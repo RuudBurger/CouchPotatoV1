@@ -13,6 +13,7 @@ class theMovieDb(movieBase):
     """Api for theMovieDb"""
 
     apiUrl = 'http://api.themoviedb.org/2.1'
+    imageUrl = 'http://hwcdn.themoviedb.org'
 
     def __init__(self, config):
         log.info('Using TheMovieDb provider.')
@@ -129,6 +130,9 @@ class theMovieDb(movieBase):
         return data
 
     def saveImage(self, url, destination):
+
+        if url[:6] != 'http://':
+            url = self.imageUrl + url
 
         # Make dir
         imageCache = os.path.join(cherrypy.config.get('cachePath'), 'images')
