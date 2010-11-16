@@ -140,6 +140,13 @@ def server_start():
     #No Root controller as we provided all our own.
     cherrypy.tree.mount(root = None, config = conf)
 
+    #HTTP Errors
+    def http_error_hander(status, message, traceback, version):
+        args = [status, message, traceback, version]
+        log.error("CherryPy caught an error: %s" % ", ".join(args))
+        return "<html><body><h1>Error %s</h1>Something unexpected has happened. Please check the log.</body></html>" % args[0]
+    cherrypy.config.update({'error_page.default' : http_error_hander})
+
     # Deamonize
     if options.daemonize:
         plugins.Daemonizer(cherrypy.engine).subscribe()
