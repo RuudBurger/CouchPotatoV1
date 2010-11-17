@@ -20,8 +20,7 @@ class RenamerCron(cronBase, Library):
     ''' Cronjob for renaming movies '''
 
     lastChecked = 0
-    interval = 1 #minutes
-    intervalSec = 10
+    intervalSec = 4
     config = {}
 
     def conf(self, option):
@@ -30,14 +29,12 @@ class RenamerCron(cronBase, Library):
     def run(self):
         log.info('Renamer thread is running.')
 
-        self.intervalSec = (self.interval * 60)
-
         if not os.path.isdir(self.conf('download')):
             log.info("Watched folder doesn't exist.")
 
         wait = 0.1 if self.debug else 5
 
-        #time.sleep(10)
+        time.sleep(10)
         while True and not self.abort:
             now = time.time()
             if (self.lastChecked + self.intervalSec) < now:
@@ -134,7 +131,6 @@ class RenamerCron(cronBase, Library):
                     path = movie['path'].split(os.sep)
                     path.extend(['_UNKNOWN_' + path.pop()])
                     shutil.move(movie['path'], os.sep.join(path))
-
                 except IOError:
                     pass
 
@@ -278,8 +274,7 @@ class RenamerCron(cronBase, Library):
             if not os.path.isfile(dest) and removed:
                 log.info('Moving file "%s" to %s.' % (latinToAscii(old), dest))
 
-                if not self.debug:
-                    shutil.move(old, dest)
+                shutil.move(old, dest)
                 justAdded.append(dest)
             else:
                 try:
