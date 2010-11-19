@@ -192,7 +192,6 @@ def _parseBitRate(value):
     try:
         bitrate = float(value.split()[0])
     except:
-        import pdb; pdb.set_trace()
         return None
 
     if 'kbit' in value.lower():
