@@ -13,7 +13,11 @@ def url(*args, **kwargs):
     return cherrypy.url(routes.url_for(*args, **kwargs), base = base())
 
 def redirect(url):
-    url = url if url else base()
+    b = base()
+    if b:
+        url = '/' + url.lstrip(b) if url else b
+    else:
+        url = url if url else b
     raise cherrypy.HTTPRedirect(url)
 
 class BaseController:
