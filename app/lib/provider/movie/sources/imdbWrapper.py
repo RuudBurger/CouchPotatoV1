@@ -35,7 +35,10 @@ class imdbWrapper(movieBase):
             new = self.feedItem()
             new.imdb = 'tt' + r.movieID
             new.name = self.toSaveString(r['title'])
-            new.year = r['year']
+            try:
+                new.year = r['year']
+            except:
+                new.year = ''
 
             return new
         else :
@@ -65,8 +68,8 @@ class imdbWrapper(movieBase):
             return self.toResults(r, one = True)
         else:
             self.p.update(r)
-            self.p.update(r, info='release dates')
-            self.p.update(r, info='taglines')
+            self.p.update(r, info = 'release dates')
+            self.p.update(r, info = 'taglines')
             return r
 
     def get_IMDb_instance(self):
