@@ -3,12 +3,19 @@ CouchPotato
 
 Version 26 (not released):
 
-* New: Preferred words for searching in "Settings >> General"
+* New: Preferred words for searching in "Settings >> General".
+* New: Download meta-data. Poster, fanart, .nfo file.
+* New: XBMC Notifications.
+* Enhancement: Ability to disable the updater.
 * Enhancement: Better movie detection when renaming.
 * Enhancement: Settings page instead of popup.
 * Enhancement: R5 DVD-R is allowed
+* Enhancement: Added <resolution> and <sourcemedia> to renaming filenames.
+* Fix: Updated updater for new GitHub download page layout.
+* Fix: Images from TheMovieDB couldn't be downloaded.
 * Fix: OpenSubtitle didn't always stay logged in.
 * Fix: Move .idx files along with .sub files.
+* ![And a lot more fixed here](https://github.com/RuudBurger/CouchPotato/compare/f60d448ad0...dfefbbc9c60aba77171c329406b6050313ce1823)
 
 Version 25:
 
