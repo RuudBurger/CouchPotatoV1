@@ -300,11 +300,11 @@ class RenamerCron(cronBase, Library):
 
             # Add to renaming history
             h = RenameHistory()
-            h.movieId = movie['movie'].id
-            h.movieQueue = movie['history'].movieQueue if movie['history'] else 0
+            Db.add(h)
+
+            h.movieQueue = movie['queue'].id if movie['queue'] else 0
             h.old = unicode(old.decode('utf-8'))
             h.new = unicode(dest.decode('utf-8'))
-            Db.add(h)
             Db.flush()
 
             if multiple:
