@@ -155,7 +155,7 @@ class Library:
                     movie['info']['name'] = movie['movie'].name
                     movie['info']['year'] = movie['movie'].year
                     try:
-                        movie['info']['quality'] = movie['history'].movieQueue.qualityType
+                        movie['info']['quality'] = qualities.types.get(movie['queue'].qualityType)
                     except:
                         movie['info']['quality'] = qualities.guess([os.path.join(movie['path'], file['filename']) for file in movie['files']])
 
