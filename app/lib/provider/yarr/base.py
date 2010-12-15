@@ -114,6 +114,14 @@ class nzbBase(rss):
             if word.strip() and word.strip().lower() in nzbWords:
                 log.info('NZB contains ignored word %s: %s' % (word, item.name))
                 return False
+        
+        # Must contain MustHaveWords
+        nzbWords = re.split('\W+', self.toSearchString(item.name).lower())
+        mustHaveWords = self.config.get('global', 'mustHaveWords').split(',')
+        for word in mustHaveWords:
+            if word.strip() and word.strip().lower() not in nzbWords:
+                log.info('NZB does not contain must have word %s: %s' % (word, item.name))
+                return False
 
         q = Qualities()
         type = q.types.get(qualityType)
