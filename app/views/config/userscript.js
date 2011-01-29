@@ -15,7 +15,7 @@
 // @exclude     http://*.trak.tv/movie/*/*
 // ==/UserScript==
 
-var version = 4;
+var version = 5;
 
 function create() {
     switch (arguments.length) {
@@ -277,6 +277,100 @@ trakt = (function(){
     }
     return constructor;
 })();
+
+apple = (function(){
+    /*
+     *  Only movies on Apple Trailers
+     */
+    function isMovie(){
+        return true;
+    }
+    
+    /*
+     *  AJAX post and call 'callback' function
+     */
+    function post(newurl, callback) {
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: newurl,
+            headers: {
+            'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
+            'Accept': 'application/atom+xml,application/xml,text/xml',
+            },
+            onload: function(responseDetails) {
+                callback(responseDetails);
+            }
+        });
+    }
+
+    /*
+     *  Search TheMovieDB for IMDB ID, year of release and open OSD
+     *
+     */
+    function getId(response) {
+        if (!response) {
+            var TMDB_API_KEY = "31582644f51aa19f8fcd9b2998e17a9d"
+
+            var mName = document.title.substr(0, document.title.indexOf(" -")).replace(/ /g, "+");
+            var url = 'http://api.themoviedb.org/2.1/Movie.search/en/xml/' + TMDB_API_KEY + '/' + mName;
+    
+            post(url, getId)
+        } else {
+            if (!response.responseXML) {
+                response.responseXML = new DOMParser().parseFromString(response.responseText, "text/xml");
+            }
+
+            var imdb_id = response.responseXML.getElementsByTagName('imdb_id')[0].firstChild.response; 
+
+            var year = getYear(response.responseXML);
+        }
+
+        // This is here since getId is called asyncronously from ajax call
+        lib.osd(imdb_id, year);    
+    }
+
+    /*
+     *  Gets year of release. First tries to get it from TMDB response.
+     *  If that fails, gets the year from page copyright notice.
+     *
+     */
+    function getYear(xml){
+        var year;
+        if (xml) {
+            year = xml.getElementsByTagName('released')[0].firstChild;
+            if (year != null) {
+                year = year.data;
+                year = year.substr(0, 4);
+            } else {
+                year = getYearFromPage();
+            }
+        } else {
+            year = getYearFromPage();
+        }
+
+        return year;
+    }
+
+    /*
+     *  Retrieves year from movie copyright notice.
+     *
+     */ 
+    function getYearFromPage() {
+        var fullReleaseDate = document.getElementById("view-showtimes").parentNode.innerHTML;
+        var justYear = fullReleaseDate.substr(fullReleaseDate.indexOf("Copyright", 0)+12, 4);
+
+        return justYear;
+    }
+
+    function constructor(){
+        if(isMovie()){
+            // lib.osd will be called by AJAX request in getId()
+            getId();    
+        }
+    }
+    return constructor;
+})();
+
 // Start
 (function(){
     factory = {
@@ -284,7 +378,8 @@ trakt = (function(){
         "sharethe.tv" : sharethetv,
         "moviemeter.nl" : moviemeter,
         "whiwa.net" : whiwa,
-        "trakt.tv" : trakt
+        "trakt.tv" : trakt,
+	"trailers.apple.com" : apple
     };
     for (var i in factory){
         GM_log(i);
