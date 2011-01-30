@@ -11,6 +11,7 @@
 // @include     http://whiwa.net/stats/movie/*
 // @include     http://trakt.tv/movie/*
 // @include     http://*.trak.tv/movie/*
+// @include     http://trailers.apple.com/trailers/*
 // @exclude     http://trak.tv/movie/*/*
 // @exclude     http://*.trak.tv/movie/*/*
 // ==/UserScript==
@@ -320,7 +321,7 @@ apple = (function(){
                 response.responseXML = new DOMParser().parseFromString(response.responseText, "text/xml");
             }
 
-            var imdb_id = response.responseXML.getElementsByTagName('imdb_id')[0].firstChild.response; 
+            var imdb_id = response.responseXML.getElementsByTagName('imdb_id')[0].firstChild.nodeValue; 
 
             var year = getYear(response.responseXML);
         }
