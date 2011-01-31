@@ -12,11 +12,12 @@
 // @include     http://trakt.tv/movie/*
 // @include     http://*.trak.tv/movie/*
 // @include     http://trailers.apple.com/trailers/*
+// @include     http://www.themoviedb.org/movie/*
 // @exclude     http://trak.tv/movie/*/*
 // @exclude     http://*.trak.tv/movie/*/*
 // ==/UserScript==
 
-var version = 5;
+var version = 6;
 
 function create() {
     switch (arguments.length) {
@@ -372,6 +373,71 @@ apple = (function(){
     return constructor;
 })();
 
+tmdb = (function(){
+    var obj = this;
+
+    function isMovie(){
+        return true;
+    }
+    
+    /*
+     *      AJAX post and call 'callback' function
+     */
+    function post(newurl, callback) {
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: newurl,
+            headers: {
+               'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
+               'Accept': 'application/atom+xml,application/xml,text/xml',
+            },
+            onload: function(responseDetails) {
+               callback(responseDetails);
+            }
+        });
+    }
+
+    /*
+     *      Search TheMovieDB for IMDB ID, year of release and open OSD
+     *
+     */
+    function getId(response) {
+        if (!response) {
+            var TMDB_API_KEY = "31582644f51aa19f8fcd9b2998e17a9d"
+
+            mName = document.title.substr(0, document.title.indexOf("TMDb")-3).replace(/ /g, "+");
+            mName = mName.replace(/·/g, "-");
+
+            var url = 'http://api.themoviedb.org/2.1/Movie.search/en/xml/' + TMDB_API_KEY + '/' + mName;
+
+            post(url, getId);
+        } else {
+            if (!response.responseXML) {
+                response.responseXML = new DOMParser().parseFromString(response.responseText, "text/xml");
+            }
+
+            var imdb_id = response.responseXML.getElementsByTagName('imdb_id')[0].firstChild.nodeValue; 
+            var year = getYear();
+                
+            // This is here since getId is called asyncronously from ajax call
+            lib.osd(imdb_id, year);    
+        }
+    }
+    
+    function getYear(){
+        var year = document.getElementById("year").innerHTML;
+        year = year.substr(1, year.length-2);
+        return year;
+    }
+    
+    function constructor(){
+        if(isMovie()){
+            getId();    
+        }
+    }
+    return constructor;
+})();
+
 // Start
 (function(){
     factory = {
@@ -380,7 +446,8 @@ apple = (function(){
         "moviemeter.nl" : moviemeter,
         "whiwa.net" : whiwa,
         "trakt.tv" : trakt,
-	"trailers.apple.com" : apple
+        "trailers.apple.com" : apple,
+        "themoviedb.org" : tmdb
     };
     for (var i in factory){
         GM_log(i);
