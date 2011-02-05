@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 // ==UserScript==
 // @name        CouchPotato UserScript
 // @description Add movies to your CouchPotato via external sites like IMDB
@@ -365,9 +366,11 @@ apple = (function(){
     }
 
     function constructor(){
-        if(isMovie()){
-            // lib.osd will be called by AJAX request in getId()
-            getId();    
+        if (window.navigator.userAgent.indexOf("Chrome") < 0) {
+            if(isMovie()){
+                // lib.osd will be called by AJAX request in getId()
+                getId();    
+            }
         }
     }
     return constructor;
@@ -431,8 +434,10 @@ tmdb = (function(){
     }
     
     function constructor(){
-        if(isMovie()){
-            getId();    
+        if (window.navigator.userAgent.indexOf("Chrome") < 0) {
+            if(isMovie()){
+                getId();    
+            }
         }
     }
     return constructor;
