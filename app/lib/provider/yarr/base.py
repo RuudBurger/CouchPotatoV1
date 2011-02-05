@@ -112,7 +112,7 @@ class nzbBase(rss):
         # Must contain any required words
         requiredWords = self.config.get('global', 'requiredWords').split(',')
         for word in requiredWords:
-            if word.lower().strip() not in nzbWords:
+            if word.strip() and word.strip().lower() not in nzbWords:
                 log.info('NZB does not contain required word %s: %s' % (word, item.name))
                 return False
 
