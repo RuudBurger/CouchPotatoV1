@@ -73,6 +73,14 @@
 						Comma seperated. NZB/Torrents must contain these words. Example: GERMAN, DTS
 					</p>
 				</div>
+				
+				<div class="ctrlHolder">
+					<label for="">Any required word</label>
+					<input type="text" name="global.anyRequiredWords" value="${config.get('global', 'anyRequiredWords')}" class="textInput large"/>
+					<p class="formHint">
+						Comma seperated. NZB/Torrents must contain any of these words. Example: WiKi, CtrlHD
+					</p>
+				</div>
 			</fieldset>
 		</div>
 
