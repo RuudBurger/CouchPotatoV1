@@ -11,8 +11,8 @@ class nzbMatrix(nzbBase):
     """Api for NZBMatrix"""
 
     name = 'NZBMatrix'
-    downloadUrl = 'http://nzbmatrix.com/api-nzb-download.php?id=%s%s'
-    detailUrl = 'http://nzbmatrix.com/nzb-details.php?id=%s&hit=1'
+    downloadUrl = 'https://nzbmatrix.com/api-nzb-download.php?id=%s%s'
+    detailUrl = 'https://nzbmatrix.com/nzb-details.php?id=%s&hit=1'
     searchUrl = 'http://rss.nzbmatrix.com/rss.php'
 
     catIds = {
@@ -101,7 +101,7 @@ class nzbMatrix(nzbBase):
                     new.name = title
                     new.date = int(time.mktime(parse(date).timetuple()))
                     new.size = self.parseSize(size)
-                    new.url = self.downloadLink(id).replace('http://', 'https://')
+                    new.url = self.downloadLink(id)
                     new.detailUrl = self.detailLink(id)
                     new.content = self.gettextelement(nzb, "description")
                     new.score = self.calcScore(new, movie)
