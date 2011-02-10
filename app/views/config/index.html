@@ -73,6 +73,14 @@
 						Comma seperated. NZB/Torrents must contain these words. Example: GERMAN, DTS
 					</p>
 				</div>
+				<div class="ctrlHolder">
+					<label for="">Movie(-Info) Language</label>
+					<select name="TheMovieDB.language" id="language" class="textInput large">
+						% for language in ['de','en']:
+						<option value="${language}"${' selected="selected"' if str(language) == config.get('TheMovieDB', 'language') else ''}>${language}</option>
+						% endfor
+					</select>
+				</div>
 			</fieldset>
 		</div>
 
