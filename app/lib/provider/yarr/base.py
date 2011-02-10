@@ -126,11 +126,11 @@ class nzbBase(rss):
                             (item.name, ", ".join(blacklisted)))
             return False
 			
-		# Use any of the required words instead off all required words
-		anyRequiredWords = get_words(self.config.get('global', 'anyRequiredWords'))
-		requiredWordFound = set(anyRequiredWords).intersection(set(nzbWords))
-		if requiredWordFound:
-			return True
+	# Use any of the required words instead off all required words
+	anyRequiredWords = get_words(self.config.get('global', 'anyRequiredWords'))
+	requiredWordFound = set(anyRequiredWords).intersection(set(nzbWords))
+	if requiredWordFound:
+		return True
 
         q = Qualities()
         type = q.types.get(qualityType)
