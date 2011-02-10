@@ -103,6 +103,7 @@ class configApp():
 
         self.addSection('TheMovieDB')
         self.setDefault('TheMovieDB', 'key', '9b939aee0aaafc12a65bf448e4af9543')
+		self.setDefault('TheMovieDB', 'language', 'en')
 
         self.addSection('IMDB')
 
