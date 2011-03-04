@@ -1,0 +1,13 @@
+# path to app
+# this must point to CouchPotato's install location.
+APP_PATH=PATH_TO_COUCHPOTATO_DIRECTORY
+
+# user that CouchPotato should run as.
+# this must be customized - and using root is strongly discouraged.
+USER=COUCHPOTATO_USER
+
+
+
+# $PIDFILE: the process ID of this instance will be written here.
+# default:
+# PIDFILE=/var/run/couchpotato.pid

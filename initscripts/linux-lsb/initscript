@@ -1,0 +1,163 @@
+#! /bin/bash
+
+### BEGIN INIT INFO
+# Provides:          CouchPotato application instance
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts instance of CouchPotato
+# Description:       starts instance of CouchPotato using start-stop-daemon
+### END INIT INFO
+
+### DON'T EDIT ME
+## place your customizations to these variables in
+## the appropriate location for your distribution and
+## symlink this file to the appropriate location for
+## your distribution
+###
+
+###
+## debian/ubuntu usage example:
+##  one install:
+##   _symlink_ this script to /etc/init.d/couchpotato
+##   _copy_ initscript_config to /etc/defaults/couchpotato
+##
+##  multiple installs:
+##   copied config file name must match the name 
+##   you use for the symlink
+##   in /etc/init.d.
+##   e.g.:
+##   initscript symlinked to /etc/init.d/mygreatcouchpotato1
+##   config _copied_ /etc/default/mygreatcouchpotato1
+##   and
+##   initscript symlinked to /etc/init.d/mygreatcouchpotato2
+##   config _copied_ to /etc/default/mygreatcouchpotato2
+##
+## 
+###
+
+# default options
+DEFOPTS="-d"
+
+# app name
+DESC="CouchPotato"
+
+PIDFILE=/var/run/couchpotato.pid
+
+# initscript name
+INITSCRIPT="$(basename "$0")"
+
+SETTINGS=/etc/default/${INITSCRIPT}
+
+SETTINGS_LOADED="FALSE"
+
+[ -r $SETTINGS ] || exit 0
+
+# these must be set in the settings file, not here
+unset USER APP_PATH
+
+. /lib/lsb/init-functions
+
+load_settings() {
+    if [ $SETTINGS_LOADED != "TRUE" ]; then
+	. $SETTINGS
+       
+	([ -z "$USER" ] || [ -z "$APP_PATH" ]) &&  {
+	    log_warning_msg "$DESC: not configured, aborting. See $SETTINGS";
+	    return 1; }
+        
+	OPTIONS="$DEFOPTS"
+        [ -n "$QUIET" ] && OPTIONS="$OPTIONS --quiet"
+	[ -n "$PORT" ] && OPTIONS="$OPTIONS --port=$PORT"
+	[ -n "$EXTRAOPTS" ] && OPTIONS="$OPTIONS $EXTRAOPTS"
+
+        # now that we know the path, is SB there and executable?
+        DAEMON=${APP_PATH}/CouchPotato.py 
+
+        ([ ! -x $DAEMON ]) && {
+            log_warning_msg "$DESC: couldn't find $DAEMON, or it wouldn't execute. See $SETTINGS."
+            return 1; }
+
+        # path to python bin
+        PYTHONEXEC="^$(sed -n '1s/^#\!\([a-z0-9\.\/]\+\)\(.*\)/\1(\2)?/p' $DAEMON)"
+
+	SETTINGS_LOADED="TRUE"
+    fi
+    return 0
+}
+
+check_retval() {
+	if [ $? -eq 0 ]; then
+		log_end_msg 0
+		return 0
+	else
+		log_end_msg 1
+		exit 1
+	fi
+}
+
+is_running() {
+    # returns 0 when running, 1 otherwise
+    PID="$(pgrep -f -x -u $USER "$PYTHONEXEC $DAEMON $DEFOPTS.*")"
+    RET=$?
+    [ $RET -gt 1 ] && exit 1 || return $RET
+}
+
+start_couchpotato() {
+    load_settings || exit 0
+    if ! is_running; then
+	log_daemon_msg "Starting $DESC"
+	start-stop-daemon --quiet --chdir $APP_PATH --chuid $USER --start --exec $DAEMON -- $OPTIONS
+	check_retval
+	# create a pidfile; we don't use it but some monitoring app likes to have one
+	[ -w $(dirname $PIDFILE) ] && \
+	    pgrep -f -x -n -u $USER "$PYTHONEXEC $DAEMON $OPTIONS" > $PIDFILE
+    else
+	log_success_msg "$DESC: already running (pid $PID)"
+    fi
+}
+
+stop_couchpotato() {
+	load_settings || exit 0
+	if is_running; then
+		TMPFILE=$(mktemp /tmp/couchpotato.XXXXXXXXXX || exit 1)
+		trap '[ -f $TMPFILE ] && rm -f $TMPFILE' EXIT
+		echo "$PID" > $TMPFILE
+		log_daemon_msg "Stopping $DESC"
+		start-stop-daemon --stop --user $USER --pidfile $TMPFILE --retry 30
+		check_retval
+	else
+		log_success_msg "$DESC: not running"
+	fi
+	[ -f $PIDFILE ] && rm -f $PIDFILE
+}
+
+case "$1" in
+	start)
+		start_couchpotato
+	;;
+	stop)
+		stop_couchpotato
+	;;
+	force-reload|restart)
+		stop_couchpotato
+		start_couchpotato
+	;;
+	status)
+		load_settings || exit 4
+		if is_running; then
+			log_success_msg "$DESC: running (pid $PID)"
+		else
+			log_success_msg "$DESC: not running"
+			[ -f $PIDFILE ] && exit 1 || exit 3
+		fi
+	;;
+	*)
+		log_failure_msg "Usage: $0 {start|stop|restart|force-reload|status}"
+		exit 3
+	;;
+esac
+
+
+exit 0
