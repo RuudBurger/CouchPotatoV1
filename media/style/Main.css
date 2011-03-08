@@ -83,11 +83,11 @@ a:hover { color: #4d66c4; }
 	right: 0;
 	padding: 10px 10px 10px 40px;
 	background: #f7f7f7 url('../../media/images/toTop.gif') no-repeat 10px center;
-	border-radius: 5px 0 0 0; 
-	-moz-border-radius: 5px 0 0 0; 
-	-webkit-border-radius: 5px 0 0 0; 
+	border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
 }
-	
+
 form {
 	padding:0;
 	margin:0;
@@ -139,7 +139,7 @@ form {
 		}
 			#header .navigation ul li:first-child a { padding-left: 10px; }
 			#header .navigation ul li a.logLink { font-size: 13px; padding: 23px 20px 15px; }
-			#header .navigation ul li a#showConfig { 
+			#header .navigation ul li a#showConfig {
 				background: url('../../media/images/gear.png') no-repeat center;
 				height: 35px;
 				width: 10px;
@@ -149,19 +149,19 @@ form {
 				display: block;
 				margin-top: 5px;
 			}
-	
+
 		#header .navigation ul li.disabled {
 			color: #e5e5e5;
 		}
-		
+
 		#header .navigation ul li a:link, #header .navigation ul li a:visited {
 			color: #2c2c2c;
 		}
-		
+
 		#header .navigation ul li a:hover, #header .navigation ul li a:active {
 			color: #8b8b8b;
 		}
-		
+
 	#header #addForm {
 		overflow: hidden;
 		margin-right: 15px;
@@ -175,7 +175,7 @@ form {
 			float: right;
 			padding: 5px;
 		}
-		
+
 		#header .addNew .row input {
 			height: 21px;
 			font-size: 15px;
@@ -183,48 +183,48 @@ form {
 			padding: 2px 4px;
 			background: #fff;
 		}
-		
+
 		#header .addNew .row select {
 			margin-top: 5px;
 		}
-		
+
 		#header .addNew .row .undo {
 			float: left;
 			margin: 6px 5px 0 0;
 		}
-		
+
 		#header .addNew .row .movieselect {
 			width: 195px;
 		}
-		
+
 		#header .addNew .row .quality {
 			width: 70px;
 		}
-		
+
 		#header .addNew .row #yearInput {
-			width: 40px; 
-			border: 1px 
+			width: 40px;
+			border: 1px
 			solid red;
 		}
-		
+
 		#header .addNew .row .overTxtLabel {
 			padding: 2px 3px;
 			font-size: 15px;
 			color: #999;
 			top: 33px !important;
 		}
-		
+
 		#header #addForm .spinner {
 			top: 25px !important;
 		}
-		
+
 		form a.submit {
-			background: #222 url(../../media/images/button.png) repeat-x; 
-			display: inline-block; 
-			padding: 4px 10px 4px; 
-			color: #fff; 
+			background: #222 url(../../media/images/button.png) repeat-x;
+			display: inline-block;
+			padding: 4px 10px 4px;
+			color: #fff;
 			text-decoration: none;
-			-moz-border-radius: 5px; 
+			-moz-border-radius: 5px;
 			-webkit-border-radius: 5px;
 			-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 			-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
@@ -234,7 +234,7 @@ form {
 			cursor: pointer;
 			margin-right: 3px;
 		}
-		
+
 /*** Movie list ***/
 #filterDetails, #clear_downloaded {
 	text-align: right;
@@ -247,24 +247,24 @@ form {
 	#filterDetails a, #filterDetails span, #clear_downloaded a {
 		margin: 0 0 0 20px;
 		background: #f3f3f3;
-		border-radius: 5px; 
-		-moz-border-radius: 5px; 
+		border-radius: 5px;
+		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		padding: 5px 10px;
 	}
 		#filterDetails strong {
 			color:  #666;
 		}
-	
+
 	#filterDetails .toggle, #clear_downloaded .clear_downloaded {
 		margin-left: 10px;
 	}
-	
+
 	#filterDetails .reload {
 		background: #f3f3f3 url('../../media/images/reload.png') no-repeat 7px 7px;
 		padding-left: 28px;
 	}
-	
+
 	#filterDetails .spinner {
 		background: #f3f3f3 url('../../media/images/spinner.gif') no-repeat 7px center;
 		padding-left: 28px;
@@ -297,18 +297,18 @@ a[name=sn], a[name=dl] {
 	#movies .header {
 		font-weight: bold;
 	}
-	
+
 	#movies .header > span, #movies .item > span {
 		float:left;
 		display:block;
 		padding: 19px 9px 6px;
 	}
-	
+
 	#movies .header, #movies > .item {
 		clear:both;
 		text-align: center;
 	}
-	
+
 	#movies > .item {
 		overflow:hidden;
 		background: #fff;
@@ -318,11 +318,11 @@ a[name=sn], a[name=dl] {
 	#movies > .item:nth-child(even) {
 		background: #fafafa;
 	}
-	
+
 	#movies > .item.waiting {
 		background: #ffeeca;
 	}
-	
+
 	#movies > .item.active {
 		background: #edf7f9 !important;
 	}
@@ -338,7 +338,7 @@ a[name=sn], a[name=dl] {
 				margin: 12px 20px 5px 10px;
 				width: 92px;
 				height: 138px;
-				-moz-border-radius: 3px; 
+				-moz-border-radius: 3px;
 				-webkit-border-radius: 3px;
 				-moz-box-shadow: 0 0 3px rgba(0,0,0,0.35);
 				-webkit-box-shadow: 0 0 3px rgba(0,0,0,0.35);
@@ -361,18 +361,18 @@ a[name=sn], a[name=dl] {
 					font-weight: normal;
 					padding: 13px 0 6px;
 				}
-	
+
 				#movies .title .overview {
 					font-size: 12px;
 					display: block;
 					color: #777;
 					text-align: justify;
 				}
-	
+
 					#movies .item:hover .overview {
 						color: #333;
 					}
-	
+
 				#movies .title .rating {
 					display: block;
 					font-size: 11px;
@@ -383,8 +383,8 @@ a[name=sn], a[name=dl] {
 			#movies.list .title .extra * { display: none; }
 			#movies.list .title .thumbnail { display: none; }
 			#movies.list .title .extra h2 { display: block; padding: 13px 0 6px 10px; }
-		
-		
+
+
 		#movies .year {
 			width: 70px;
 		}
@@ -404,7 +404,7 @@ a[name=sn], a[name=dl] {
 				border-bottom: none;
 				border-top: none;
 			}
-		
+
 		#movies .item .quality {
 			padding: 5px 9px;
 			height: 45px;
@@ -419,42 +419,33 @@ a[name=sn], a[name=dl] {
 			color: #333;
 			background: url('../../media/images/qualities.png') no-repeat;
 		}
-                        /** ACTIVE **/
-			#movies .item .quality .q1080P.active { background-position: -85px 0; }
-			#movies .item .quality .q720P.active { background-position: -71px 0; }
-			#movies .item .quality .qBR-Rip.active { background-position: -58px 0; }
-			#movies .item .quality .qDVD-R.active { background-position: -44px 0; }
-			#movies .item .quality .qDVD-Rip.active { background-position: -30px 0; }
-			#movies .item .quality .qScreener.active { background-position: -17px 0; }
-			#movies .item .quality .qR5.active, #movies .item .quality .qTeleCine.active, #movies .item .quality .qTeleSync.active, #movies .item .quality .qCam.active { background-position: -3px -50px; }
-	
-			/** ACTIVE + FINISHED **/
-			#movies .item .quality .q1080P.finished { background-position: -85px -50px; }
-			#movies .item .quality .q720P.finished { background-position: -71px -50px; }
-			#movies .item .quality .qBR-Rip.finished { background-position: -58px -50px; }
-			#movies .item .quality .qDVD-R.finished { background-position: -44px -50px; }
-			#movies .item .quality .qDVD-Rip.finished { background-position: -30px -50px; }
-			#movies .item .quality .qScreener.finished { background-position: -17px -50px; }
-			#movies .item .quality .qR5.finished, #movies .item .quality .qTeleCine.finished, #movies .item .quality .qTeleSync.finished, #movies .item .quality .qCam.finished { background-position: -3px -150px; }
-			
+			/** ACTIVE **/
+			#movies .item .quality .q1080P.active { background-position: -85px -63px; }
+			#movies .item .quality .q720P.active { background-position: -71px -63px; }
+			#movies .item .quality .qBR-Rip.active { background-position: -58px -63px; }
+			#movies .item .quality .qDVD-R.active { background-position: -44px -63px; }
+			#movies .item .quality .qDVD-Rip.active { background-position: -30px -63px; }
+			#movies .item .quality .qScreener.active { background-position: -17px -63px; }
+			#movies .item .quality .qR5.active, #movies .item .quality .qTeleCine.active, #movies .item .quality .qTeleSync.active, #movies .item .quality .qCam.active { background-position: -3px -63px; }
+
 			/** INACTIVE **/
-			#movies .item .quality .q1080P { background-position: -85px -100px; }
-			#movies .item .quality .q720P { background-position: -71px -100px; }
-			#movies .item .quality .qBR-Rip { background-position: -58px -100px; }
-			#movies .item .quality .qDVD-R { background-position: -44px -100px; }
-			#movies .item .quality .qDVD-Rip { background-position: -30px -100px; }
-			#movies .item .quality .qScreener { background-position: -17px -100px; }
-			#movies .item .quality .qR5, #movies .item .quality .qTeleCine, #movies .item .quality .qTeleSync, #movies .item .quality .qCam { background-position: -3px -100px; }
-			
+			#movies .item .quality .q1080P { background-position: -85px -115px; }
+			#movies .item .quality .q720P { background-position: -71px -115px; }
+			#movies .item .quality .qBR-Rip { background-position: -58px -115px; }
+			#movies .item .quality .qDVD-R { background-position: -44px -115px; }
+			#movies .item .quality .qDVD-Rip { background-position: -30px -115px; }
+			#movies .item .quality .qScreener { background-position: -17px -115px; }
+			#movies .item .quality .qR5, #movies .item .quality .qTeleCine, #movies .item .quality .qTeleSync, #movies .item .quality .qCam { background-position: -3px -115px; }
+
 			/** COMPLETED **/
-			#movies .item .quality .q1080P.completed { background-position: -85px -150px; }
-			#movies .item .quality .q720P.completed { background-position: -71px -150px; }
-			#movies .item .quality .qBR-Rip.completed { background-position: -58px -150px; }
-			#movies .item .quality .qDVD-R.completed { background-position: -44px -150px; }
-			#movies .item .quality .qDVD-Rip.completed { background-position: -30px -150px; }
-			#movies .item .quality .qScreener.completed { background-position: -17px -150px; }
-			#movies .item .quality .qR5.completed , #movies .item .quality .qTeleCine.completed , #movies .item .quality .qTeleSync.completed , #movies .item .quality .qCam.completed { background-position: -3px -150px; }
-		
+			#movies .item .quality .q1080P.completed { background-position: -85px -13px; }
+			#movies .item .quality .q720P.completed { background-position: -71px -13px; }
+			#movies .item .quality .qBR-Rip.completed { background-position: -58px -13px; }
+			#movies .item .quality .qDVD-R.completed { background-position: -44px -13px; }
+			#movies .item .quality .qDVD-Rip.completed { background-position: -30px -13px; }
+			#movies .item .quality .qScreener.completed { background-position: -17px -13px; }
+			#movies .item .quality .qR5.completed , #movies .item .quality .qTeleCine.completed , #movies .item .quality .qTeleSync.completed , #movies .item .quality .qCam.completed { background-position: -3px -13px; }
+
 		#movies .info {
 			width: 97px;
 			text-align: right;
@@ -472,10 +463,10 @@ a[name=sn], a[name=dl] {
 			#movies .info .moviedb { background-image: url('../../media/images/moviedb.png'); }
 			#movies .info .forceCheck { background-image: url('../../media/images/reload.png'); }
 			#movies .info .delete { background-image: url('../../media/images/delete.png'); }
-	
+
 	#movies > .item .queue { display: none; }
 	#movies > .item.active .queue { display: block; }
-	
+
 	#movies > .item .queue {
 		font-size: 12px;
 		position: absolute;
@@ -488,7 +479,7 @@ a[name=sn], a[name=dl] {
 		-webkit-border-radius: 6px;
 		margin: 53px 0 0 520px;
 	}
-	
+
 		#movies > .item .queue .header {
 			padding: 2px 5px;
 			overflow: hidden;
@@ -498,42 +489,42 @@ a[name=sn], a[name=dl] {
 			-webkit-border-top-left-radius: 6px;
 			-webkit-border-top-right-radius: 6px;
 		}
-	
+
 		#movies > .item .queue .item {
 			clear: both;
 			overflow: hidden;
 			padding: 2px 5px;
 		}
-		
+
 		#movies > .item .queue .item:nth-child(odd) {
 			background: #fff;
 		}
-		
+
 		#movies > .item .queue .item:last-child {
 			-moz-border-radius-bottomleft: 6px;
 			-moz-border-radius-bottomright: 6px;
 			-webkit-border-bottom-left-radius: 6px;
 			-webkit-border-bottom-right-radius: 6px;
 		}
-		
+
 		#movies > .item .queue .inactive {
 			color: #999;
 		}
-		
+
 		#movies > .item .queue .completed {
 			background: #dffbbe !important;
 		}
-	
+
 			#movies > .item .queue span, #movies > .item .queue acronym {
 				display: block;
 				float: left;
 				text-align: left;
 				padding: 2px 5px;
 			}
-	
+
 			#movies > .item .queue .found { width: 200px; overflow: hidden; height: 24px; }
 			#movies > .item .queue .qualityType { width: 50px; text-align: center; }
-			#movies > .item .queue .markComplete { 
+			#movies > .item .queue .markComplete {
 				width: 37px;
 				height: 25px;
 				text-align: center;
@@ -554,11 +545,11 @@ a[name=sn], a[name=dl] {
 		display: block;
 		float: left;
 	}
-	
+
 	.smallList {
 		padding-left:10px;
 	}
-	
+
 		.smallList a {
 			display: inline-block;
 			height: 20px;
@@ -574,7 +565,7 @@ a[name=sn], a[name=dl] {
 #logs {
 	padding: 10px;
 }
-	
+
 /*** Feed ***/
 h1 {
 	font-size: 30px;
@@ -602,7 +593,7 @@ h1 {
 			clear: left;
 			float: left;
 		}
-		
+
 		#feed .eta .item .thumbnail {
 			float: left;
 			margin: 5px 15px 4px 0;
@@ -613,7 +604,7 @@ h1 {
 			#feed .eta .item .thumbnail .img {
 				display: inline-block;
 				max-width: 175px;
-				-moz-border-radius: 3px; 
+				-moz-border-radius: 3px;
 				-webkit-border-radius: 3px;
 				-moz-box-shadow: 0 0 14px rgba(0,0,0,0.35);
 				-webkit-box-shadow: 0 0 14px rgba(0,0,0,0.35);
@@ -626,7 +617,7 @@ h1 {
 				width: 180px;
 				line-height: 0;
 			}
-			
+
 				#feed .eta .info a, #feed .eta .info span {
 					display: inline-block;
 					height: 20px;
@@ -639,31 +630,31 @@ h1 {
 				#feed .eta .info .hd { background-image: url('../../media/images/hd.png'); }
 				#feed .eta .info .notice { background-image: url('../../media/images/notice.png'); }
 				#feed .eta .info .videoeta { background-image: url('../../media/images/videoeta.png'); }
-		
+
 		#feed .eta .item .extra {
 			float: left;
 			width: 250px;
 		}
-		
+
 			#feed .eta .item h2 {
 				margin: 0;
 				padding: 0;
 				font-size: 24px;
 				font-weight: normal;
 			}
-			
+
 			#feed .eta .item .release {
 				font-size: 20px;
 				padding: 10px 0;
 				display: block;
 				color: #999;
 			}
-		
+
 			#feed .eta .item .overview {
 				display: block;
 				text-align: justify;
 			}
-			
+
 			#feed .eta .item .rating {
 				display: block;
 				font-size: 11px;
@@ -686,13 +677,13 @@ h1 {
 		margin: 0;
 		width: 100%;
 	}
-	
+
 	#configForm ul li {
 		list-style: none;
 		float: left;
 	}
 		#configForm ul li:first-child { margin-left: 7px; }
-	
+
 		#configForm ul li a {
 			display: block;
 			padding: 10px 15px;
@@ -702,7 +693,7 @@ h1 {
 			-webkit-border-radius: 6px 6px 0 0;
 			-moz-border-radius: 6px 6px 0 0;
 		}
-	
+
 		#configForm ul li a.current {
 			background: #fafafa;
 		}
@@ -722,19 +713,19 @@ h1 {
 			-moz-border-radius: 6px;
 		}
 		#configForm .group.current { display: block; }
-	
+
 		#configForm h3 {
 			font-size: 19px;
 			padding: 0 20px 10px 10px;
 			margin: 0;
 			background: #fafafa;
 		}
-	
+
 		#configForm .infoMessage {
 			font-size: 15px;
 			margin: 10px 10px 23px;
 		}
-	
+
 		#configForm fieldset {
 			width: 458px;
 			float: left;
@@ -752,38 +743,38 @@ h1 {
 		#configForm .group fieldset.right {
 			float: right !important;
 		}
-			
+
 		#configForm .buttonHolder {
 			background: none;
 			margin: 0;
 		}
-		
+
 		#configForm .ctrlHolder {
 			line-height: 25px;
 			padding: 10px;
 			border-bottom: 1px solid #f3f3f3;
 		}
-		
+
 		#configForm .ctrlHolder:last-child {
 			border: none;
 			padding-bottom: 10px;
 		}
-		
+
 			#configForm .ctrlHolder label {
 				line-height: 19px;
 			}
-			
+
 			input {
 				-webkit-border-radius: 3px;
 				-moz-border-radius: 3px;
 			}
-			
+
 			input.xsmall {
 				width: 6% !important;
 				text-align: center !important;
 				margin-right: 4px !important;
 			}
-			
+
 			#configForm .userscript fieldset {
 				text-align: center;
 				font-weight:bold;
@@ -792,20 +783,20 @@ h1 {
 				width: 100%;
 				background: transparent;
 			}
-			
+
 				#configForm .userscriptInstall {
 					padding: 20px 15px 10px;
 					text-align: center;
 					font-weight:bold;
 					font-size: 15px;
 				}
-			
+
 			#configForm .formHint span {
 				background: #f5f5f5;
 				padding: 2px;
 				margin-right: 1px;
 			}
-			
+
 			#configForm .formHint {
 				text-align: left;
 				padding-top: 0;
@@ -816,18 +807,18 @@ h1 {
 				float: right;
 				width: 60%;
 			}
-			
+
 			#configForm fieldset > .formHint {
 				margin: 10px 30px;
 				font-size: 12px;
 				text-align: center;
 			}
-			
+
 			#configForm span.or {
 				color: #999;
 				padding: 0 5px;
 			}
-		
+
 		#configForm .standardQualities {
 			float: left;
 			width: 265px;
@@ -844,13 +835,13 @@ h1 {
 				#configForm .standardQualities .item .label {
 					padding: 4px 10px;
 				}
-		
+
 				#configForm .standardQualities input {
 					clear: both;
 					float: left;
 					margin: 6px 0;
 				}
-				
+
 				#configForm .handle {
 					background: url('../../media/images/handle.png') center no-repeat;
 					display: block;
@@ -859,16 +850,16 @@ h1 {
 					float: right;
 					cursor: move;
 				}
-		
+
 		#configForm .qualityTemplates .template {
 			border-bottom: 1px solid #f0f0f0;
 			margin-bottom: 30px;
 		}
-		
+
 		#configForm .qualityTemplates .formHint img {
 			margin: 30px 0;
 		}
-		
+
 		#configForm .qualityTemplates .template h4 {
 			margin: 0 0 0 173px;
 			font-size: 16px;
@@ -876,35 +867,35 @@ h1 {
 			display: block;
 			padding: 0;
 		}
-		
+
 		#configForm .qualityTemplates .template > .delete {
 			float: left;
 			display: block;
 			width: 20px;
 			padding: 5px;
 		}
-		
+
 		#configForm .qualityTemplates .types {
 			float: left;
 		}
-		
+
 			#configForm .qualityTemplates .header {
 				font-weight: bold;
 			}
-		
+
 			#configForm .qualityTemplates .qualityType {
 				display: block;
 				float: left;
 				width: 190px;
 			}
-		
+
 			#configForm .qualityTemplates span.markComplete {
 				display: block;
 				float: left;
 				width: 50px;
 				text-align: center;
 			}
-		
+
 			#configForm .qualityTemplates .item {
 				display: block;
 				clear: both;
@@ -916,23 +907,23 @@ h1 {
 				#configForm .qualityTemplates .item:hover {
 					background: #f3f3f3;
 				}
-				
+
 				#configForm .qualityTemplates select {
 					width: 95%;
 					margin: 3px 0 0 0;
 				}
-				
+
 				#configForm .qualityTemplates textarea {
 					display: none;
 				}
-		
+
 				#configForm .qualityTemplates .item .delete {
 					float: left;
 					line-height: 0;
 					padding: 5px 0;
 					cursor: pointer;
 				}
-		
+
 			#configForm .qualityTemplates .addType {
 				clear: both;
 				text-align: center;
@@ -940,7 +931,7 @@ h1 {
 				display: block;
 				float: right;
 			}
-		
+
 			#configForm .qualityTemplates #newTemplate {
 				clear: both;
 				text-align: center;
@@ -974,7 +965,7 @@ h1 {
 					color: #666;
 					width: 85px;
 				}
-			
+
 				#configForm .qualitySizes .size input {
 					width: 40px !important;
 				}
@@ -982,7 +973,7 @@ h1 {
 			#configForm .qualitySizes .header {
 				font-weight: bold;
 			}
-		
+
 		#xbmcFieldset a {
 			margin-left: 34%;
 			display: block;
@@ -994,33 +985,33 @@ h1 {
 			text-align:center;
 		}
 			#configForm .about fieldset {
-				width: 100%; 
+				width: 100%;
 				background: transparent;
 			}
 
 			#configForm .about .submit {
 				background-color: #ff0000;
 			}
-	
+
 			#configForm .about .submit.restart {
 				background-color: #f78a00;
 			}
-		
+
 			#configForm #versionInfo {
 				margin-top: 30px;
 			}
-			
+
 			#configForm #donate {
 				padding: 50px 30px 10px;
 				font-style: italic;
 				font-size: 15px;
 				color: #999;
 			}
-			
+
 				#configForm #donate div {
 					padding: 20px 0;
 				}
-	
+
 			#configForm .site {
 				font-size: 16px;
 				margin: 20px;
@@ -1053,14 +1044,14 @@ h1 {
 		display: block;
 		padding: 10px 5px;
 		margin: 5px 0;
-		border-radius: 5px; 
-		-moz-border-radius: 5px; 
+		border-radius: 5px;
+		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		background: #ededed url(../../media/images/button.png) repeat-x;
 		cursor: pointer;
 		border: 1px solid #ddd;
 	}
-	.question .answer:hover { 
+	.question .answer:hover {
 		background: #f1f1f1;
 	}
 

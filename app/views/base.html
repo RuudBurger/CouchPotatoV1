@@ -11,15 +11,10 @@
 		'Uniform.css',
 		'UniformGeneric.css'
 	]
-	miniCss = Minify.css(cssFiles) 
 %>
-	% if debug:
 	% for cssFile in cssFiles:
 	<link href="${baseUrl}media/style/${cssFile}" media="screen" rel="stylesheet" type="text/css" />
 	% endfor
-	% else:
-	<link href="${baseUrl}${miniCss}" media="screen" rel="stylesheet" type="text/css" />
-	% endif
 </head>
 <body>
 <% 
@@ -36,15 +31,10 @@
 		'Question.js',
 		'Library.js'
 	]
-	miniJs = Minify.js(jsFiles) 
 %>
-% if debug:
 	% for jsFile in jsFiles:
 	<script src="${baseUrl}media/script/${jsFile}" type="text/javascript"></script>
 	% endfor
-% else:
-	<script src="${baseUrl}${miniJs}" type="text/javascript"></script>
-% endif
 
 	<div id="header">
 	    <div class="navigation">
