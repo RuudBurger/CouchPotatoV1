@@ -566,6 +566,31 @@
 					</p>
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels right" id="notifoFieldset">
+				<h3>Notifo</h3>
+				<div class="ctrlHolder checkbox">
+					<label for="">Enabled</label>
+					<input type="checkbox" name="Notifo.enabled" value="True" ${' checked="checked"' if config.get('Notifo', 'enabled') else ''} />
+					<p class="formHint">
+						Sends a notification to Notifo
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label for="">Username</label>
+					<input type="text" name="Notifo.username" value="${config.get('Notifo', 'username')}" class="textInput large" />
+				</div>
+				<div class="ctrlHolder">
+					<label for="">API Secret</label>
+					<input type="password" name="Notifo.key" value="${config.get('Notifo', 'key')}" class="textInput large" />
+					<p class="formHint">
+						Get your API secret at: 
+						<a href="http://notifo.com/user/settings" target="blank">http://notifo.com/user/settings</a>
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<a href="#notifoTest" id="notifoTest">Send a message to Notifo, see if it works.</a>
+				</div>
+			</fieldset>
 		</div>
 		<div class="buttonHolder">
 			<span class="cancel"><a href="#cancel">Cancel</a> or</span> 
@@ -744,6 +769,13 @@
 			new Request({
 				'url': './testXBMC/',
 				'data': $('xbmcFieldset')
+			}).send()
+		})
+		$('notifoTest').addEvent('click', function(e){
+			(e).stop()
+			new Request({
+				'url': './testNotifo/',
+				'data': $('notifoFieldset')
 			}).send()
 		})
 		$('nmjTest').addEvent('click', function(e){

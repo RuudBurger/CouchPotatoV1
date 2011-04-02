@@ -3,6 +3,7 @@ from app.config.db import QualityTemplate, Session as Db
 from app.controllers import BaseController, redirect
 from app.lib.qualities import Qualities
 from app.lib.xbmc import XBMC
+from app.lib.notifo import Notifo
 from app.lib.nmj import NMJ
 import cherrypy
 import json
@@ -102,6 +103,14 @@ class ConfigController(BaseController):
 
         xbmc = XBMC()
         xbmc.test(data.get('XBMC.host'), data.get('XBMC.username'), data.get('XBMC.password'))
+
+        return ''
+
+    @cherrypy.expose
+    def testNotifo(self, **data):
+
+        notifo = Notifo()
+        notifo.test(data.get('Notifo.username'), data.get('Notifo.key'))
 
         return ''
 

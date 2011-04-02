@@ -147,6 +147,11 @@ class configApp():
         self.setDefault('Meta', 'posterFileName', 'movie.tbn')
         self.setDefault('Meta', 'nfoFileName', 'movie.nfo')
 
+	self.addSection('Notifo');
+	self.setDefault('Notifo', 'enabled', False);
+	self.setDefault('Notifo', 'username', '');
+	self.setDefault('Notifo', 'key', '');
+
         self.save()
 
     def save(self):
