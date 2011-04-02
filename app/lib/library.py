@@ -19,7 +19,7 @@ class Library:
 
     minimalFileSize = 1024 * 1024 * 200 # 10MB
     ignoredInPath = ['_unpack', '_failed_', '_unknown_', '_exists_', '.appledouble', '.appledb', '.appledesktop', '/._', 'cp.cpnfo'] #unpacking, smb-crap, hidden files
-    ignoreNames = ['extract', 'extracting']
+    ignoreNames = ['extract', 'extracting', 'extracted', 'movie', 'movies', 'film', 'films']
     extensions = {
         'movie': ['*.mkv', '*.wmv', '*.avi', '*.mpg', '*.mpeg', '*.mp4', '*.m2ts', '*.iso', '*.img', '*.vob'],
         'nfo': ['*.nfo'],
@@ -303,7 +303,7 @@ class Library:
 
             # Try and match the movies via filenaming
             for file in movie['files']:
-                dirnames = movie['path'].replace(unicode(self.config.get('Renamer', 'download')), '').split(os.path.sep)
+                dirnames = movie['path'].lower().replace(unicode(self.config.get('Renamer', 'download')).lower(), '').split(os.path.sep)
                 dirnames.append(file['filename'])
                 dirnames.reverse()
 

@@ -340,7 +340,10 @@ class RenamerCron(cronBase, Library):
                     log.info('Moving matching subtitle.')
 
                     subtitle = movie['subtitles'][type].pop(0)
+
+                    replacements['original'] = subtitle['filename']
                     replacements['ext'] = subtitle['ext']
+
                     subDest = os.path.join(destination, folder, self.doReplace(fileNaming, replacements))
                     old = os.path.join(movie['path'], subtitle['filename'])
                     if not _move(old, subDest):
