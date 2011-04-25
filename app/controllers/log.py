@@ -4,6 +4,7 @@ from app.controllers import BaseController, url, redirect
 from markupsafe import escape
 import cherrypy
 import os
+import app.config
 
 log = CPLog(__name__)
 file = 'CouchPotato.log'
@@ -56,7 +57,7 @@ class LogController(BaseController):
         return redirect(url(controller = 'log', action = 'index'))
 
     def logDir(self):
-        return os.path.join(cherrypy.config.get('runPath'), 'logs')
+        return os.path.join(app.config.DATADIR, 'logs')
 
     def logFile(self):
         return os.path.join(self.logDir(), file)

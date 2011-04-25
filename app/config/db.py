@@ -10,6 +10,7 @@ from sqlalchemy.types import Integer, DateTime, String, Boolean, Text
 import datetime
 import os
 import sys
+import app.config
 
 log = CPLog(__name__)
 
@@ -24,7 +25,7 @@ if os.name == 'nt':
     else:
         path = os.path.join(os.path.abspath(os.path.curdir), 'data.db')
 else:
-    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data.db')
+    path = os.path.join(app.config.DATADIR, 'data.db')
 
 engine = create_engine('sqlite:///%s' % path)
 metadata = MetaData(engine)
