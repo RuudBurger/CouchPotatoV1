@@ -1,6 +1,7 @@
 from app.config.cplog import CPLog
 from app.lib.cron.eta import startEtaCron, etaQueue
 from app.lib.cron.renamer import startRenamerCron
+from app.lib.cron.movierss import startMovieRSSCron
 from app.lib.cron.subtitle import subtitleQueue, startSubtitleCron
 from app.lib.cron.trailer import startTrailerCron, trailerQueue
 from app.lib.cron.yarr import startYarrCron
@@ -55,6 +56,10 @@ class CronJobs(plugins.SimplePlugin):
         #renamer cron
         renamerCronJob = startRenamerCron(config, self.searchers, self.debug)
         self.threads['renamer'] = renamerCronJob
+
+        #Movie RSS cron
+        MovieRSSCronJob = startMovieRSSCron(config, self.searchers, self.debug)
+        self.threads['MovieRSS'] = MovieRSSCronJob
 
         #nzb cronjob
         yarrCronJob = startYarrCron(config, self.debug, yarrSearch)

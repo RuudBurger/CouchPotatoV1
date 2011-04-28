@@ -124,12 +124,18 @@ class configApp():
         self.setDefault('Subtitles', 'addLanguage', True)
         self.setDefault('Subtitles', 'name', 'filename') #filename, subtitle
 
+        self.addSection('MovieRSS')
+        self.setDefault('MovieRSS', 'enabled', False)
+        self.setDefault('MovieRSS', 'minyear', '2000')
+        self.setDefault('MovieRSS', 'minrating', '6.0')
+
         self.addSection('XBMC')
         self.setDefault('XBMC', 'enabled', False)
         self.setDefault('XBMC', 'onSnatch', False)
         self.setDefault('XBMC', 'host', 'localhost')
         self.setDefault('XBMC', 'username', 'xbmc')
         self.setDefault('XBMC', 'password', 'xbmc')
+        self.setDefault('XBMC', 'dbpath', '')
         self.setDefault('XBMC', 'updateOneOnly', False)
 
         self.addSection('NMJ')

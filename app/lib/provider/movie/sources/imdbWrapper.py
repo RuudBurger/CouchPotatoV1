@@ -7,7 +7,7 @@ log = CPLog(__name__)
 class imdbWrapper(movieBase):
     """Api for theMovieDb"""
 
-    def __init__(self, config, http = False):
+    def __init__(self, config, http = True):
         log.info('Using IMDB provider.')
 
         self.config = config
@@ -70,6 +70,7 @@ class imdbWrapper(movieBase):
             self.p.update(r)
             self.p.update(r, info = 'release dates')
             self.p.update(r, info = 'taglines')
+            self.p.update(r, info = 'vote details')
             return r
 
     def get_IMDb_instance(self):

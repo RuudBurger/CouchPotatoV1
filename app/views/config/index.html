@@ -446,6 +446,27 @@
 
 		<div class="group extra">
 			<fieldset class="inlineLabels">
+				<h3>Blu-Ray.com RSS</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="MovieRSS.enabled" value="True" ${' checked="checked"' if config.get('MovieRSS', 'enabled') else ''} />
+				</div>
+				<div class="ctrlHolder">
+					<label>Minimum movie year</label>
+					<input type="text" name="MovieRSS.minyear" value="${config.get('MovieRSS', 'minyear')}" class="textInput large"/>
+					<p class="formHint">
+						Movies released after and including this year will added to the wanted list
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Minimum IMDB rating</label>
+					<input type="text" name="MovieRSS.minrating" value="${config.get('MovieRSS','minrating')}" class="textInput large"/>
+					<p class="formHint">
+						The minimum IMDB rating for a movie to be added
+					</p>
+				</div>
+			</fieldset>
+			<fieldset class="inlineLabels">
 				<h3>Trailers</h3>
 				<div class="ctrlHolder">
 					<label>Download trailer</label>
@@ -541,6 +562,13 @@
 				<div class="ctrlHolder">
 					<label>Password</label>
 					<input type="password" name="XBMC.password" value="${config.get('XBMC', 'password')}" autocomplete="off" class="textInput large"/>
+				</div>
+				<div class="ctrlHolder">
+					<label>DB Path</label>
+					<input type="text" name="XBMC.dbpath" value="${config.get('XBMC', 'dbpath')}" autocomplete="off" class="textInput large"/>
+					<p class="formHint">
+						Example: C:\Users\Username\AppData\Roaming\XBMC\userdata\Database
+					</p>
 				</div>
 				<div class="ctrlHolder">
 					<a href="#xbmcTest" id="xbmcTest" class="testNotification">Send a message to XBMC, see if it works.</a>
