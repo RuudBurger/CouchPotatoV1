@@ -24,8 +24,6 @@ class openSubtitles(subtitleBase):
         self.config = config
         self.extensions = extensions
 
-        self.login()
-
     def conf(self, value):
         return self.config.get('Subtitles', value)
 
@@ -47,9 +45,14 @@ class openSubtitles(subtitleBase):
 
         return True;
 
+    def close(self):
+        if self.token:
+            self.server.close()
+            self.token = None
+
     def find(self, movie):
 
-        if not self.isAvailable(self.siteUrl) and self.login():
+        if not (self.isAvailable(self.siteUrl) and self.login()):
             return
 
         data = {

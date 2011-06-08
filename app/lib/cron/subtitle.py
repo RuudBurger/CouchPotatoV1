@@ -43,6 +43,15 @@ class SubtitleCron(rss, cronBase, Library):
             except Queue.Empty:
                 pass
 
+        # Subtitle providers are done for now, so close them if necessary.
+        # This prevents this cron from hanging on to a socket in between
+        # runs, and trying to re-use it on the next run. Often the other 
+        # side of the socket will close it if it is unused for a long period 
+        # of time, making it unusable anyway.
+        for provider in self.providers:
+            if hasattr(provider, 'close') and callable(provider.close):
+                provider.close()
+
         log.info('SubtitleCron shutting down.')
 
     def conf(self, value):

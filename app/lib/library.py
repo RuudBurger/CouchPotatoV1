@@ -21,7 +21,7 @@ class Library:
     ignoredInPath = ['_unpack', '_failed_', '_unknown_', '_exists_', '.appledouble', '.appledb', '.appledesktop', '/._', 'cp.cpnfo'] #unpacking, smb-crap, hidden files
     ignoreNames = ['extract', 'extracting', 'extracted', 'movie', 'movies', 'film', 'films']
     extensions = {
-        'movie': ['*.mkv', '*.wmv', '*.avi', '*.mpg', '*.mpeg', '*.mp4', '*.m2ts', '*.iso', '*.img', '*.vob'],
+        'movie': ['*.mkv', '*.wmv', '*.avi', '*.mpg', '*.mpeg', '*.mp4', '*.m4v', '*.m2ts', '*.iso', '*.img', '*.vob'],
         'nfo': ['*.nfo'],
         'subtitle': ['*.sub', '*.srt', '*.ssa', '*.ass'],
         'subtitleExtras': ['*.idx'],
@@ -65,7 +65,15 @@ class Library:
             return movies
 
         log.debug('os.walk(movieFolder) %s' % movieFolder)
-        for root, subfiles, filenames in os.walk(movieFolder):
+        # Walk the tree once to catch any UnicodeDecodeErrors that might arise
+        # from malformed file and directory names. Use the non-unicode version
+        # of movieFolder if so.
+        try:
+            for x in os.walk(movieFolder): pass
+            walker = os.walk(movieFolder)
+        except UnicodeDecodeError:
+            walker = os.walk(str(movieFolder))
+        for root, subfiles, filenames in walker:
             if self.abort:
                 log.debug('Aborting moviescan')
                 return movies
@@ -444,7 +452,12 @@ class Library:
         libraryDir = os.path.join(cherrypy.config.get('basePath'), 'library')
         script = os.path.join(libraryDir, 'getmeta.py')
 
-        p = subprocess.Popen(["python", script, filename], stdout = subprocess.PIPE, stderr = subprocess.PIPE, cwd = libraryDir)
+        # Use the current python interpreter, if possible. Cannot rely on just using "python" because on some
+        # system (ie. ArchLinux), the default "python" interpreter is python 3, and that will not work here.
+        pyinterp = sys.executable
+        if not pyinterp: pyinterp = "python"
+
+        p = subprocess.Popen([pyinterp, script, filename], stdout = subprocess.PIPE, stderr = subprocess.PIPE, cwd = libraryDir)
         z = p.communicate()[0]
 
         try:
