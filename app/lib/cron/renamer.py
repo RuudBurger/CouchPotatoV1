@@ -205,6 +205,10 @@ class RenamerCron(cronBase, Library):
                     for dir in os.path.split(root):
                         if dir in self.ignoreNames:
                             skip = True
+                            
+                    # ignore if the current dir is the blackhole
+                    if root in self.conf('download'):
+                        skip = True
 
                     if skip: continue
 
