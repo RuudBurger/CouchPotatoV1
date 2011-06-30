@@ -71,6 +71,7 @@ class ConfigController(BaseController):
               'Torrents.enabled',
               'NZB.enabled',
               'NZBMatrix.enabled', 'NZBMatrix.english', 'NZBMatrix.ssl',
+              'NZBsRUS.enabled',
               'newzbin.enabled',
               'NZBsorg.enabled',
               'newznab.enabled',

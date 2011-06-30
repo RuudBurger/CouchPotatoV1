@@ -80,6 +80,9 @@ class configApp():
         self.setDefault('newznab', 'enabled', False)
         self.setDefault('newznab', 'host', '')
         self.setDefault('newznab', 'apikey', '')
+        self.setDefault('NZBsRUS', 'enabled', False)
+        self.setDefault('NZBsRUS', 'userid', '')
+        self.setDefault('NZBsRUS', 'userhash','')
 
         self.addSection('NZB')
         self.setDefault('NZB', 'enabled', True)

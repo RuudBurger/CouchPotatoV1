@@ -328,6 +328,27 @@
 					</p>
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels" id="nzbsrusFieldset">
+				<h3>NZBsRus.com</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="NZBsRus.enabled" value="True" ${' checked="checked"' if config.get('NZBsRUS','enabled') else''} />
+				</div>
+				<div class="ctrlHolder">
+					<label>Id</label>
+					<input type="text" name="NZBsRUS.userid" value="${config.get('NZBsRUS', 'userid')}" class="textInput large" />
+					<p class="formHint">
+						Can be found at the bottom of <a href="https://www.nzbsrus.com/rss.php" target="_blank">this</a> page, number after "&amp;i="
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Id</label>
+					<input type="text" name="NZBsRUS.userhash" value="${config.get('NZBsRUS', 'userhash')}" class="textInput large" />
+					<p class="formHint">
+						Can be found at the bottom of <a href="https://www.nzbsrus.com/rss.php" target="_blank">this</a> page, number after "&amp;h="
+					</p>
+				</div>
+			</fieldset>
 		</div>
 
 		<div class="group userscript">
