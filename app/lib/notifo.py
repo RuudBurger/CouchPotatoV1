@@ -21,14 +21,16 @@ class Notifo:
     def conf(self, options):
         return cherrypy.config['config'].get('Notifo', options)
 
-    def send(self, message):
+    def send(self, message, status):
 
         url = 'https://api.notifo.com/v1/send_notification'
 
         try:
             message = message.strip()
             data = urllib.urlencode({
-                'msg': message.encode('utf-8'),
+                'label': "CouchPotato",
+                'title': status,
+                'msg': message.encode('utf-8')
             })
 
             req = urllib2.Request(url)
@@ -49,11 +51,11 @@ class Notifo:
         log.info('Notifo notification successful.')
         return
 
-    def notify(self, message):
+    def notify(self, message, status):
         if not self.enabled:
             return
 
-        self.send(message)
+        self.send(message, status)
 
     def test(self, username, key):
 
@@ -61,4 +63,4 @@ class Notifo:
         self.username = username
         self.key = key
 
-        self.notify('This is a test notification from Couch Potato')
+        self.notify('This is a test notification from Couch Potato', "Testing:")

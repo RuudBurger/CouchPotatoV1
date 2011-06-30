@@ -174,7 +174,7 @@ class RenamerCron(cronBase, Library):
                 # Notify Notifo
                 log.debug('Notifo')
                 notifo = Notifo()
-                notifo.notify('Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
+                notifo.notify('%s (%s)' % (movie['movie'].name, movie['movie'].year), "Downloaded:")
 
             else:
                 path = movie['path'].split(os.sep)
