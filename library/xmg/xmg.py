@@ -1,6 +1,9 @@
 import json
 import os
 import urllib2
+import re
+from xml.etree.ElementTree import Element, SubElement, Comment, tostring
+import xml.dom.minidom
 
 __author__ = 'Therms'
 __tmdb_apikey__ = '6d96a9efb4752ed0d126d94e12e52036'
@@ -74,13 +77,67 @@ class MetaGen():
             except:
                 raise ApiError("Unknown TMDB data format: %s" % self.tmdb_data)
                 
-    def write_nfo(self, path):
+    def write_nfo(self, path, url = True, xml = True):
+
+        self.out_string = ''
+
+        if xml:
+            self.out_string = self._generate_nfo_xml()
+
+        if url:
+            self.out_string = self.out_string + self.nfo_string
+ 
         try:
             f = open(path, 'w')
-            f.write(self.nfo_string)
+            f.write(self.out_string)
             f.close()
         except:
             raise NfoError("Couldn't write nfo")
+
+    def _generate_nfo_xml(self):
+        nfoxml = Element('movie')
+
+        title = SubElement(nfoxml, 'title')
+        title.text = self.tmdb_data['name']
+
+        originaltitle = SubElement(nfoxml, 'originaltitel')
+        originaltitle.text = self.tmdb_data['original_name']
+
+        rating = SubElement(nfoxml, 'rating')
+        rating.text = str(self.tmdb_data['rating'])
+
+        year = SubElement(nfoxml, 'year')
+        year.text = self.tmdb_data['released'][:4]
+
+        votes = SubElement(nfoxml, 'votes')
+        votes.text = str(self.tmdb_data['votes'])
+
+        plot = SubElement(nfoxml, 'plot')
+        plot.text = self.tmdb_data['overview']
+
+        for genre in self.tmdb_data['genres']:
+            genres = SubElement(nfoxml, 'genre')
+            genres.text = genre['name']
+
+        runtime = SubElement(nfoxml, 'runtime')
+        runtime.text = str(self.tmdb_data['runtime']) + " min"
+
+        premiered = SubElement(nfoxml, 'premiered')
+        premiered.text = self.tmdb_data['released']
+
+        mpaa = SubElement(nfoxml, 'mpaa')
+        mpaa.text = self.tmdb_data['certification']
+
+        id = SubElement(nfoxml, 'id')
+        id.text = self.tmdb_data['imdb_id']
+
+        # Clean up the xml and return it
+        nfoxml = xml.dom.minidom.parseString(tostring(nfoxml))
+        xml_string = nfoxml.toprettyxml(indent='  ')
+        text_re = re.compile('>\n\s+([^<>\s].*?)\n\s+</', re.DOTALL)    
+        xml_string = text_re.sub('>\g<1></', xml_string)
+
+        return xml_string
 
     def _get_fanart(self, min_height, min_width):
         '''  Fetches the fanart for the specified imdb_id and saves it to dir.
