@@ -66,6 +66,7 @@ class ConfigController(BaseController):
               'GROWL.enabled', 'GROWL.onSnatch',
               'Notifo.enabled', 'Notifo.onSnatch',
               'Meta.enabled',
+              'MovieETA.enabled',
               'Renamer.enabled', 'Renamer.trailerQuality', 'Renamer.cleanup',
               'Torrents.enabled',
               'NZB.enabled',

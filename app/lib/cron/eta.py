@@ -26,6 +26,13 @@ class etaCron(rss, cronBase):
 
         timeout = 0.1 if self.debug else 1
         while True and not self.abort:
+            
+            config = cherrpy.config.get('config')
+            
+            if not config.get('MovieETA','enabled'):
+                log.info('MovieETA disabled')
+                break
+            
             try:
                 queue = etaQueue.get(timeout = timeout)
                 if queue.get('id'):

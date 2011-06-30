@@ -530,6 +530,13 @@
 					</p>
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels">
+				<h3>MovieETA</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Check VideoETA</label>
+					<input type="checkbox" name="MovieETA.enabled" value="True" ${' checked="checked"' if config.get('MovieETA', 'enabled') else ''} />
+				</div>
+			</fieldset>
 		</div>
 		<div class="group notifications">
 			<fieldset class="inlineLabels" id="xbmcFieldset">

@@ -123,6 +123,9 @@ class configApp():
         self.setDefault('Subtitles', 'languages', 'en')
         self.setDefault('Subtitles', 'addLanguage', True)
         self.setDefault('Subtitles', 'name', 'filename') #filename, subtitle
+        
+        self.addSection('MovieETA')
+        self.setDefault('MovieETA', 'enabled', True)
 
         self.addSection('MovieRSS')
         self.setDefault('MovieRSS', 'enabled', False)
