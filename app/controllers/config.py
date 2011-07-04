@@ -8,6 +8,7 @@ from app.lib.plex import PLEX
 from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
+from app.lib.nma import NMA
 import cherrypy
 import json
 import sys
@@ -65,6 +66,7 @@ class ConfigController(BaseController):
               'PROWL.enabled', 'PROWL.onSnatch',
               'GROWL.enabled', 'GROWL.onSnatch',
               'Notifo.enabled', 'Notifo.onSnatch',
+              'NMA.enable', 'NMA.onSnatch',
               'Meta.enabled',
               'MovieETA.enabled',
               'Renamer.enabled', 'Renamer.trailerQuality', 'Renamer.cleanup',
@@ -160,6 +162,13 @@ class ConfigController(BaseController):
         notifo = Notifo()
         notifo.test(data.get('Notifo.username'), data.get('Notifo.key'))
 
+        return ''
+    
+    @cherrypy.expose
+    def testNMA(self, **data):
+        
+        nma = NMA()
+        nma.test(data.get('NMA.apikey'), data.get('NMA.devkey'), data.get('NMA.priority'))
         return ''
 
     @cherrypy.expose

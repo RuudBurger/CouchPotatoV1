@@ -15,6 +15,7 @@ from app.lib.plex import PLEX
 from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
+from app.lib.nma import NMA
 from xmg import xmg
 import cherrypy
 import os
@@ -175,6 +176,11 @@ class RenamerCron(cronBase, Library):
                 log.debug('Notifo')
                 notifo = Notifo()
                 notifo.notify('%s (%s)' % (movie['movie'].name, movie['movie'].year), "Downloaded:")
+                
+                #Notify NotifyMyAndroid
+                log.debug('NotifyMyAndroid')
+                nma = NMA()
+                nma.notify('Download Complete', 'Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
 
             else:
                 path = movie['path'].split(os.sep)

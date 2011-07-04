@@ -11,6 +11,7 @@ from app.lib.xbmc import XBMC
 from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
+from app.lib.nma import NMA
 import cherrypy
 import datetime
 import os
@@ -211,6 +212,12 @@ class YarrCron(cronBase, rss):
                             log.debug('Notifo')
                             notifo = Notifo()
                             notifo.notify('%s' % highest.name, "Snatched:")
+                            
+                        # Notify NotifyMyAndroid
+                        if self.config.get('NMA','onSnatch'):
+                            log.debug('NotifyMyAndroid')
+                            nma = NMA()
+                            nma.notify('Download Started', 'Snatched %s' % highest.name)
 
                     return True
 
