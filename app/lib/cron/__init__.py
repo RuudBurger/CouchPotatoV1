@@ -8,6 +8,7 @@ from app.lib.cron.yarr import startYarrCron
 from app.lib.provider.movie.search import movieSearcher
 from app.lib.provider.yarr.search import Searcher
 from app.lib.sabNzbd import sabNzbd
+from app.lib.transmission import transmission
 from cherrypy.process import plugins
 import cherrypy
 import sys
@@ -64,6 +65,7 @@ class CronJobs(plugins.SimplePlugin):
         #nzb cronjob
         yarrCronJob = startYarrCron(config, self.debug, yarrSearch)
         yarrCronJob.sabNzbd = sabNzbd(config)
+        yarrCronJob.transmission = transmission(config)
         self.threads['yarr'] = yarrCronJob
 
         #log all errors/tracebacks to logfile

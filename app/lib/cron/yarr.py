@@ -166,8 +166,11 @@ class YarrCron(cronBase, rss):
                         time.sleep(10) # Give these APIs air!
                         if self.config.get('NZB', 'sendTo') == 'Sabnzbd' and highest.type == 'nzb':
                             success = self.sabNzbd.send(highest, movie.imdb)
+                        elif self.config.get('Torrents', 'sendTo') == 'Transmission' and highest.type == 'torrent':
+                            success = self.transmission.send(highest, movie.imdb)
                         else:
                             success = self.blackHole(highest)
+ 
                     else:
                         success = False
                         log.info('Found %s but waiting for %d hours.' % (highest.name, ((highest.date + waitFor) - time.time()) / (60 * 60)))

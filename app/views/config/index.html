@@ -96,7 +96,7 @@
 						% endfor
 					</select>
 				</div>
-				<div class="sabnzbd sendTo">
+				<div class="sabnzbd sendTonzb">
 					<div class="ctrlHolder">
 						<label>Host</label>
 						<input type="text" name="Sabnzbd.host" value="${config.get('Sabnzbd', 'host')}" class="textInput large"/>
@@ -127,7 +127,7 @@
 						</p>
 					</div>
 				</div>
-				<div class="blackhole sendTo">
+				<div class="nzbblackhole sendTonzb">
 					<div class="ctrlHolder">
 						<label>NZB Directory</label>
 						<input type="text" name="NZB.blackhole" value="${config.get('NZB', 'blackhole')}" class="textInput large"/>
@@ -145,11 +145,53 @@
 					<input type="checkbox" name="Torrents.enabled" value="True" ${' checked="checked"' if config.get('Torrents', 'enabled') else ''} />
 				</div>
 				<div class="ctrlHolder">
-					<label>Download to</label>
-					<input type="text" name="Torrents.blackhole" value="${config.get('Torrents', 'blackhole')}" class="textInput large"/>
-					<p class="formHint">
-						Your .torrent watch folder
+					<label for="torrentsSendTo">Download to</label>
+					<select name="Torrents.sendTo" id="torrentsSendTo" class="textInput large">
+						% for sendTo in ['Transmission','Blackhole']:
+						<option value="${sendTo}"${' selected="selected"' if str(sendTo) == config.get('Torrents', 'sendTo') else ''}>${sendTo}</option>
+						% endfor
+					</select>
+				</div>
+				<div class="transmission sendTotorrents">
+					<div class="ctrlHolder">
+						<label>Host</label>
+						<input type="text" name="Transmission.host" value="${config.get('Transmission', 'host')}" class="textInput large"/>
+						<p class="formHint">
+							Where does Transmission run? Usually <i>localhost:9091</i>
+						</p>
+					</div>
+					<div class="ctrlHolder">
+						<label>Username</label>
+						<input type="text" name="Transmission.username" value="${config.get('Transmission', 'username')}" autocomplete="off" class="textInput large"/>
+					</div>
+					<div class="ctrlHolder">
+						<label>Password</label>
+						<input type="password" name="Transmission.password" value="${config.get('Transmission', 'password')}" autocomplete="off" class="textInput large"/>
+					</div>
+					<div class="ctrlHolder">
+						<label>Download Directory</label>
+						<input type="text" name="Transmission.directory" value="${config.get('Transmission', 'directory')}" autocomplete="off" class="textInput large"/>
+						<p class="formHint">
+						Where should Transmission saved the downloaded files?
 					</p>
+					</div>
+					<div class="ctrlHolder">
+						<label>Seeding ratio</label>
+						<input type="text" name="Transmission.ratio" value="${config.get('Transmission', 'ratio')}" autocomplete="off" class="textInput xsmall"/>
+						<p class="formHint">
+						    Stop transfer when reaching ratio 
+					    </p>
+						
+					</div>
+				</div>
+				<div class="torrentsblackhole sendTotorrents">
+					<div class="ctrlHolder">
+					    <label>Torrent Directory</label>
+					    <input type="text" name="Torrents.blackhole" value="${config.get('Torrents', 'blackhole')}" class="textInput large"/>
+					    <p class="formHint">
+						    Your .torrent watch folder
+					    </p>
+				    </div>
 				</div>
 				<div class="ctrlHolder">
 					<label>Wait</label>
@@ -929,17 +971,29 @@
 		    });
 		})
 		
-		// hide unused sendto
-		var sendToSelect = $('nzbSendTo')
-	    var sendTo = function(){
-			form.getElements('.sendTo').setStyle('display', 'none')
-	        if (sendToSelect.get('value') == 'Sabnzbd') 
+		// hide unused sendto for nzb
+		var sendToSelectnzb = $('nzbSendTo')
+	    var sendTonzb = function(){
+			form.getElements('.sendTonzb').setStyle('display', 'none')
+	        if (sendToSelectnzb.get('value') == 'Sabnzbd') 
 	            form.getElement('.sabnzbd').setStyle('display', 'block')
 	        else 
-	            form.getElement('.blackhole').setStyle('display', 'block')
+	            form.getElement('.nzbblackhole').setStyle('display', 'block')
 	    }
-		sendToSelect.addEvent('change', sendTo);
-		sendTo();
+		sendToSelectnzb.addEvent('change', sendTonzb);
+		sendTonzb();
+		
+		// hide unused sendto for torrents
+		var sendToSelecttorrents = $('torrentsSendTo')
+	    var sendTotorrents = function(){
+			form.getElements('.sendTotorrents').setStyle('display', 'none')
+	        if (sendToSelecttorrents.get('value') == 'Transmission') 
+	            form.getElement('.transmission').setStyle('display', 'block')
+	        else 
+	            form.getElement('.torrentsblackhole').setStyle('display', 'block')
+	    }
+		sendToSelecttorrents.addEvent('change', sendTotorrents);
+		sendTotorrents();
 		
 		 // Cancel button
 		form.getElements('.cancel a').addEvent('click', function(e){
