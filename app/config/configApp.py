@@ -94,7 +94,7 @@ class configApp():
         self.addSection('Torrents')
         self.setDefault('Torrents', 'enabled', False)
         self.setDefault('Torrents', 'wait', 24)
-        self.setDefault('Torrents', 'sendTo', 'Transmission')
+        self.setDefault('Torrents', 'sendTo', 'Blackhole')
         self.setDefault('Torrents', 'blackhole', '')
 
         self.addSection('Sabnzbd')
