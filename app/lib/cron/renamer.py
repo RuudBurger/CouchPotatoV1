@@ -186,7 +186,7 @@ class RenamerCron(cronBase, Library):
                 # Notify Twitter
                 log.debug('Twitter')
                 twitter = Twitter()
-                twitter.notify('Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year), 'Downloaded:')
+                twitter.notify('Downloaded Finished', 'Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
                 
             else:
                 path = movie['path'].split(os.sep)

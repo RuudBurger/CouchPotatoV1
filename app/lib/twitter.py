@@ -50,7 +50,7 @@ class Twitter:
         api = twitter.Api(username, password, access_token_key, access_token_secret)
 
         try:
-            api.PostUpdate(message)
+            api.PostUpdate('[' + event + '] ' + message)
         except Exception, e:
             log.error('Error sending tweet: '+str(e))
             return False
