@@ -27,6 +27,7 @@ class YarrCron(cronBase, rss):
     lastChecked = 0
     provider = None
     sabNzbd = None
+    nzbGet = None
     intervalSec = 10
     checkTheseMovies = []
     stop = False
@@ -166,6 +167,8 @@ class YarrCron(cronBase, rss):
                         time.sleep(10) # Give these APIs air!
                         if self.config.get('NZB', 'sendTo') == 'Sabnzbd' and highest.type == 'nzb':
                             success = self.sabNzbd.send(highest, movie.imdb)
+                        elif self.config.get('NZB', 'sendTo') == 'Nzbget' and highest.type == 'nzb':
+                            success = self.nzbGet.send(highest)
                         elif self.config.get('Torrents', 'sendTo') == 'Transmission' and highest.type == 'torrent':
                             success = self.transmission.send(highest, movie.imdb)
                         else:

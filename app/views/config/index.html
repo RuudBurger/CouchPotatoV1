@@ -91,7 +91,7 @@
 				<div class="ctrlHolder">
 					<label for="nzbSendTo">Download to</label>
 					<select name="NZB.sendTo" id="nzbSendTo" class="textInput large">
-						% for sendTo in ['Sabnzbd','Blackhole']:
+						% for sendTo in ['Sabnzbd','Blackhole','Nzbget']:
 						<option value="${sendTo}"${' selected="selected"' if str(sendTo) == config.get('NZB', 'sendTo') else ''}>${sendTo}</option>
 						% endfor
 					</select>
@@ -136,6 +136,29 @@
 						</p>
 					</div>
 				</div>
+                <div class="nzbget sendTonzb">
+                    <div class="ctrlHolder">
+                        <label>Host</label>
+                        <input type="text" name="Nzbget.host" value="${config.get('Nzbget', 'host')}" class="textInput large" />
+                        <p class="formHint">
+                            Hostname with port. Usually <i>localhost:6789</i>
+                        </p>
+                    </div>
+					<div class="ctrlHolder">
+						<label>Password</label>
+						<input type="password" name="Nzbget.password" value="${config.get('Nzbget', 'password')}" autocomplete="off" class="textInput large"/>
+					    <p class="formHint">
+							nzbGet password. Default is <i>tegbzn6789</i>
+						</p>
+                    </div>
+					<div class="ctrlHolder">
+						<label>Category</label>
+						<input type="text" name="Nzbget.category" value="${config.get('Nzbget', 'category')}" class="textInput large"/>
+						<p class="formHint">
+							Category where NZBs should be put.
+						</p>
+					</div>
+                </div>
 			</fieldset>
 			
 			<fieldset class="inlineLabels" id="torrentsFieldset">
@@ -977,6 +1000,8 @@
 			form.getElements('.sendTonzb').setStyle('display', 'none')
 	        if (sendToSelectnzb.get('value') == 'Sabnzbd') 
 	            form.getElement('.sabnzbd').setStyle('display', 'block')
+            else if (sendToSelectnzb.get('value') == 'Nzbget') 
+	            form.getElement('.nzbget').setStyle('display', 'block')
 	        else 
 	            form.getElement('.nzbblackhole').setStyle('display', 'block')
 	    }
