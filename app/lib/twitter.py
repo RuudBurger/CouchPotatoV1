@@ -62,16 +62,14 @@ class Twitter:
         self.enabled = True
         self.notify('CouchPotato Test', 'ZOMG Lazors Pewpewpew!')
 
-    def get_authorization(self):
+    def get_authorization(self, referer):
 
         oauth_consumer = oauth.Consumer(self.consumer_key, self.consumer_secret)
         oauth_client = oauth.Client(oauth_consumer)
 
         log.info('Getting authentication url from Twitter')
 
-        host = cherrypy.config['config'].get('global', 'host')
-        port = cherrypy.config['config'].get('global', 'port')
-        callbackURL = 'http://'+host+':'+port+'/config/twitterAuth/'
+        callbackURL = referer + 'twitterAuth/'
         
         resp, content = oauth_client.request(self.REQUEST_TOKEN_URL, 'POST', body=urllib.urlencode({'oauth_callback':callbackURL}))
 

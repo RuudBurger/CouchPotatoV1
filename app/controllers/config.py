@@ -184,7 +184,8 @@ class ConfigController(BaseController):
     def twitterReqAuth(self):
 
         twitter = Twitter()
-        auth_url = twitter.get_authorization()
+        referer = cherrypy.request.headers.get('referer')
+        auth_url = twitter.get_authorization(referer)
         return redirect(auth_url)
 
     @cherrypy.expose
