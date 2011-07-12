@@ -420,31 +420,40 @@ a[name=sn], a[name=dl] {
 			background: url('../../media/images/qualities.png') no-repeat;
 		}
 			/** ACTIVE **/
-			#movies .item .quality .q1080P.active { background-position: -85px -63px; }
-			#movies .item .quality .q720P.active { background-position: -71px -63px; }
-			#movies .item .quality .qBR-Rip.active { background-position: -58px -63px; }
-			#movies .item .quality .qDVD-R.active { background-position: -44px -63px; }
-			#movies .item .quality .qDVD-Rip.active { background-position: -30px -63px; }
-			#movies .item .quality .qScreener.active { background-position: -17px -63px; }
-			#movies .item .quality .qR5.active, #movies .item .quality .qTeleCine.active, #movies .item .quality .qTeleSync.active, #movies .item .quality .qCam.active { background-position: -3px -63px; }
+			#movies .item .quality .q1080P.active { background-position: -85px 0; }
+			#movies .item .quality .q720P.active { background-position: -71px 0; }
+			#movies .item .quality .qBR-Rip.active { background-position: -58px 0; }
+			#movies .item .quality .qDVD-R.active { background-position: -44px 0; }
+			#movies .item .quality .qDVD-Rip.active { background-position: -30px 0; }
+			#movies .item .quality .qScreener.active { background-position: -17px 0; }
+			#movies .item .quality .qR5.active, #movies .item .quality .qTeleCine.active, #movies .item .quality .qTeleSync.active, #movies .item .quality .qCam.active { background-position: -3px -50px; }
+
+			/** ACTIVE + FINISHED **/
+			#movies .item .quality .q1080P.finished { background-position: -85px -50px; }
+			#movies .item .quality .q720P.finished { background-position: -71px -50px; }
+			#movies .item .quality .qBR-Rip.finished { background-position: -58px -50px; }
+			#movies .item .quality .qDVD-R.finished { background-position: -44px -50px; }
+			#movies .item .quality .qDVD-Rip.finished { background-position: -30px -50px; }
+			#movies .item .quality .qScreener.finished { background-position: -17px -50px; }
+			#movies .item .quality .qR5.finished, #movies .item .quality .qTeleCine.finished, #movies .item .quality .qTeleSync.finished, #movies .item .quality .qCam.finished { background-position: -3px -150px; }
 
 			/** INACTIVE **/
-			#movies .item .quality .q1080P { background-position: -85px -115px; }
-			#movies .item .quality .q720P { background-position: -71px -115px; }
-			#movies .item .quality .qBR-Rip { background-position: -58px -115px; }
-			#movies .item .quality .qDVD-R { background-position: -44px -115px; }
-			#movies .item .quality .qDVD-Rip { background-position: -30px -115px; }
-			#movies .item .quality .qScreener { background-position: -17px -115px; }
-			#movies .item .quality .qR5, #movies .item .quality .qTeleCine, #movies .item .quality .qTeleSync, #movies .item .quality .qCam { background-position: -3px -115px; }
+			#movies .item .quality .q1080P { background-position: -85px -100px; }
+			#movies .item .quality .q720P { background-position: -71px -100px; }
+			#movies .item .quality .qBR-Rip { background-position: -58px -100px; }
+			#movies .item .quality .qDVD-R { background-position: -44px -100px; }
+			#movies .item .quality .qDVD-Rip { background-position: -30px -100px; }
+			#movies .item .quality .qScreener { background-position: -17px -100px; }
+			#movies .item .quality .qR5, #movies .item .quality .qTeleCine, #movies .item .quality .qTeleSync, #movies .item .quality .qCam { background-position: -3px -100px; }
 
 			/** COMPLETED **/
-			#movies .item .quality .q1080P.completed { background-position: -85px -13px; }
-			#movies .item .quality .q720P.completed { background-position: -71px -13px; }
-			#movies .item .quality .qBR-Rip.completed { background-position: -58px -13px; }
-			#movies .item .quality .qDVD-R.completed { background-position: -44px -13px; }
-			#movies .item .quality .qDVD-Rip.completed { background-position: -30px -13px; }
-			#movies .item .quality .qScreener.completed { background-position: -17px -13px; }
-			#movies .item .quality .qR5.completed , #movies .item .quality .qTeleCine.completed , #movies .item .quality .qTeleSync.completed , #movies .item .quality .qCam.completed { background-position: -3px -13px; }
+			#movies .item .quality .q1080P.completed { background-position: -85px -150px; }
+			#movies .item .quality .q720P.completed { background-position: -71px -150px; }
+			#movies .item .quality .qBR-Rip.completed { background-position: -58px -150px; }
+			#movies .item .quality .qDVD-R.completed { background-position: -44px -150px; }
+			#movies .item .quality .qDVD-Rip.completed { background-position: -30px -150px; }
+			#movies .item .quality .qScreener.completed { background-position: -17px -150px; }
+			#movies .item .quality .qR5.completed , #movies .item .quality .qTeleCine.completed , #movies .item .quality .qTeleSync.completed , #movies .item .quality .qCam.completed { background-position: -3px -150px; }
 
 		#movies .info {
 			width: 97px;

@@ -81,7 +81,7 @@ class Updater(SimplePlugin):
                 if self.hasGit() and tryGit:
                     try:
                         gitPath = cherrypy.config['config'].get('global', 'git')
-                        p = subprocess.Popen(gitPath + ' rev-parse HEAD', stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True, cwd = os.getcwd())
+                        p = subprocess.Popen(gitPath + ' rev-parse HEAD', stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True, cwd = self.runPath)
                         output, err = p.communicate()
                         if err or 'fatal' in output.lower(): raise RuntimeError(err)
                         log.debug('Git version output: %s' % output.strip())
