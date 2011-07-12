@@ -12,6 +12,7 @@ from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
 from app.lib.nma import NMA
+from app.lib.twitter import Twitter
 import cherrypy
 import datetime
 import os
@@ -225,6 +226,12 @@ class YarrCron(cronBase, rss):
                             nma = NMA()
                             nma.notify('Download Started', 'Snatched %s' % highest.name)
 
+                        # Notify Twitter
+                        if self.config.get('Twitter','onSnatch'):
+                            log.debug('Twitter')
+                            twitter = Twitter()
+                            twitter.notify('Download Started', 'Snatched %s' % highest.name)
+                            
                     return True
 
                 queue.lastCheck = now

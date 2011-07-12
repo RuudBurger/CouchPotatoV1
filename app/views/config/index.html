@@ -868,6 +868,31 @@
 					</select>
 				</div>
 			</fieldset>
+            <fieldset class="inlineLabels" id="twitterFieldset">
+				<h3>Twitter</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enabled</label>
+					<input type="checkbox" name="Twitter.enabled" value="True" ${' checked="checked"' if config.get('Twitter', 'enabled') else ''} />
+					<p class="formHint">
+						Sends a notification on Twitter.
+					</p>
+				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Also on snatched</label>
+					<input type="checkbox" name="Twitter.onSnatch" value="True" ${' checked="checked"' if config.get('Twitter', 'onSnatch') else ''} />
+					<p class="formHint">
+						Also send a notification when a movie is snatched.
+					</p>
+				</div>
+                % if not config.get('Twitter', 'isAuthenticated'):
+                <div class"ctrlHolder">
+                    <a href="${url(controller='config', action='twitterReqAuth')}" class="testNotification">Request Authorization</a>
+                </div>
+                % endif
+				<div class="ctrlHolder">
+					<a href="#twitterTest" id="twitterTest" class="testNotification">Send a notification on Twitter, see if it works.</a>
+				</div>
+			</fieldset>
 		</div>
 		<div class="buttonHolder">
 			<span class="cancel"><a href="#cancel">Cancel</a> or</span> 
@@ -985,7 +1010,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
@@ -1123,6 +1148,13 @@
 			new Request({
 				'url': './testNMA/',
 				'data': $('nmaFieldset')
+			}).send()
+		})
+        $('twitterTest').addEvent('click',function(e){
+			(e).stop()
+			new Request({
+				'url': './testTwitter/',
+				'data': $('twitterFieldset')
 			}).send()
 		})
 	});

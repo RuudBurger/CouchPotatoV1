@@ -194,6 +194,13 @@ class configApp():
         self.setDefault('NMA', 'devkey', '')
         self.setDefault('NMA', 'priority', '0')
 
+        self.addSection('Twitter')
+        self.setDefault('Twitter', 'enabled', False)
+        self.setDefault('Twitter', 'onSnatch', False)
+        self.setDefault('Twitter', 'username', '')
+        self.setDefault('Twitter', 'password', '')
+        self.setDefault('Twitter', 'isAuthenticated', False)
+
         self.addSection('Meta')
         self.setDefault('Meta', 'enabled', False)
         self.setDefault('Meta', 'fanartMinHeight', 0)

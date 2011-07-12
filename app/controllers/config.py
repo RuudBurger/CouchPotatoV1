@@ -9,6 +9,7 @@ from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
 from app.lib.nma import NMA
+from app.lib.twitter import Twitter
 import cherrypy
 import json
 import sys
@@ -67,6 +68,7 @@ class ConfigController(BaseController):
               'GROWL.enabled', 'GROWL.onSnatch',
               'Notifo.enabled', 'Notifo.onSnatch',
               'NMA.enable', 'NMA.onSnatch',
+              'Twitter.enabled', 'Twitter.onSnatch',
               'Meta.enabled',
               'MovieETA.enabled',
               'Renamer.enabled', 'Renamer.trailerQuality', 'Renamer.cleanup',
@@ -170,6 +172,27 @@ class ConfigController(BaseController):
         nma = NMA()
         nma.test(data.get('NMA.apikey'), data.get('NMA.devkey'), data.get('NMA.priority'))
         return ''
+
+    @cherrypy.expose
+    def testTwitter(self, **data):
+
+        twitter = Twitter()
+        twitter.test()
+        return ''
+
+    @cherrypy.expose
+    def twitterReqAuth(self):
+
+        twitter = Twitter()
+        auth_url = twitter.get_authorization()
+        return redirect(auth_url)
+
+    @cherrypy.expose
+    def twitterAuth(self, oauth_token=None, oauth_verifier=None, **params):
+
+        twitter = Twitter()
+        twitter.get_credentials(oauth_verifier)
+        return redirect('../')
 
     @cherrypy.expose
     def exit(self):

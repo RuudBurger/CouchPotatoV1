@@ -16,6 +16,7 @@ from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
 from app.lib.nma import NMA
+from app.lib.twitter import Twitter
 from xmg import xmg
 import cherrypy
 import os
@@ -182,6 +183,11 @@ class RenamerCron(cronBase, Library):
                 nma = NMA()
                 nma.notify('Download Complete', 'Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
 
+                # Notify Twitter
+                log.debug('Twitter')
+                twitter = Twitter()
+                twitter.notify('Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year), 'Downloaded:')
+                
             else:
                 path = movie['path'].split(os.sep)
                 path.extend(['_UNKNOWN_' + path.pop()])
