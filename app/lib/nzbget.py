@@ -1,5 +1,5 @@
 from app.config.cplog import CPLog
-import httplib
+import socket
 
 from base64 import standard_b64encode
 import xmlrpclib
@@ -26,9 +26,6 @@ class nzbGet():
             return False
 
         nzbGetXMLrpc = "http://nzbget:%(password)s@%(host)s/xmlrpc"
-        if self.conf('host') == None:
-            log.error("No nzbGet host found in configuration. Please configure it.")
-            return False
 
         url = nzbGetXMLrpc % {"host": self.conf('host'), "password": self.conf('password')}
 
@@ -38,11 +35,11 @@ class nzbGet():
                 log.info("Successfully connected to nzbGet")
             else:
                 log.info("Successfully connected to nzbGet, but unable to send a message")
-        except httplib.socket.error:
-            log.error("nzbGet is not responding. Please ensure that nzbGet is running and that your password and host is correct.")
+        except socket.error:
+            log.error("nzbGet is not responding. Please ensure that nzbGet is running and host setting is correct.")
             return False
         except xmlrpclib.ProtocolError, e:
-            if e.errmsg == "Unauthorized":
+            if e.errcode == 401:
                 log.error("nzbGet password is incorrect.")
             else:
                 log.error("Protocol Error: " + e.errmsg)
@@ -52,6 +49,7 @@ class nzbGet():
             r = urllib2.urlopen(nzb.url).read().strip()
         except:
             log.error("Unable to get NZB file.")
+            return False
 
         nzbcontent64 = standard_b64encode(r)
 
