@@ -16,10 +16,10 @@ class tpb(torrentBase):
     """Api for the Pirate Bay"""
 
     name = 'The Pirate Bay'
-    downloadUrl = 'http://torrents.thepiratebay.org/%s/%s.torrent'
-    nfoUrl = 'http://thepiratebay.org/torrent/%s'
-    detailUrl = 'http://thepiratebay.org/torrent/%s'
-    apiUrl = 'http://thepiratebay.org/search/%s/0/7/%d'
+    downloadUrl = 'https://torrents.thepiratebay.org/%s/%s.torrent'
+    nfoUrl = 'https://thepiratebay.org/torrent/%s'
+    detailUrl = 'https://thepiratebay.org/torrent/%s'
+    apiUrl = 'https://thepiratebay.org/search/%s/0/7/%d'
 
     catIds = {
         207: ['720p', '1080p'],
@@ -41,7 +41,7 @@ class tpb(torrentBase):
         return self.config.get('Torrents', option)
 
     def enabled(self):
-        return self.conf('enabled') and self.conf('blackhole') and os.path.isdir(self.conf('blackhole'))
+        return self.conf('enabled') and (not self.conf('sendto') == 'Blackhole' or (self.conf('blackhole') and os.path.isdir(self.conf('blackhole'))))
 
     def find(self, movie, quality, type):
 
