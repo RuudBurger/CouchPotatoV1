@@ -14,7 +14,7 @@ class nzbMatrix(nzbBase):
     name = 'NZBMatrix'
     downloadUrl = 'https://api.nzbmatrix.com/v1.1/download.php?id=%s%s'
     detailUrl = 'https://nzbmatrix.com/nzb-details.php?id=%s&hit=1'
-    searchUrl = 'http://rss.nzbmatrix.com/rss.php'
+    searchUrl = 'https://rss.nzbmatrix.com/rss.php'
 
     catIds = {
         42: ['720p', '1080p'],
