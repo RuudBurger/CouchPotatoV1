@@ -17,6 +17,7 @@ from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
 from app.lib.nma import NMA
 from app.lib.twitter import Twitter
+from app.lib.synoindex import Synoindex
 from xmg import xmg
 import cherrypy
 import os
@@ -188,6 +189,12 @@ class RenamerCron(cronBase, Library):
                 twitter = Twitter()
                 twitter.notify('Downloaded Finished', 'Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
                 
+                # Notify Synoindex
+                log.debug('Synoindex')
+                synoindex = Synoindex()
+                for file in finalDestination['filenames']:
+                    synoindex.addToLibrary(os.path.join(finalDestination['directory'], file))
+                
             else:
                 path = movie['path'].split(os.sep)
                 path.extend(['_UNKNOWN_' + path.pop()])
@@ -291,7 +298,7 @@ class RenamerCron(cronBase, Library):
         replacements = {
              'cd': '',
              'cdNr': '',
-             'ext': '.mkv',
+             'ext': 'mkv',
              'namethe': namethe.strip(),
              'thename': moviename.strip(),
              'year': movie['info']['year'],
@@ -309,7 +316,6 @@ class RenamerCron(cronBase, Library):
 
         justAdded = []
         finalDestination = None
-        finalFilename = self.doReplace(fileNaming, replacements)
 
         #clean up post-processing script
         ppScriptName = movie['info'].get('ppScriptName')
@@ -325,6 +331,8 @@ class RenamerCron(cronBase, Library):
             else:
                 log.info("Don't know where the post processing script is located, not removing %s" % ppScriptName)
 
+        filenames = []
+
         for file in movie['files']:
             log.info('Trying to find a home for: %s' % latinToAscii(file['filename']))
 
@@ -338,6 +346,7 @@ class RenamerCron(cronBase, Library):
 
             folder = self.doReplace(folderNaming, replacements)
             filename = self.doReplace(fileNaming, replacements)
+            filenames.append(filename)
 
             old = os.path.join(movie['path'], file['filename'])
             dest = os.path.join(destination, folder, filename)
@@ -417,7 +426,7 @@ class RenamerCron(cronBase, Library):
 
         return {
             'directory': finalDestination,
-            'filename': finalFilename
+            'filenames': filenames
         }
 
     def removeOld(self, path, dontDelete = [], newSize = 0):

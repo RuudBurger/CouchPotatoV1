@@ -201,6 +201,9 @@ class configApp():
         self.setDefault('Twitter', 'password', '')
         self.setDefault('Twitter', 'isAuthenticated', False)
 
+        self.addSection('Synoindex')
+        self.setDefault('Synoindex', 'enabled', False)
+
         self.addSection('Meta')
         self.setDefault('Meta', 'enabled', False)
         self.setDefault('Meta', 'fanartMinHeight', 0)

@@ -893,6 +893,19 @@
 					<a href="#twitterTest" id="twitterTest" class="testNotification">Send a notification on Twitter, see if it works.</a>
 				</div>
 			</fieldset>
+            <fieldset class="inlineLabels" id="synoIndexFieldset">
+				<h3>Synology Media Server</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enabled</label>
+					<input type="checkbox" name="Synoindex.enabled" value="True" ${' checked="checked"' if config.get('Synoindex', 'enabled') else ''} />
+					<p class="formHint">
+						Automaticly adds index to Synology Media Server.
+					</p>
+				</div>
+                <p class="ctrlHolder formHint">
+                    This only works if CP is running on a Synology NAS.
+				</p>
+			</fieldset>
 		</div>
 		<div class="buttonHolder">
 			<span class="cancel"><a href="#cancel">Cancel</a> or</span> 
@@ -1010,7 +1023,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
