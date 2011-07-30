@@ -10,7 +10,7 @@ def base():
     return ''
 
 def url(*args, **kwargs):
-    return cherrypy.url(routes.url_for(*args, **kwargs), base = base())
+    return routes.url_for(*args, **kwargs)
 
 def redirect(url):
     b = base()

@@ -194,7 +194,7 @@ def server_start():
     #cherrypy.log.access_log.propagate = False
 
     #No Root controller as we provided all our own.
-    cherrypy.tree.mount(root = None, config = conf)
+    cherrypy.tree.mount(None, cherrypy.config.get('config').get('global', 'urlbase'), config = conf)
 
     #HTTP Errors
     def http_error_hander(status, message, traceback, version):
