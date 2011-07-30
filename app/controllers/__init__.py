@@ -13,10 +13,6 @@ def url(*args, **kwargs):
     return routes.url_for(*args, **kwargs)
 
 def redirect(url):
-    b = base()
-    if b and not url.startswith(('http://', 'https://')):
-        url = url[len(b) + 1:] if url.startswith(b) else url
-        url = '/' + url if url else b
     raise cherrypy.HTTPRedirect(url)
 
 class BaseController:
