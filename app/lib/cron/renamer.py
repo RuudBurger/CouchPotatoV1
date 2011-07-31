@@ -131,17 +131,23 @@ class RenamerCron(cronBase, Library):
                                                                posterFileNaming,
                                                                add_tags = {'orig_ext': posterOrigExt})
 
-                        x.write_nfo(nfo_location)
+                        try:
+                            x.write_nfo(nfo_location)
+                        except: pass
 
-                        x.write_fanart(fanart_filename,
-                                       finalDestination['directory'],
-                                       fanartMinHeight,
-                                       fanartMinWidth)
+                        try:
+                            x.write_fanart(fanart_filename,
+                                           finalDestination['directory'],
+                                           fanartMinHeight,
+                                           fanartMinWidth)
+                        except: pass
 
-                        x.write_poster(poster_filename,
-                                       finalDestination['directory'],
-                                       posterMinHeight,
-                                       posterMinWidth)
+                        try:
+                            x.write_poster(poster_filename,
+                                           finalDestination['directory'],
+                                           posterMinHeight,
+                                           posterMinWidth)
+                        except: pass
 
                         log.info('XBMC metainfo for imdbid, %s, generated' % movie['movie'].imdb)
                     except Exception, e:

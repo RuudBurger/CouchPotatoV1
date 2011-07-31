@@ -1,6 +1,9 @@
 import json
 import os
 import urllib2
+import re
+from xml.etree.ElementTree import Element, SubElement, Comment, tostring
+import xml.dom.minidom
 
 __author__ = 'Therms'
 __tmdb_apikey__ = '6d96a9efb4752ed0d126d94e12e52036'
@@ -56,10 +59,9 @@ class MetaGen():
             self.imdbid = imdbid
 
         self.nfo_string = 'http://www.imdb.com/title/' + imdbid + '/'
-
         self.tmdb_data = self._get_tmdb_imdb()
         self._validate_tmdb_json()
-
+        
         #TODO: Search by movie name
         #TODO: Search by tmdb_id
         #TODO: Search by movie hash
@@ -73,14 +75,98 @@ class MetaGen():
                 _ = self._get_poster(0, 0)
             except:
                 raise ApiError("Unknown TMDB data format: %s" % self.tmdb_data)
+                
+    def write_nfo(self, path, url = True, xml = True):
 
-    def write_nfo(self, path):
+        self.out_string = ''
+
+        if xml:
+            self.out_string = self._generate_nfo_xml()
+
+        if url:
+            self.out_string = self.out_string + self.nfo_string
+ 
         try:
             f = open(path, 'w')
-            f.write(self.nfo_string)
+            f.write(self.out_string)
             f.close()
         except:
             raise NfoError("Couldn't write nfo")
+
+    def _generate_nfo_xml(self):
+        nfoxml = Element('movie')
+
+        try:
+            title = SubElement(nfoxml, 'title')
+            title.text = self.tmdb_data['name']
+        except:
+            pass
+
+        try:
+            originaltitle = SubElement(nfoxml, 'originaltitel')
+            originaltitle.text = self.tmdb_data['original_name']
+        except:
+            pass
+
+        try:
+            rating = SubElement(nfoxml, 'rating')
+            rating.text = str(self.tmdb_data['rating'])
+        except:
+            pass
+
+        try:
+            year = SubElement(nfoxml, 'year')
+            year.text = self.tmdb_data['released'][:4]
+        except:
+            pass
+
+        try:
+            votes = SubElement(nfoxml, 'votes')
+            votes.text = str(self.tmdb_data['votes'])
+        except:
+            pass
+
+        try:
+            plot = SubElement(nfoxml, 'outline')
+            plot.text = self.tmdb_data['overview']
+        except:
+            pass
+
+        for genre in self.tmdb_data['genres']:
+            genres = SubElement(nfoxml, 'genre')
+            genres.text = genre['name']
+
+        try:
+            runtime = SubElement(nfoxml, 'runtime')
+            runtime.text = str(self.tmdb_data['runtime']) + " min"
+        except:
+            pass
+
+        try:
+            premiered = SubElement(nfoxml, 'premiered')
+            premiered.text = self.tmdb_data['released']
+        except:
+            pass
+
+        try:
+            mpaa = SubElement(nfoxml, 'mpaa')
+            mpaa.text = self.tmdb_data['certification']
+        except:
+            pass
+
+        try:
+            id = SubElement(nfoxml, 'id')
+            id.text = self.tmdb_data['imdb_id']
+        except:
+            pass
+
+        # Clean up the xml and return it
+        nfoxml = xml.dom.minidom.parseString(tostring(nfoxml))
+        xml_string = nfoxml.toprettyxml(indent='  ')
+        text_re = re.compile('>\n\s+([^<>\s].*?)\n\s+</', re.DOTALL)    
+        xml_string = text_re.sub('>\g<1></', xml_string)
+
+        return xml_string.encode('utf-8')
 
     def _get_fanart(self, min_height, min_width):
         '''  Fetches the fanart for the specified imdb_id and saves it to dir.
@@ -92,7 +178,7 @@ class MetaGen():
         '''
         images = [image['image'] for image in self.tmdb_data['backdrops'] if image['image'].get('size') == 'original']
         if len(images) == 0:
-            raise ApiError("No fanart")
+            return
 
         return self._get_image(images, min_height, min_width)
 
@@ -124,7 +210,7 @@ class MetaGen():
         '''
         images = [image['image'] for image in self.tmdb_data['posters'] if image['image'].get('size') == 'original']
         if len(images) == 0:
-            raise ApiError("No posters")
+            return
 
         return self._get_image(images, min_height, min_width)
 
@@ -148,6 +234,7 @@ class MetaGen():
 
     def _get_tmdb_imdb(self):
         url = "http://api.themoviedb.org/2.1/Movie.imdbLookup/en/json/%s/%s" % (__tmdb_apikey__, self.imdbid)
+
         count = 0
         while 1:
             count += 1
@@ -191,15 +278,18 @@ class MetaGen():
 
         return images[0]
 
-
 if __name__ == "__main__":
     import sys
     try:
         id = sys.argv[1]
     except:
         id = 'tt0111161'
-
+    
     x = MetaGen(id)
-    x.write_nfo(".\movie.nfo")
-    x.write_fanart("fanart", ".", 0, 0)
-    x.write_poster("movie", ".", 0, 0)
+    x.write_nfo("movie.nfo")
+    try:
+        x.write_fanart("fanart.jpg", ".", 0, 0)
+    except: pass
+    try:
+        x.write_poster("movie.tbn", ".", 0, 0)
+    except: pass
