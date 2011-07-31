@@ -25,7 +25,7 @@ class Library:
         'nfo': ['*.nfo'],
         'subtitle': ['*.sub', '*.srt', '*.ssa', '*.ass'],
         'subtitleExtras': ['*.idx'],
-        'trailer': ['*.mov', '*.mp4', '*.flv'],
+        'trailer': ['*.mov', '*.flv'],
         'cpnfo': ['cp.cpnfo']
     }
     codecs = {
