@@ -13,11 +13,11 @@ class Synoindex:
     def conf(self, options):
         return cherrypy.config['config'].get('Synoindex', options)
         
-    def addToLibrary(self, movie_name):
+    def addToLibrary(self, folder_name):
         if not self.enabled:
             return
         
-        synoindexCommand = ['/usr/syno/bin/synoindex', '-a', movie_name]
+        synoindexCommand = ['/usr/syno/bin/synoindex', '-A', folder_name]
         log.info(u"Executing synoindex command: "+str(synoindexCommand))
         try:
             p = subprocess.Popen(synoindexCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

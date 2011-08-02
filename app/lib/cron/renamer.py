@@ -192,8 +192,7 @@ class RenamerCron(cronBase, Library):
                 # Notify Synoindex
                 log.debug('Synoindex')
                 synoindex = Synoindex()
-                for file in finalDestination['filenames']:
-                    synoindex.addToLibrary(os.path.join(finalDestination['directory'], file))
+                synoindex.addToLibrary(finalDestination['directory'])
                 
             else:
                 path = movie['path'].split(os.sep)
