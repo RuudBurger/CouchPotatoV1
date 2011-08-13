@@ -153,13 +153,20 @@ class configApp():
         self.setDefault('MovieRSS', 'minyear', '2000')
         self.setDefault('MovieRSS', 'minrating', '6.0')
 
+        self.addSection('XBMCDB')
+        self.setDefault('XBMCDB', 'enabled', False)
+        self.setDefault('XBMCDB', 'usemysql', False)
+        self.setDefault('XBMCDB', 'dbpath', '')
+        self.setDefault('XBMCDB', 'host', 'localhost')
+        self.setDefault('XBMCDB', 'user', 'root')
+        self.setDefault('XBMCDB', 'pass', None)
+
         self.addSection('XBMC')
         self.setDefault('XBMC', 'enabled', False)
         self.setDefault('XBMC', 'onSnatch', False)
         self.setDefault('XBMC', 'host', 'localhost')
         self.setDefault('XBMC', 'username', 'xbmc')
         self.setDefault('XBMC', 'password', 'xbmc')
-        self.setDefault('XBMC', 'dbpath', '')
         self.setDefault('XBMC', 'updateOneOnly', False)
 
         self.addSection('NMJ')

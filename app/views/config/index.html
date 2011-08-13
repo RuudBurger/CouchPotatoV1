@@ -10,7 +10,7 @@
 		<li><a href="#userscript">Userscript</a></li>
 		<li><a href="#about">About</a></li>
 	</ul>
-		
+
 	<form class="uniForm" action="${url(controller="config", action="save")}" method="post">
 		<div class="group general">
 			<fieldset class="inlineLabels">
@@ -160,7 +160,7 @@
 					</div>
                 </div>
 			</fieldset>
-			
+
 			<fieldset class="inlineLabels" id="torrentsFieldset">
 				<h3>Torrents</h3>
 				<div class="ctrlHolder checkbox">
@@ -202,9 +202,9 @@
 						<label>Seeding ratio</label>
 						<input type="text" name="Transmission.ratio" value="${config.get('Transmission', 'ratio')}" autocomplete="off" class="textInput xsmall"/>
 						<p class="formHint">
-						    Stop transfer when reaching ratio 
+						    Stop transfer when reaching ratio
 					    </p>
-						
+
 					</div>
 				</div>
 				<div class="torrentsblackhole sendTotorrents">
@@ -438,7 +438,7 @@
 						<a href="http://couchpotato.tenderapp.com/" target="_blank">Find help on the Support Forum</a>
 					</p>
 				</div>
-				
+
 				<div class="site" style="margin:40px 0 0; font-size: 20px;">
 					<div>Don't have a usenet account yet? Check these out: </div>
 					<a href="https://usenetserver.com/partners/?a_aid=couchpotato&amp;a_bid=3f357c6f">UsenetServer</a>,
@@ -446,7 +446,7 @@
 					<a href="http://easynews.com/free-account?a_aid=couchpotato&amp;a_bid=443b8133">14 day free Easynews trial</a> -->
 					<span style="color:#aaa; font-size: 15px;">Help support CouchPotato and save some money for yourself by signing up for an account!</span>
 				</div>
-				
+
 				<div id="donate">
 					<div>I'm building CouchPotato in my spare time, so if you want to buy me a coke while I'm coding, that would be awesome!</div>
 					<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=GFWSRM6L43T2S&amp;lc=US&amp;item_name=A%20more%20awesome%20CouchPotato&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank">
@@ -479,7 +479,7 @@
 				</p>
 				<div class="customList"></div>
 			</fieldset>
-			
+
 			<fieldset class="inlineLabels">
 				<h3>Default Qualities</h3>
 				<div class="ctrlHolder">
@@ -515,7 +515,7 @@
 				<div class="ctrlHolder">
 					<span class="size header">
 						<span>Minimum</span>
-						<span>Maximum</span> 
+						<span>Maximum</span>
 					</span>
 				</div>
 				% for key, quality in Qualities.getTypes():
@@ -623,6 +623,45 @@
 					<input type="checkbox" name="MovieETA.enabled" value="True" ${' checked="checked"' if config.get('MovieETA', 'enabled') else ''} />
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels" id="xbmcdbFieldset">
+				<h3>Check XBMC Library</h3>
+				<p class="formHint">
+					Used for checking if a movie exists in your library, before adding it to your wanted list.
+				</p>
+				<div class="ctrlHolder checkbox">
+					<label>Enabled</label>
+					<input type="checkbox" name="XBMCDB.enabled" value="True" ${' checked="checked"' if config.get('XBMCDB', 'enabled') else ''} />
+				</div>
+				<div class="ctrlHolder">
+					<label>DB Path</label>
+					<input type="text" name="XBMCDB.dbpath" value="${config.get('XBMCDB', 'dbpath')}" autocomplete="off" class="textInput large"/>
+					<p class="formHint">
+						If you are using the normal XBMC database, enter the directory here.  Example: C:\Users\Username\AppData\Roaming\XBMC\userdata\Database
+					</p>
+				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Use MySQL?</label>
+					<input type="checkbox" name="XBMCDB.usemysql" value="True" ${' checked="checked"' if config.get('XBMCDB', 'usemysql') else ''} />
+					<p class="formHint">
+						Use a centralized MySQL XBMC Database instead of local SQLite database.
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>MySQL Host</label>
+					<input type="text" name="XBMCDB.host" value="${config.get('XBMCDB', 'host')}" autocomplete="off" class="textInput large"/>
+					<p class="formHint">
+						If you are using MySQL, enter the address of the server including port.  Example: 192.168.1.20:3306
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>MySQL Username</label>
+					<input type="text" name="XBMCDB.user" value="${config.get('XBMCDB', 'user')}" autocomplete="off" class="textInput large"/>
+				</div>
+				<div class="ctrlHolder">
+					<label>MySQL Password</label>
+					<input type="password" name="XBMCDB.pass" value="${config.get('XBMCDB', 'pass')}" autocomplete="off" class="textInput large"/>
+				</div>
+			</fieldset>
 		</div>
 		<div class="group notifications">
 			<fieldset class="inlineLabels" id="xbmcFieldset">
@@ -658,14 +697,6 @@
 				</div>
 				<div class="ctrlHolder">
 					<a href="#xbmcTest" id="xbmcTest" class="testNotification">Send a message to XBMC, see if it works.</a>
-				</div>
-				<div class="ctrlHolder">
-					<label>DB Path</label>
-					<input type="text" name="XBMC.dbpath" value="${config.get('XBMC', 'dbpath')}" autocomplete="off" class="textInput large"/>
-					<p class="formHint">
-						Used for checking if you already have a movie in you library, before adding it to your wanted list.
-						Example: C:\Users\Username\AppData\Roaming\XBMC\userdata\Database
-					</p>
 				</div>
 			</fieldset>
 			<fieldset class="inlineLabels" id="nmjFieldset">
@@ -747,7 +778,7 @@
 				<div class="ctrlHolder">
 					<label>Keys</label>
 					<input type="text" name="PROWL.keys" value="${config.get('PROWL', 'keys')}" class="textInput large"/>
-					<p class="ctrlHolder"> 
+					<p class="ctrlHolder">
 						<a href="https://www.prowlapp.com/api_settings.php" target="_blank" class="testNotification">Get your Prowl api key here</a>
 					</p>
 				</div>
@@ -908,7 +939,7 @@
 			</fieldset>
 		</div>
 		<div class="buttonHolder">
-			<span class="cancel"><a href="#cancel">Cancel</a> or</span> 
+			<span class="cancel"><a href="#cancel">Cancel</a> or</span>
 			<button type="submit" class="primaryAction">
 				Save &raquo;
 			</button>
@@ -930,9 +961,9 @@
 				var checkbox = el.getElement('input[type=checkbox]')
 				var label = el.getElement('.label')
 				label.setStyle('opacity', 1)
-				
+
 				data.append([el.get('data-id')])
-				
+
 				if (!checkbox.get('checked')){
 					hide.append([el.get('data-name')])
 					label.setStyle('opacity', 0.6)
@@ -941,7 +972,7 @@
 			sq.getElement('input[name=Quality.order]').set('value', data)
 			sq.getElement('input[name=Quality.hide]').set('value', hide)
 		}
-		
+
 		sq.getElements('.item input[type=checkbox]').addEvent('click', saveQualityTemplateOrder)
 
 		var qualitySortable = new Sortables(sq, {
@@ -960,7 +991,7 @@
 		templates = json.dumps(Qualities.getTemplates())
 %>
 		var q = new Quality(qt, ${types}, ${templates});
-		
+
 		$('newTemplate').addEvent('click', function(e){
 			(e).stop()
 			q.add({
@@ -973,9 +1004,9 @@
 				}]
 			})
 		})
-		
+
 		var showHideFileRenameOptionsLink = form.getElement('a[id=showHideFileRenameOptions]')
-		
+
 		var toggleFileRenameOptions = function(){
 			var field = form.getElement('p[id=fileRenameOptions]')
 			if(field.getStyle('display') != 'none'){
@@ -987,18 +1018,18 @@
 				showHideFileRenameOptionsLink.innerText = "Hide naming-options"
 			}
 		}
-		
+
 		showHideFileRenameOptionsLink.addEvent('click', toggleFileRenameOptions)
 
 		// Replace Userscript IE
 		if (Browser.ie){
 			form.getElement('.userscript fieldset a').setStyle('display', 'none')
 		}
-		
+
 		// Get host and post with Userscript
 		var usButton = $('configForm').getElement('.userscriptInstall')
 		usButton.set('href', usButton.get('href')+'?host='+location.href.replace('config/', '')+'&type=CouchPotato.user.js')
-		
+
 		// Match label to input, cause i'm lazy
 		form.getElements('label').each(function(el, nr){
 			if(!el.get('for')){
@@ -1007,13 +1038,13 @@
 				el.getNext().set('id', id)
 			}
 		});
-	
+
 		// Form highlight
 	    new Uniform();
 
 		// Renaming disabled stuff
 	    var isEnabled = function(checkbox, fieldset){
-	        if (checkbox.get('checked')) 
+	        if (checkbox.get('checked'))
 	            fieldset.getElements('.ctrlHolder').setStyle('opacity', 1)
 	        else {
 	        	var first = fieldset.getElement('.ctrlHolder');
@@ -1022,8 +1053,8 @@
 	            });
 	        }
 	    }
-		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
+
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset','xbmcdbFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
@@ -1031,39 +1062,39 @@
 		        isEnabled(checkbox, fieldset)
 		    });
 		})
-		
+
 		// hide unused sendto for nzb
 		var sendToSelectnzb = $('nzbSendTo')
 	    var sendTonzb = function(){
 			form.getElements('.sendTonzb').setStyle('display', 'none')
-	        if (sendToSelectnzb.get('value') == 'Sabnzbd') 
+	        if (sendToSelectnzb.get('value') == 'Sabnzbd')
 	            form.getElement('.sabnzbd').setStyle('display', 'block')
-            else if (sendToSelectnzb.get('value') == 'Nzbget') 
+            else if (sendToSelectnzb.get('value') == 'Nzbget')
 	            form.getElement('.nzbget').setStyle('display', 'block')
-	        else 
+	        else
 	            form.getElement('.nzbblackhole').setStyle('display', 'block')
 	    }
 		sendToSelectnzb.addEvent('change', sendTonzb);
 		sendTonzb();
-		
+
 		// hide unused sendto for torrents
 		var sendToSelecttorrents = $('torrentsSendTo')
 	    var sendTotorrents = function(){
 			form.getElements('.sendTotorrents').setStyle('display', 'none')
-	        if (sendToSelecttorrents.get('value') == 'Transmission') 
+	        if (sendToSelecttorrents.get('value') == 'Transmission')
 	            form.getElement('.transmission').setStyle('display', 'block')
-	        else 
+	        else
 	            form.getElement('.torrentsblackhole').setStyle('display', 'block')
 	    }
 		sendToSelecttorrents.addEvent('change', sendTotorrents);
 		sendTotorrents();
-		
+
 		 // Cancel button
 		form.getElements('.cancel a').addEvent('click', function(e){
 			(e).stop()
 			history.back();
 		});
-		
+
 		// Shutdown button
 		form.getElements('.about a.submit').addEvent('click', function(e){
 			(e).stop()
@@ -1079,11 +1110,11 @@
 				}
 			}).send()
 		});
-		
+
 		// Menu
 		$('configForm').getElements('ul a').addEvent('click', function(e){
 			(e).stop()
-			
+
 			showForm(e.target, e.target.get('href').substr(1))
 
 		});
@@ -1096,7 +1127,7 @@
 		}
 		var firstItem = $('configForm').getElement('ul li:last-child a');
 		showForm(firstItem, firstItem.get('href').substr(1));
-		
+
 		$('xbmcTest').addEvent('click', function(e){
 			(e).stop()
 			new Request({

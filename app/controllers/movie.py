@@ -1,6 +1,7 @@
 from app.config.cplog import CPLog
 from app.config.db import Session as Db, Movie, QualityTemplate, MovieQueue
 from app.controllers import BaseController, url, redirect
+from library import pymysql
 from sqlalchemy.sql.expression import or_, desc
 import cherrypy
 import os.path
@@ -102,7 +103,7 @@ class MovieController(BaseController):
     @cherrypy.tools.mako(filename = "movie/search.html")
     def search(self, **data):
         '''
-        Search for added movie. 
+        Search for added movie.
         Add if only 1 is found
         '''
         moviename = data.get('moviename')
@@ -156,20 +157,39 @@ class MovieController(BaseController):
 
     def _addMovie(self, movie, quality, year = None):
 
-        if cherrypy.config.get('config').get('XBMC', 'dbpath'):
+        if cherrypy.config.get('config').get('XBMCDB', 'enabled') and (cherrypy.config.get('config').get('XBMCDB', 'usemysql') or cherrypy.config.get('config').get('XBMCDB', 'dbpath')):
             log.debug('Checking if movie exists in XBMC by IMDB id:' + movie.imdb)
-            dbfile = os.path.join(cherrypy.config.get('config').get('XBMC', 'dbpath'), 'MyVideos34.db')
-            #------Opening connection to XBMC DB------
-            connXbmc = MySqlite.connect(dbfile)
+            if cherrypy.config.get('config').get('XBMCDB', 'dbpath'):
+                dbfile = os.path.join(cherrypy.config.get('config').get('XBMCDB', 'dbpath'), 'MyVideos34.db')
+                #------Opening connection to XBMC DB------
+                dbtype = 'sqlite'
+                try:
+                    connXbmc = MySqlite.connect(dbfile)
+                except:
+                    connXbmc = None
+            elif cherrypy.config.get('config').get('XBMCDB', 'usemysql'):
+                #------Using Centralized MySQL XBMC DB------
+                mysqlhost = cherrypy.config.get('config').get('XBMCDB', 'host').split(':')
+                mysqlport = 3306
+                mysqluser = cherrypy.config.get('config').get('XBMCDB', 'user')
+                mysqlpass = cherrypy.config.get('config').get('XBMCDB', 'pass')
+                dbtype = 'mysql'
+                if len(mysqlhost) > 1 and mysqlhost[1].isdigit():
+                    mysqlport = mysqlhost[1]
+                try:
+                    connXbmc = pymysql.connect(host=mysqlhost[0], port=mysqlport, user=mysqluser, passwd=mysqlpass, db="xbmc_video")
+                except:
+                    connXbmc = None
             if connXbmc:
-                connXbmc.row_factory = MySqlite.Row
+                if dbtype == 'sqlite':
+                    connXbmc.row_factory = MySqlite.Row
                 cXbmc = connXbmc.cursor()
                 cXbmc.execute('select c09 from movie where c09="' + movie.imdb + '"')
                 #------End of Opening connection to XBMC DB------
                 inXBMC = False
                 for rowXbmc in cXbmc: # do a final check just to be sure
-                    log.debug('Found in XBMC:' + rowXbmc["c09"])
-                    if movie.imdb == rowXbmc["c09"]:
+                    log.debug('Found in XBMC:' + rowXbmc[0])
+                    if movie.imdb == rowXbmc[0]:
                         inXBMC = True
                     else:
                         inXBMC = False
@@ -180,7 +200,10 @@ class MovieController(BaseController):
                     log.info('Movie already exists in XBMC, skipping.')
                     return
             else:
-                log.info('Could not connect to the XBMC database at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
+                if cherrypy.config.get('config').get('XBMCDB', 'dbpath'):
+                    log.info('Could not connect to the XBMC database at ' + cherrypy.config.get('config').get('XBMCDB', 'dbpath'))
+                elif cherrypy.config.get('config').get('XBMCDB', 'enabled'):
+                    log.info('Could not connect to the XBMC MySQL database at ' + cherrypy.config.get('config').get('XBMCDB', 'host'))
 
         log.info('Adding movie to database: %s' % movie.name)
 
