@@ -187,7 +187,7 @@ class RenamerCron(cronBase, Library):
                 # Notify Twitter
                 log.debug('Twitter')
                 twitter = Twitter()
-                twitter.notify('Downloaded Finished', 'Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
+                twitter.notify('Download Finished', 'Downloaded %s (%s)' % (movie['movie'].name, movie['movie'].year))
                 
                 # Notify Synoindex
                 log.debug('Synoindex')
@@ -239,7 +239,7 @@ class RenamerCron(cronBase, Library):
                                 os.remove(fullFilePath)
                                 log.info('Removing file %s.' % fullFilePath)
                             except OSError:
-                                log.error('Couldn\'t remove file %s. To large.' % fullFilePath)
+                                log.error('Couldn\'t remove file %s. Too large.' % fullFilePath)
 
                     try:
                         os.rmdir(root)
