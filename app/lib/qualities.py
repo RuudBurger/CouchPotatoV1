@@ -15,7 +15,7 @@ class Qualities:
         'brrip':    {'key': 'brrip', 'size': (700, 7000), 'order':3, 'label': 'BR-Rip', 'alternative': ['bdrip'], 'allow': ['720p'], 'ext':['mkv', 'avi']},
         'dvdr':     {'key': 'dvdr', 'size': (3000, 10000), 'order':4, 'label': 'DVD-R', 'alternative': [], 'tags': ['pal', 'ntsc'], 'allow': [], 'ext':['iso', 'img']},
         'dvdrip':   {'key': 'dvdrip', 'size': (600, 2400), 'order':5, 'label': 'DVD-Rip', 'alternative': [], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
-        'scr':      {'key': 'scr', 'size': (600, 1000), 'order':6, 'label': 'Screener', 'alternative': ['dvdscr'], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
+        'scr':      {'key': 'scr', 'size': (600, 1600), 'order':6, 'label': 'Screener', 'alternative': ['dvdscr', 'ppvrip'], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
         'r5':       {'key': 'r5', 'size': (600, 1000), 'order':7, 'label': 'R5', 'alternative': [], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
         'tc':       {'key': 'tc', 'size': (600, 1000), 'order':8, 'label': 'TeleCine', 'alternative': ['telecine'], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
         'ts':       {'key': 'ts', 'size': (600, 1000), 'order':9, 'label': 'TeleSync', 'alternative': ['telesync'], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
