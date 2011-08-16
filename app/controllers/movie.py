@@ -202,7 +202,7 @@ class MovieController(BaseController):
             else:
                 if cherrypy.config.get('config').get('XBMCDB', 'dbpath'):
                     log.info('Could not connect to the XBMC database at ' + cherrypy.config.get('config').get('XBMCDB', 'dbpath'))
-                elif cherrypy.config.get('config').get('XBMCDB', 'enabled'):
+                elif cherrypy.config.get('config').get('XBMCDB', 'usemysql'):
                     log.info('Could not connect to the XBMC MySQL database at ' + cherrypy.config.get('config').get('XBMCDB', 'host'))
 
         log.info('Adding movie to database: %s' % movie.name)
