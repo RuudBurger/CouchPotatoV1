@@ -43,7 +43,6 @@
 				<span class="hd ${'disabled' if not eta.bluray else ''}"></span>
 				<a href="http://www.imdb.com/title/${movie.imdb}/" class="imdb" target="_blank"></a>
 				<a ${'href="http://www.themoviedb.org/movie/%s"' % str(movie.movieDb) if movie.movieDb else ''} class="moviedb ${'disabled' if not movie.movieDb else ''}" target="_blank"></a>
-				<a href="http://videoeta.com/movie/${eta.videoEtaId}" class="videoeta" target="_blank"></a>
 			</span>
 		</span>
 		<span class="extra">
