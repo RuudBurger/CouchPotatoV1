@@ -117,6 +117,7 @@ class newzbin(nzbBase):
                     new = self.feedItem()
                     new.id = id
                     new.type = 'nzb'
+                    new.source = 'newzbin'
                     new.name = title
                     new.date = int(time.mktime(parse(date).timetuple()))
                     new.size = self.parseSize(size)

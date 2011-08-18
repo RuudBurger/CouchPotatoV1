@@ -45,8 +45,22 @@ class nzbGet():
                 log.error("Protocol Error: " + e.errmsg)
             return False
 
+        newzbinuser = self.config.get('newzbin', 'username')
+        newzbinpass = self.config.get('newzbin', 'password')
+
         try:
-            r = urllib2.urlopen(nzb.url).read().strip()
+            if nzb.source == 'newzbin':
+                newzbinurl = 'http://www.newzbin.com/api/dnzb/'
+                newzbinargs = { 'username' : newzbinuser,
+                                'password' : newzbinpass,
+                                'reportid' : str(nzb.id) }
+                log.info('Receiving report ' + str(nzb.id) + ' from newzbin')
+                newzbindata = urllib.urlencode(newzbinargs)
+                nzburl = urllib2.Request(newzbinurl, newzbindata)
+            else:
+                log.error('Downloading '+nzb.url)
+                nzburl = nzb.url
+            r = urllib2.urlopen(nzburl).read().strip()
         except:
             log.error("Unable to get NZB file.")
             return False
