@@ -51,6 +51,18 @@ var Question = new Class( {
 			answer.addEvent('click', self.close.bind(self))
 		}
 
+		if (options.ajax) {
+			answer.addEvent('click', function(e){
+				e.stop();
+				new Request({
+					'url': options.href,
+					'onSuccess': function() {
+						options.obj.getParent('.item').destroy();
+						self.close();
+					}
+				}).send();	
+			});
+		}
 	},
 
 	close : function() {

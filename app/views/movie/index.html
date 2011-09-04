@@ -60,7 +60,7 @@
 			<a href="http://www.imdb.com/title/${movie.imdb}/" class="imdb" target="_blank"></a>
 			<a ${'href="http://www.themoviedb.org/movie/%s"' % str(movie.movieDb) if movie.movieDb else ''} target="_blank" class="moviedb ${'disabled' if not movie.movieDb else ''}"></a>
 			<a class="forceCheck" href="${url(controller='cron', action='forceSingle', id=movie.id)}" title="Force search/refresh info"></a>
-			<a class="delete" href="${url(controller='movie', action='delete', id=movie.id)}" title="Delete this movie"></a>
+			<a class="delete" href="${url(controller='movie', action='delete', id=movie.id)}" title="Remove: ${movie.name} (${movie.year})"></a>
 		</span>
 		<div class="queue">
 			<div class="header">
@@ -130,13 +130,21 @@
 		});
 		
 		movies.addEvent('click:relay(a.delete)', function(e, clicked){
-			(e).stop();
-			new Request({
-				'url': clicked.get('href'),
-				'onSuccess': function(){
-					clicked.getParent('.item').destroy()
+				(e).stop();
+
+				new Question('What do you want to do?', [
+				{
+					'text': clicked.get('title'),
+					'href': clicked.get('href'),
+					'ajax': true,
+					'obj': clicked
+				},
+				{
+					'text': 'Cancel',
+					'class': 'cancel',
+					'cancel': true
 				}
-			}).send()
+				])
 		});
 		
 		movies.addEvent('click:relay(a.forceCheck)', function(e, clicked){
