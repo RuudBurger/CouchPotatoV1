@@ -62,6 +62,7 @@ class ConfigController(BaseController):
             [
               'global.launchbrowser', 'global.updater',
               'XBMC.enabled', 'XBMC.onSnatch',
+              'XBMCDB.enabled', 'XBMCDB.usemysql',
               'NMJ.enabled',
               'PLEX.enabled',
               'PROWL.enabled', 'PROWL.onSnatch',
@@ -165,10 +166,10 @@ class ConfigController(BaseController):
         notifo.test(data.get('Notifo.username'), data.get('Notifo.key'))
 
         return ''
-    
+
     @cherrypy.expose
     def testNMA(self, **data):
-        
+
         nma = NMA()
         nma.test(data.get('NMA.apikey'), data.get('NMA.devkey'), data.get('NMA.priority'))
         return ''

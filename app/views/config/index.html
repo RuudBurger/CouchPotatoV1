@@ -627,6 +627,45 @@
 					<label>Check VideoETA</label>
 					<input type="checkbox" name="MovieETA.enabled" value="True" ${' checked="checked"' if config.get('MovieETA', 'enabled') else ''} />
 				</div>
+			</fieldset>  
+			<fieldset class="inlineLabels" id="xbmcdbFieldset">     				
+			  <h3>Check XBMC Library</h3>                           				
+			  <p class="formHint">                                  				
+			    Used for checking if a movie exists in your library, before adding it to your wanted list.				
+			  </p>                                                                                        				
+			  <div class="ctrlHolder checkbox">                                                           				
+			    <label>Enabled</label>                                                                    				
+			    <input type="checkbox" name="XBMCDB.enabled" value="True" ${' checked="checked"' if config.get('XBMCDB', 'enabled') else ''} />				
+			  </div>                                                                                                                           				
+			  <div class="ctrlHolder">                                                                                                         				
+			    <label>DB Path</label>                                                                                                         				
+			    <input type="text" name="XBMCDB.dbpath" value="${config.get('XBMCDB', 'dbpath')}" autocomplete="off" class="textInput large"/> 				
+			    <p class="formHint">                                                                                                           				
+			      If you are using the normal XBMC database, enter the directory here.  Example: C:\Users\Username\AppData\Roaming\XBMC\userdata\Database				
+			    </p>                                                                                                                                     				
+			  </div>                                                                                                                                     				
+			  <div class="ctrlHolder checkbox">                                                                                                           				
+			    <label>Use MySQL?</label>                                                                                                                 				
+			    <input type="checkbox" name="XBMCDB.usemysql" value="True" ${' checked="checked"' if config.get('XBMCDB', 'usemysql') else ''} />         				
+			    <p class="formHint">                                                                                                                     				
+			      Use a centralized MySQL XBMC Database instead of local SQLite database.                                                                				
+			    </p>                                                                                                                                     				
+			  </div>                                                                                                                                     				
+			  <div class="ctrlHolder">                                                                                                                   				
+			    <label>MySQL Host</label>                                                                                                                				
+			    <input type="text" name="XBMCDB.host" value="${config.get('XBMCDB', 'host')}" autocomplete="off" class="textInput large"/>               				
+			    <p class="formHint">                                                                                                                     				
+			      If you are using MySQL, enter the address of the server including port.  Example: 192.168.1.20:3306                                    				
+			    </p>                                                                                                                                     				
+			  </div>                                                                                                                                     				
+			  <div class="ctrlHolder">                                                                                                                   				
+			    <label>MySQL Username</label>                                                                                                            				
+			    <input type="text" name="XBMCDB.user" value="${config.get('XBMCDB', 'user')}" autocomplete="off" class="textInput large"/>               				
+			  </div>                                                                                                                                     				
+			  <div class="ctrlHolder">                                                                                                                   				
+			    <label>MySQL Password</label>                                                                                                            				
+			    <input type="password" name="XBMCDB.pass" value="${config.get('XBMCDB', 'pass')}" autocomplete="off" class="textInput large"/>           				
+			  </div>                                                                                                                                     				
 			</fieldset>
 		</div>
 		<div class="group notifications">
@@ -663,15 +702,7 @@
 				</div>
 				<div class="ctrlHolder">
 					<a href="#xbmcTest" id="xbmcTest" class="testNotification">Send a message to XBMC, see if it works.</a>
-				</div>
-				<div class="ctrlHolder">
-					<label>DB Path</label>
-					<input type="text" name="XBMC.dbpath" value="${config.get('XBMC', 'dbpath')}" autocomplete="off" class="textInput large"/>
-					<p class="formHint">
-						Used for checking if you already have a movie in you library, before adding it to your wanted list.
-						Example: C:\Users\Username\AppData\Roaming\XBMC\userdata\Database
-					</p>
-				</div>
+				</div>   
 			</fieldset>
 			<fieldset class="inlineLabels" id="nmjFieldset">
 				<h3>Networked Media Jukebox</h3>
@@ -1028,7 +1059,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'xbmcdbFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
