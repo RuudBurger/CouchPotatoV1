@@ -7,6 +7,7 @@ from app.lib import plex
 from app.lib import prowl
 from app.lib import growl
 from app.lib import notifo
+from app.lib import boxcar
 from app.lib.cron.base import cronBase
 from app.lib.library import Library
 from app.lib.xbmc import XBMC
@@ -15,6 +16,7 @@ from app.lib.plex import PLEX
 from app.lib.prowl import PROWL
 from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
+from app.lib.boxcar import Boxcar
 from app.lib.nma import NMA
 from app.lib.twitter import Twitter
 from app.lib.synoindex import Synoindex
@@ -178,6 +180,11 @@ class RenamerCron(cronBase, Library):
                 log.debug('Notifo')
                 notifo = Notifo()
                 notifo.notify('%s (%s)' % (movie['movie'].name, movie['movie'].year), "Downloaded:")
+
+                # Notify Boxcar
+                log.debug('Boxcar')
+                boxcar = Boxcar()
+                boxcar.notify('%s (%s)' % (movie['movie'].name, movie['movie'].year), "Downloaded:")
 
                 #Notify NotifyMyAndroid
                 log.debug('NotifyMyAndroid')

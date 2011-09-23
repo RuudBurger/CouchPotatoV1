@@ -190,6 +190,12 @@ class configApp():
         self.setDefault('Notifo', 'username', '')
         self.setDefault('Notifo', 'key', '')
 
+        self.addSection('Boxcar')
+        self.setDefault('Boxcar', 'enabled', False)
+        self.setDefault('Boxcar', 'onSnatch', False)
+        self.setDefault('Boxcar', 'username', '')
+        self.setDefault('Boxcar', 'password', '')
+
         self.addSection('NMA')
         self.setDefault('NMA', 'enabled', False)
         self.setDefault('NMA', 'onSnatch', False)

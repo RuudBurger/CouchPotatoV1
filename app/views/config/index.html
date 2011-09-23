@@ -836,6 +836,34 @@
 					<a href="#notifoTest" id="notifoTest" class="testNotification">Send a message to Notifo, see if it works.</a>
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels" id="boxcarFieldset">
+				<h3>Boxcar</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enabled</label>
+					<input type="checkbox" name="Boxcar.enabled" value="True" ${' checked="checked"' if config.get('Boxcar', 'enabled') else ''} />
+					<p class="formHint">
+						Sends a notification to <a href="http://boxcar.io/" target="blank">Boxcar</a>
+					</p>
+				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Also on snatched</label>
+					<input type="checkbox" name="Boxcar.onSnatch" value="True" ${' checked="checked"' if config.get('Boxcar', 'onSnatch') else ''} />
+					<p class="formHint">
+						Also send a notification when a movie is snatched.
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Username</label>
+					<input type="text" name="Boxcar.username" value="${config.get('Boxcar', 'username')}" class="textInput large" />
+				</div>
+				<div class="ctrlHolder">
+					<label>Password</label>
+					<input type="text" name="Boxcar.password" value="${config.get('Boxcar', 'password')}" class="textInput large" />
+				</div>
+				<div class="ctrlHolder">
+					<a href="#boxcarTest" id="boxcarTest" class="testNotification">Send a message to Boxcar, see if it works.</a>
+				</div>
+			</fieldset>
 			<fieldset class="inlineLabels" id="nmaFieldset">
 				<h3>NotifyMyAndroid</h3>
 				<div class="ctrlHolder checkbox">
@@ -1028,7 +1056,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
@@ -1135,6 +1163,13 @@
 			new Request({
 				'url': './testNotifo/',
 				'data': $('notifoFieldset')
+			}).send()
+		})
+		$('boxcarTest').addEvent('click', function(e){
+			(e).stop()
+			new Request({
+				'url': './testBoxcar/',
+				'data': $('boxcarFieldset')
 			}).send()
 		})
 		$('nmjTest').addEvent('click', function(e){
