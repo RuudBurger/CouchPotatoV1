@@ -612,6 +612,30 @@
 				</div>
 			</fieldset>
 			<fieldset class="inlineLabels">
+				<h3>Trakt Watchlist</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="Trakt.enabled" value="True" ${' checked="checked"' if config.get('Trakt', 'enabled') else ''} />
+					<p class="formHint">
+						This will add movies from your Trakt watchlist.
+					</p>
+				</div>
+                <div class="ctrlHolder">
+					<label>Trakt Username</label>
+					<input type="text" name="Trakt.username" value="${config.get('Trakt','username')}" class="textInput large"/>
+					<p class="formHint">
+						Your Trakt username
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Trakt API Key</label>
+					<input type="text" name="Trakt.apikey" value="${config.get('Trakt', 'apikey')}" class="textInput large"/>
+					<p class="formHint">
+						Your api key for trakt from http://trakt.tv/settings/api
+					</p>
+				</div>
+			</fieldset>
+			<fieldset class="inlineLabels">
 				<h3>Metadata</h3>
 				<div class="ctrlHolder checkbox">
 					<label>Save metadata</label>

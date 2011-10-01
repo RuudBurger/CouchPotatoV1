@@ -153,6 +153,11 @@ class configApp():
         self.setDefault('MovieRSS', 'minyear', '2000')
         self.setDefault('MovieRSS', 'minrating', '6.0')
 
+        self.addSection('Trakt')
+        self.setDefault('Trakt', 'enabled', False)
+        self.setDefault('Trakt', 'apikey', '')
+        self.setDefault('Trakt', 'username', '')
+        
         self.addSection('XBMC')
         self.setDefault('XBMC', 'enabled', False)
         self.setDefault('XBMC', 'onSnatch', False)
