@@ -14,23 +14,9 @@
 # __contributors__ = "Ingmar J Stein (Growl Team), John Morrissey (hashlib patch)"
 
 from app.config.cplog import CPLog
-from socket import AF_INET, SOCK_DGRAM, socket
+import socket
 import cherrypy
-import struct
-
-try:
-    import hashlib
-    md5_constructor = hashlib.md5
-except ImportError:
-    import md5
-    md5_constructor = md5.new
-
-
-
-GROWL_UDP_PORT = 9887
-GROWL_PROTOCOL_VERSION = 1
-GROWL_TYPE_REGISTRATION = 0
-GROWL_TYPE_NOTIFICATION = 1
+from app.lib.growl_lib import gntp
 
 log = CPLog(__name__)
 
@@ -48,122 +34,132 @@ class GROWL:
     def conf(self, options):
         return cherrypy.config['config'].get('GROWL', options)
 
-    def notify(self, message, title):
-        if not self.enabled:
-            return
-
-        # default priority
-        priority = 0
-        # default stickiness
-        sticky = False
-
-        for curHost in self.hosts:
-            # connect up to Growl server machine
-            addr = (curHost, GROWL_UDP_PORT)
-
-            s = socket(AF_INET, SOCK_DGRAM)
-            # register application with remote Growl
-            p = GrowlRegistrationPacket(password = self.password)
-            p.addNotification()
-            # send registration packet
-            s.sendto(p.payload(), addr)
-
-            # assemble notification packet
-            p = GrowlNotificationPacket(title = title, description = message, priority = priority, sticky = sticky, password = self.password)
-
-            # send notification packet
-            s.sendto(p.payload(), addr)
-            s.close()
-            log.info(u"Growl notifications sent.")
-
     def updateLibrary(self):
         #For uniformity reasons not removed
         return
 
     def test(self, hosts, password):
-
         self.enabled = True
         self.hosts = [x.strip() for x in hosts.split(",")]
         self.password = password
 
-        self.notify('ZOMG Lazors Pewpewpew!', 'Test Message')
+        self._sendRegistration('Test')
+        return self._sendGrowl("Test Growl", "Testing Growl settings from CouchPotato", "Test", force=True)
 
+    def notify(self, message, title):
+        if not self.enabled:
+            return
+        self._sendGrowl(title, message)
 
-class GrowlRegistrationPacket:
-    """Builds a Growl Network Registration packet.
-    Defaults to emulating the command-line growlnotify utility."""
+    def _send_growl(self, options, message=None):
+                
+        #Send Notification
+        notice = gntp.GNTPNotice()
+    
+        #Required
+        notice.add_header('Application-Name',options['app'])
+        notice.add_header('Notification-Name',options['name'])
+        notice.add_header('Notification-Title',options['title'])
+    
+        if options['password']:
+            notice.set_password(options['password'])
+    
+        #Optional
+        if options['sticky']:
+            notice.add_header('Notification-Sticky',options['sticky'])
+        if options['priority']:
+            notice.add_header('Notification-Priority',options['priority'])
+        if options['icon']:
+            notice.add_header('Notification-Icon', 'https://github.com/RuudBurger/CouchPotato/raw/master/media/images/homescreen.png')
+    
+        if message:
+            notice.add_header('Notification-Text',message)
 
-    def __init__(self, application = "CouchPotato", password = None):
-        self.notifications = []
-        self.defaults = [] # array of indexes into notifications
-        self.application = application.encode("utf-8")
-        self.password = password
+        response = self._send(options['host'],options['port'],notice.encode(),options['debug'])
+        if isinstance(response,gntp.GNTPOK): return True
+        return False
 
-    def addNotification(self, notification = "General Notification", enabled = True):
-        """Adds a notification type and sets whether it is enabled on the GUI"""
+    def _send(self, host,port,data,debug=False):
+        if debug: print '<Sending>\n',data,'\n</Sending>'
+        
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((host,port))
+        s.send(data)
+        response = gntp.parse_gntp(s.recv(1024))
+        s.close()
+    
+        if debug: print '<Received>\n',response,'\n</Received>'
 
-        self.notifications.append(notification)
-        if enabled:
-            self.defaults.append(len(self.notifications) - 1)
+        return response
 
-    def payload(self):
-        """Returns the packet payload."""
-        self.data = struct.pack("!BBH",
-            GROWL_PROTOCOL_VERSION,
-            GROWL_TYPE_REGISTRATION,
-            len(self.application))
-        self.data += struct.pack("BB",
-            len(self.notifications),
-            len(self.defaults))
-        self.data += self.application
-        for notification in self.notifications:
-            encoded = notification.encode("utf-8")
-            self.data += struct.pack("!H", len(encoded))
-            self.data += encoded
-        for default in self.defaults:
-            self.data += struct.pack("B", default)
-        self.checksum = md5_constructor()
-        self.checksum.update(self.data)
-        if self.password:
-            self.checksum.update(self.password)
-        self.data += self.checksum.digest()
-        return self.data
+    def _sendGrowl(self, title="CouchPotato Notification", message=None, name=None, force=False):
+        if name == None:
+            name = title
+    
+        port = 23053
+    
+        growlHosts = []
+        for host in self.hosts:
+            growlHosts.append((host, port))
+    
+        opts = {}
+    
+        opts['name'] = name
+    
+        opts['title'] = title
+        opts['app'] = 'CouchPotato'
+    
+        opts['sticky'] = None
+        opts['priority'] = None
+        opts['debug'] = False
+    
+        opts['password'] = self.password
+    
+        opts['icon'] = True
+    
+        for pc in growlHosts:
+            opts['host'] = pc[0]
+            opts['port'] = pc[1]
+            log.info(u"Sending growl to "+opts['host']+":"+str(opts['port'])+": "+message)
+            try:
+                return self._send_growl(opts, message)
+            except socket.error, e:
+                log.error(u"Unable to send growl to "+opts['host']+":"+str(opts['port'])+": "+ex(e))
+                return False
 
-class GrowlNotificationPacket:
-    """Builds a Growl Network Notification packet.
-     Defaults to emulating the command-line growlnotify utility."""
+    def _sendRegistration(self, name='CouchPotato Notification'):
+        opts = {}
+    
+        port = 23053
 
-    def __init__(self, application = "CouchPotato",
-                notification = "General Notification", title = "Title",
-                description = "Description", priority = 0, sticky = False, password = None):
+        growlHosts = []
+        for host in self.hosts:
+            growlHosts.append((host, port))
+            
+        opts['password'] = self.password
+        
+        opts['app'] = 'CouchPotato'
+        opts['debug'] = False
+        
+        for pc in growlHosts:
+            opts['host'] = pc[0]
+            opts['port'] = pc[1]
 
-        self.application = application.encode("utf-8")
-        self.notification = notification.encode("utf-8")
-        self.title = title.encode("utf-8")
-        self.description = description.encode("utf-8")
-        flags = (priority & 0x07) * 2
-        if priority < 0:
-            flags |= 0x08
-        if sticky:
-            flags = flags | 0x0100
-        self.data = struct.pack("!BBHHHHH",
-                             GROWL_PROTOCOL_VERSION,
-                             GROWL_TYPE_NOTIFICATION,
-                             flags,
-                             len(self.notification),
-                             len(self.title),
-                             len(self.description),
-                             len(self.application))
-        self.data += self.notification
-        self.data += self.title
-        self.data += self.description
-        self.data += self.application
-        self.checksum = md5_constructor()
-        self.checksum.update(self.data)
-        if password:
-            self.checksum.update(password)
-        self.data += self.checksum.digest()
+            #Send Registration
+            register = gntp.GNTPRegister()
+            register.add_header('Application-Name', opts['app'])
+            register.add_header('Application-Icon', 'https://github.com/RuudBurger/CouchPotato/raw/master/media/images/homescreen.png')
+        
+            register.add_notification('Test', True)
+            register.add_notification('Download Started', True)
+            register.add_notification('Download Complete', True)
 
-    def payload(self):
-        """Returns the packet payload."""
-        return self.data
+            if opts['password']:
+                register.set_password(opts['password'])
+        
+            try:
+                log.info(u"Sending growl registration to "+opts['host']+":"+str(opts['port']))
+                return self._send(opts['host'],opts['port'],register.encode(),opts['debug'])
+            except socket.error, e:
+                log.error(u"Unable to send growl to "+opts['host']+":"+str(opts['port'])+": "+str(e).decode('utf-8'))
+                return False
