@@ -2,6 +2,7 @@ from app.config.cplog import CPLog
 from app.lib.cron.eta import startEtaCron, etaQueue
 from app.lib.cron.renamer import startRenamerCron
 from app.lib.cron.movierss import startMovieRSSCron
+from app.lib.cron.kinepolisrss import startKinepolisRSSCron
 from app.lib.cron.trakt import startTraktCron
 from app.lib.cron.subtitle import subtitleQueue, startSubtitleCron
 from app.lib.cron.trailer import startTrailerCron, trailerQueue
@@ -63,6 +64,10 @@ class CronJobs(plugins.SimplePlugin):
         #Movie RSS cron
         MovieRSSCronJob = startMovieRSSCron(config, self.searchers, self.debug)
         self.threads['MovieRSS'] = MovieRSSCronJob
+
+        #Kinepolis RSS cron
+        KinepolisRSSCronJob = startKinepolisRSSCron(config, self.searchers, self.debug)
+        self.threads['KinepolisRSS'] = KinepolisRSSCronJob
 
         #Trakt cron
         TraktCronJob = startTraktCron(config, self.searchers, self.debug)

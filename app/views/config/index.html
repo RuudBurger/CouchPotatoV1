@@ -408,6 +408,15 @@
 					</p>
 				</div>
 			</fieldset>
+
+                     <fieldset class="inlineLabels" id="nzbsrusFieldset">
+				<h3>#alt.binaries.hdtv.x264@EFnet</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="x264.enabled" value="True" ${' checked="checked"' if config.get('x264','enabled') else''} />
+				</div>
+			</fieldset>
+
 		</div>
 
 		<div class="group userscript">
@@ -546,12 +555,36 @@
 					<label>Minimum movie year</label>
 					<input type="text" name="MovieRSS.minyear" value="${config.get('MovieRSS', 'minyear')}" class="textInput large"/>
 					<p class="formHint">
-						Movies released after and including this year will added to the wanted list
+						Movies released after and including this year will be added to the wanted list
 					</p>
 				</div>
 				<div class="ctrlHolder">
 					<label>Minimum IMDB rating</label>
 					<input type="text" name="MovieRSS.minrating" value="${config.get('MovieRSS','minrating')}" class="textInput large"/>
+					<p class="formHint">
+						The minimum IMDB rating for a movie to be added
+					</p>
+				</div>
+			</fieldset>
+			<fieldset class="inlineLabels">
+				<h3>Kinepolis.com RSS</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="KinepolisRSS.enabled" value="True" ${' checked="checked"' if config.get('KinepolisRSS', 'enabled') else ''} />
+					<p class="formHint">
+						This will magically add movies to your wanted list that match the options below.
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Minimum movie year</label>
+					<input type="text" name="KinepolisRSS.minyear" value="${config.get('KinepolisRSS', 'minyear')}" class="textInput large"/>
+					<p class="formHint">
+						Movies released after and including this year will be added to the wanted list
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Minimum IMDB rating</label>
+					<input type="text" name="KinepolisRSS.minrating" value="${config.get('KinepolisRSS','minrating')}" class="textInput large"/>
 					<p class="formHint">
 						The minimum IMDB rating for a movie to be added
 					</p>

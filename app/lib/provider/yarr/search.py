@@ -4,6 +4,7 @@ from app.lib.provider.yarr.sources.nzbmatrix import nzbMatrix
 from app.lib.provider.yarr.sources.newzbin import newzbin
 from app.lib.provider.yarr.sources.nzbs import nzbs
 from app.lib.provider.yarr.sources.tpb import tpb
+from app.lib.provider.yarr.sources.x264 import x264
 from app.lib.qualities import Qualities
 from urllib2 import URLError
 import time
@@ -20,7 +21,7 @@ class Searcher():
         self.config = config
         self.debug = debug
 
-        for yarr in [newzbin, nzbMatrix, nzbs, newznab, tpb]:
+        for yarr in [newzbin, nzbMatrix, nzbs, newznab, tpb, x264]:
             m = yarr(config)
             self.sources.append(m)
 

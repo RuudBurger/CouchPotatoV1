@@ -167,6 +167,10 @@ class nzbBase(rss):
         if len(movie.name.split(' ')) == 2 and self.correctYear([item.name], movie.year, 0) and self.correctName(item.name, movie.name):
             return True
 
+        # a proper name will do too
+        if self.correctName(item.name, movie.name):
+            return True
+
         log.info("Wrong: %s, undetermined naming. Looking for '%s (%s)'" % (item.name, movie.name, movie.year))
         return False
 

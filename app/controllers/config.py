@@ -81,8 +81,10 @@ class ConfigController(BaseController):
               'newzbin.enabled',
               'NZBsorg.enabled',
               'newznab.enabled',
+              'x264.enabled',
               'Subtitles.enabled', 'Subtitles.addLanguage',
               'MovieRSS.enabled',
+              'KinepolisRSS.enabled',
             ]
         )
         data.update(data.fromkeys(bools, False))

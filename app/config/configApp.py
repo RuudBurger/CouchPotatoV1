@@ -84,6 +84,8 @@ class configApp():
         self.setDefault('NZBsRUS', 'enabled', False)
         self.setDefault('NZBsRUS', 'userid', '')
         self.setDefault('NZBsRUS', 'userhash', '')
+        self.addSection('x264')
+        self.setDefault('x264', 'enabled', False)
 
         self.addSection('NZB')
         self.setDefault('NZB', 'enabled', True)
@@ -152,6 +154,11 @@ class configApp():
         self.setDefault('MovieRSS', 'enabled', False)
         self.setDefault('MovieRSS', 'minyear', '2000')
         self.setDefault('MovieRSS', 'minrating', '6.0')
+
+        self.addSection('KinepolisRSS')
+        self.setDefault('KinepolisRSS', 'enabled', False)
+        self.setDefault('KinepolisRSS', 'minyear', '2000')
+        self.setDefault('KinepolisRSS', 'minrating', '6.0')
 
         self.addSection('Trakt')
         self.setDefault('Trakt', 'enabled', False)
