@@ -167,6 +167,10 @@ class nzbBase(rss):
         if len(movie.name.split(' ')) == 2 and self.correctYear([item.name], movie.year, 0) and self.correctName(item.name, movie.name):
             return True
 
+        # check nzb.su to see if this release corresponds to the proper imdb id
+        if self.checkNZBSU(item.name, movie.imdb):
+            return True
+
         log.info("Wrong: %s, undetermined naming. Looking for '%s (%s)'" % (item.name, movie.name, movie.year))
         return False
 
@@ -197,6 +201,16 @@ class nzbBase(rss):
             return False
 
         return not (found.get(preferedType['key']) and len(found) == 1)
+
+    def checkNZBSU(self, name, imdbId):
+        imdbTruncated = imdbId.replace('tt','')
+        nzbSUApi = 'http://nzb.su/api?t=movie&imdbid=%s&apikey=6b47663faa81baa09b3431df3b085692' % imdbTruncated
+        releases = self.urlopen(nzbSUApi)
+        ReleaseItems = self.getItems(releases)
+        for ReleaseItem in ReleaseItems:
+            if name in self.gettextelement(ReleaseItem, "title"):
+                return True
+        return False   
 
     def checkIMDB(self, haystack, imdbId):
 
