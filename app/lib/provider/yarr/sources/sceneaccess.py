@@ -80,11 +80,11 @@ class sceneaccess(torrentBase):
 
         for torrent in match:
 	    new = self.feedItem()
-	    new.type = torrent
-	    new.url = str(''+torrent.group('url'))
-	    new.name = self.toSaveString(''+torrent.group('title'))
-	    new.size = self.parseSize(''+torrent.group('size'))
-	    new.id = ''+torrent.group('id')
+	    new.type = 'torrent'
+	    new.url = 'http://www.sceneaccess.org/' + torrent.group('url')
+	    new.name = self.toSaveString(torrent.group('title'))
+	    new.size = self.parseSize(torrent.group('size'))
+	    new.id = torrent.group('id')
 	    new.score = self.calcScore(new, movie)
 	    if Qualities.types.get(type).get('minSize') <= new.size:
               new.detailUrl = self.detailLink(new.id)

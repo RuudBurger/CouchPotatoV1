@@ -265,8 +265,10 @@ class YarrCron(cronBase, rss):
                         log.error('No nzb available!')
                         return False
 
+                    # Used by the #alt.binaries.hdtv.x264 provider, nzbs can come as raw .nzb or also rarred
                     if "DOCTYPE nzb" not in file:
-                        fullPath = os.path.join(blackhole, self.toSaveString(item.name) + '.' + 'rar')
+                        if item.type == 'nzb':
+                            fullPath = os.path.join(blackhole, self.toSaveString(item.name) + '.' + 'rar')
 
                     log.info('Downloading %s to %s.' % (item.type, fullPath))
                     with open(fullPath, 'wb') as f:
