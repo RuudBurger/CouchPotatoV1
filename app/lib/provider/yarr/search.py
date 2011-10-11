@@ -22,7 +22,7 @@ class Searcher():
         self.config = config
         self.debug = debug
 
-        for yarr in [newzbin, nzbMatrix, nzbs, newznab, tpb, x264, sceneaccess]:
+        for yarr in [newzbin, nzbMatrix, nzbs, newznab, x264, sceneaccess]:
             m = yarr(config)
             self.sources.append(m)
 

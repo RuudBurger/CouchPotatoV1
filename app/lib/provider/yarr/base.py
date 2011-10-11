@@ -213,9 +213,9 @@ class nzbBase(rss):
         return False   
 
     def checkIMDB(self, haystack, imdbId):
-
+        imdbIdAlt = re.sub('tt[0]*', 'tt', imdbId)
         for string in haystack:
-            if 'imdb.com/title/' + imdbId in string:
+            if 'imdb.com/title/' + imdbId in string or 'imdb.com/title/' + imdbIdAlt in string:
                 return True
 
         return False

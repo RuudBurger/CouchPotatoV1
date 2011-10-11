@@ -23,7 +23,7 @@ class sceneaccess(torrentBase):
     nfoUrl = 'http://www.sceneaccess.org/details?id=%s'
     detailUrl = 'http://www.sceneaccess.org/details?id=%s'
     searchUrl = 'http://www.sceneaccess.org/browse?search=%s&method=2&c%d=%d'
-    regex = '<td class="ttr_name">.+?<b>(?P<title>.*?)</b>.+?href="(?P<url>.*?)".*?</td>' 
+    regex = '<td class="ttr_name"><a href="details\?id=(?P<id>.*?)".+?<b>(?P<title>.*?)</b>.+?href="(?P<url>.*?)".*?</td>.+?<td class="ttr_size">(?P<size>.*?)<br />' 
 
     catIds = {
      22: ['720p', '1080p'],
@@ -77,63 +77,22 @@ class sceneaccess(torrentBase):
             return results
 
         match = re.compile(self.regex, re.DOTALL ).finditer(data)
+
         for torrent in match:
 	    new = self.feedItem()
-
 	    new.type = torrent
-	    new.url = torrent.group('url')
-	    new.name = self.toSaveString(torrent.group('title')
-            results.append(new)
-	    print new.name + '-' + new.url
-
-        try:
-            tables = SoupStrainer('table')
-            html = BeautifulSoup(data, parseOnlyThese = tables)
-            resultTable = html.find('table', attrs = {'id':'torrents-table'})
-            # print resultTable.findAll('tr', attrs = {'class':'tt_row'})
-            for result in resultTable.findAll('tr', attrs = {'class':'tt_row'}):
-                namecell = result.find('td', attrs = {'class':'ttr_name'})
-                datecell = result.find('td', attrs = {'class':'ttr_added'})
-                sizecell = result.find('td', attrs = {'class':'ttr_size'})
-                seederscell = result.find('td', attrs = {'class':'ttr_seeders'})
-                leecherscell = result.find('td', attrs = {'class':'ttr_leechers'})
-                linkcell = result.find('td', attrs = {'class':'td_dl'})
-                href = namecell.find('a')
-                hrefnew = href['href']
-                id = hrefnew.replace('details?id=', '')
-                id = id.replace('&amp\;hit=1', '')
-                id = id.replace('&hit=1', '')
-                name = href['title']
-                href = linkcell.find('a')
-                url = href['href']
-                url = 'http://www.sceneaccess.org/' + url
-                datec = re.sub('<td class="ttr_added">', '', str(datecell))
-                datec = re.sub('<br />(.*)', '', datec)
-                size = re.sub('<td class="ttr_size">', '', str(sizecell))
-                size = re.sub('<br />(.*)', '', size)
-                log.info(id + " - " + name + " - " + url + " - " + datec + " - " + size)
-                name = self.toSaveString(name)
-                # to item
-                new = self.feedItem()
-                new.id = id
-                new.type = 'special_torrent'
-                new.name = name
-                new.date = datec
-                new.size = self.parseSize(size)
-                new.seeders = 100
-                new.leechers = 1
-                new.url = url
-                new.score = self.calcScore(new, movie)
-                if Qualities.types.get(type).get('minSize') <= new.size:
-                   new.detailUrl = self.detailLink(id)
-                   new.content = self.getInfo(new.detailUrl)
-                   if self.isCorrectMovie(new, movie, type):
-                      results.append(new)
-                      log.info('Found: %s' % new.name)
-            return results
-
-        except AttributeError:
-            log.debug('No search results found.')
+	    new.url = str(''+torrent.group('url'))
+	    new.name = self.toSaveString(''+torrent.group('title'))
+	    new.size = self.parseSize(''+torrent.group('size'))
+	    new.id = ''+torrent.group('id')
+	    new.score = self.calcScore(new, movie)
+	    if Qualities.types.get(type).get('minSize') <= new.size:
+              new.detailUrl = self.detailLink(new.id)
+              new.content = self.getInfo(new.detailUrl)
+              if self.isCorrectMovie(new, movie, type):
+                 results.append(new)
+                 log.info('Found: %s' % new.name)
+        return results
 
         return []
 
