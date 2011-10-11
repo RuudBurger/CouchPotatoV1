@@ -82,6 +82,7 @@ class ConfigController(BaseController):
               'NZBsorg.enabled',
               'newznab.enabled',
               'x264.enabled',
+	      'sceneaccess.enabled',
               'Subtitles.enabled', 'Subtitles.addLanguage',
               'MovieRSS.enabled',
               'KinepolisRSS.enabled',
