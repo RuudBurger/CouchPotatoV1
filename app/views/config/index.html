@@ -420,6 +420,17 @@
 				</div>
 			</fieldset>
 
+            <fieldset class="inlineLabels">
+				<h3>#alt.binaries.moovee@EFnet</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="moovee.enabled" value="True" ${' checked="checked"' if config.get('moovee','enabled') else''} />
+					<p class="formHint">
+						SD movies only
+					</p>
+				</div>
+			</fieldset>
+
 
 			<fieldset class="inlineLabels" id="sceneaccessFieldset">
 				<h3>SceneAccess</h3>
