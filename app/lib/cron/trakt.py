@@ -16,7 +16,7 @@ class TraktCron(cronBase, Library):
     ''' Cronjob for getting trakt watchlist '''
 
     lastChecked = 0
-    intervalSec = 86400
+    intervalSec = 1800
     config = {}
     TraktUrl = "http://api.trakt.tv/user/watchlist/movies.json/"
 
@@ -71,23 +71,34 @@ class TraktCron(cronBase, Library):
 
         for movie in watchlist:
             if self.abort: #this loop takes a while, stop when the program needs to close
+                log.info('Aborting trakt watchlist check')
                 return
 
             time.sleep(5) # give the system some slack
             
-            log.info('Searching for movie: "%s".' % movie.get('title'))
-            result = self.searcher['movie'].findByImdbId(movie.get('imdb_id'))
+            log.debug('Searching for movie: "%s".' % movie.get('title'))
+            result = False
+            try:
+                if movie.get('tmdb_id') != "":
+                    result = self.searcher['movie'].findById(movie.get('tmdb_id'))
+                elif movie.get('imdb_id') != "":
+                    result = self.searcher['movie'].findByImdbId(movie.get('imdb_id'))
+                else:
+                    log.info('Trakt has no tmdb or imdb Id for movie: "%s".' % movie.get('title'))
+                    continue
+            except Exception:
+                result = False
             if not result:
                 log.info('Movie not found: "%s".' % movie.get('title'))
                 continue
-            log.info('Adding movie to queue: %s.' % movie.get('title') + ' (' + str(movie.get('year')) + ')')
+            log.debug('Checking movie: %s.' % movie.get('title') + ' (' + str(movie.get('year')) + ')')
             try:
                 # Check and see if the movie is in CP already, if so, ignore it.
                 cpMovie = Db.query(Movie).filter_by(imdb = movie.get('imdb_id')).first()
                 if cpMovie:
-                    log.info('Movie found in CP Database, ignore: "%s".' % movie.get('title'))
+                    log.debug('Movie found in CP Database, ignore: "%s".' % movie.get('title'))
                     continue
-                
+                log.info('Adding movie to queue: %s.' % movie.get('title') + ' (' + str(movie.get('year')) + ')')
                 quality = Db.query(QualityTemplate).filter_by(name = self.config.get('Quality', 'default')).one()
                 MyMovieController._addMovie(result, quality.id)
             except:
