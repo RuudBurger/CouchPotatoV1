@@ -420,6 +420,35 @@
 				</div>
 			</fieldset>
 
+            <fieldset class="inlineLabels">
+				<h3>#alt.binaries.moovee@EFnet</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="moovee.enabled" value="True" ${' checked="checked"' if config.get('moovee','enabled') else''} />
+					<p class="formHint">
+						SD movies only
+					</p>
+				</div>
+			</fieldset>
+
+
+			<fieldset class="inlineLabels" id="sceneaccessFieldset">
+				<h3>SceneAccess</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="sceneaccess.enabled" value="True" ${' checked="checked"' if config.get('sceneaccess','enabled') else''} />
+				</div>
+				<div class="ctrlHolder">
+					<label>username</label>
+					<input type="text" name="sceneaccess.username" value="${config.get('sceneaccess', 'username')}" class="textInput large" />
+				</div>
+				<div class="ctrlHolder">
+					<label>password</label>
+					<input type="password" name="sceneaccess.password" value="${config.get('sceneaccess', 'password')}" class="textInput large" />
+				</div>
+			</fieldset>
+
+
 		</div>
 
 		<div class="group userscript">

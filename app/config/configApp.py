@@ -86,6 +86,12 @@ class configApp():
         self.setDefault('NZBsRUS', 'userhash', '')
         self.addSection('x264')
         self.setDefault('x264', 'enabled', False)
+        self.addSection('moovee')
+        self.setDefault('moovee', 'enabled', False)
+        self.addSection('sceneaccess')
+        self.setDefault('sceneaccess', 'enabled', False)
+        self.setDefault('sceneaccess', 'username', '')
+        self.setDefault('sceneaccess', 'password', '')
 
         self.addSection('NZB')
         self.setDefault('NZB', 'enabled', True)

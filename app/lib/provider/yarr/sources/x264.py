@@ -62,19 +62,3 @@ class x264(torrentBase):
         except AttributeError:
             log.debug('No search results found.')
 
-    def makeIgnoreString(self, type):
-        return ''
-
-    def getInfo(self, url):
-        log.debug('Getting info: %s' % url)
-        try:
-            data = urllib2.urlopen(url, timeout = self.timeout).read()
-            pass
-        except IOError:
-            log.error('Failed to open %s.' % url)
-            return ''
-
-        tables = SoupStrainer('table')
-        html = BeautifulSoup(data)
-        movieInformation = html.find('div', attrs = {'class':'i_info'})
-        return str(movieInformation).decode("utf-8", "replace")
