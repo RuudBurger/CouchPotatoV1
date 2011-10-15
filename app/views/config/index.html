@@ -664,6 +664,13 @@
 					</p>
 				</div>
 				<div class="ctrlHolder">
+					<label>Trakt Password</label>
+					<input type="password" name="Trakt.password" value="${config.get('Trakt', 'password')}" class="textInput large"/>
+					<p class="formHint">
+						Your Trakt Password, only needed if you protect your account
+					</p>
+				</div>
+				<div class="ctrlHolder">
 					<label>Trakt API Key</label>
 					<input type="text" name="Trakt.apikey" value="${config.get('Trakt', 'apikey')}" class="textInput large"/>
 					<p class="formHint">

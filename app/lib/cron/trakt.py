@@ -7,6 +7,7 @@ import time
 import traceback
 import urllib2
 import json
+from hashlib import sha1
 
 log = CPLog(__name__)
 
@@ -56,8 +57,12 @@ class TraktCron(cronBase, Library):
             return
 
         log.info('Starting Trakt check')
+        req = urllib2.Request(self.TraktUrl + self.conf('apikey') + "/" + self.conf('username'))
+        if self.conf('password') != "":
+            req.add_data(json.dumps({'username' : self.conf('username'), 'password' : sha1(self.conf('password')).hexdigest()}))
+            req.add_header('content-type', 'application/json')
         try:
-            url = urllib2.urlopen(self.TraktUrl + self.conf('apikey') + "/" + self.conf('username'), timeout = 10)
+            url = urllib2.urlopen(req, timeout = 10)
             watchlist = json.load(url)
         except (IOError, URLError):
             log.info('Trakt conection failed')
@@ -66,7 +71,7 @@ class TraktCron(cronBase, Library):
         MyMovieController = MovieController()
         
         if not watchlist:
-            log.info('No movies found.')
+            log.info('No movies found. Please add a password if you have a protected account')
             return
 
         for movie in watchlist:

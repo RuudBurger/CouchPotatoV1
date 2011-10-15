@@ -164,6 +164,7 @@ class configApp():
         self.setDefault('Trakt', 'enabled', False)
         self.setDefault('Trakt', 'apikey', '')
         self.setDefault('Trakt', 'username', '')
+        self.setDefault('Trakt', 'password', '')
         
         self.addSection('XBMC')
         self.setDefault('XBMC', 'enabled', False)
