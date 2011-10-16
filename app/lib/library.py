@@ -419,7 +419,14 @@ class Library:
     def getGroup(self, filename):
         try:
             group = re.search('-(?P<group>[A-Z0-9]+)$', filename, re.I)
-            return (group and group.group('group')) or ''
+            if group != None:
+                groupname = group.group('group')
+            else:
+		# In case there is no "-" seperator, it means it seperated by spaces. so i'll use last word sperated by " ".
+                groupname = filename.split(" ")[-1]
+
+            log.info("%s's group name is %s" % (filename, groupname))
+            return groupname
         except:
             return ''
 
