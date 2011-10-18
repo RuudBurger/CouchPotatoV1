@@ -126,8 +126,16 @@ class MovieRSSCron(cronBase, Library, rss):
                 log.info('Rating is unknown for this movie: "%s".' % RSSMovie)
                 continue
 
+            if not imdbmovie.get('votes'):
+                log.info('Number of votes is unknown for this movie: "%s".' % RSSMovie)
+                continue
+
             if float(imdbmovie.get('rating')) < float(self.conf('minrating')):
                 log.info('Rating is too low for this movie: "%s".' % RSSMovie)
+                continue
+
+            if float(imdbmovie.get('votes')) < float(self.conf('minvotes')):
+                log.info('Number of votes is too low for this movie: "%s".' % RSSMovie)
                 continue
 
             log.info('Adding movie to queue: %s.' % imdbmovie.get('title') + ' (' + str(imdbmovie.get('year')) + ') Rating: ' + str(imdbmovie.get('rating')))

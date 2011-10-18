@@ -154,11 +154,13 @@ class configApp():
         self.setDefault('MovieRSS', 'enabled', False)
         self.setDefault('MovieRSS', 'minyear', '2000')
         self.setDefault('MovieRSS', 'minrating', '6.0')
+        self.setDefault('MovieRSS', 'minvotes', '900')
 
         self.addSection('KinepolisRSS')
         self.setDefault('KinepolisRSS', 'enabled', False)
         self.setDefault('KinepolisRSS', 'minyear', '2000')
         self.setDefault('KinepolisRSS', 'minrating', '6.0')
+        self.setDefault('KinepolisRSS', 'minvotes', '900')
 
         self.addSection('Trakt')
         self.setDefault('Trakt', 'enabled', False)
