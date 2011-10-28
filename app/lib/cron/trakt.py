@@ -64,7 +64,7 @@ class TraktCron(cronBase, Library):
         try:
             url = urllib2.urlopen(req, timeout = 10)
             watchlist = json.load(url)
-        except (IOError, URLError):
+        except IOError:
             log.info('Trakt conection failed')
             return
 
