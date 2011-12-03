@@ -11,6 +11,7 @@ from app.lib.notifo import Notifo
 from app.lib.boxcar import Boxcar
 from app.lib.nma import NMA
 from app.lib.twitter import Twitter
+from app.lib.trakt import Trakt
 import cherrypy
 import json
 import sys
@@ -71,6 +72,8 @@ class ConfigController(BaseController):
               'Boxcar.enabled', 'Boxcar.onSnatch',
               'NMA.enable', 'NMA.onSnatch',
               'Twitter.enabled', 'Twitter.onSnatch',
+              'Trakt_notification.enabled',
+              'Trakt.enabled',
               'Meta.enabled',
               'MovieETA.enabled',
               'Renamer.enabled', 'Renamer.trailerQuality', 'Renamer.cleanup',
@@ -191,6 +194,14 @@ class ConfigController(BaseController):
         twitter = Twitter()
         twitter.test()
         return ''
+    
+    @cherrypy.expose
+    def testTrakt(self, **data):
+
+        trakt = Trakt()
+        result = trakt.test(data.get('Trakt_notification.apikey'), data.get('Trakt_notification.username'), data.get('Trakt_notification.password'))
+
+        return str(result)
 
     @cherrypy.expose
     def twitterReqAuth(self):

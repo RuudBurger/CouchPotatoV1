@@ -1020,6 +1020,34 @@
                     This only works if CP is running on a Synology NAS.
 				</p>
 			</fieldset>
+			<fieldset class="inlineLabels" id="traktFieldset">
+				<h3>Trakt</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Update library</label>
+					<input type="checkbox" name="Trakt_notification.enabled" value="True" ${' checked="checked"' if config.get('Trakt_notification', 'enabled') else ''} />
+					<p class="formHint">
+						Sends a notification and updates your Trakt library.
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Username</label>
+					<input type="text" name="Trakt_notification.username" value="${config.get('Trakt_notification', 'username')}" autocomplete="off" class="textInput large"/>
+				</div>
+				<div class="ctrlHolder">
+					<label>Password</label>
+					<input type="password" name="Trakt_notification.password" value="${config.get('Trakt_notification', 'password')}" autocomplete="off" class="textInput large"/>
+				</div>
+				<div class="ctrlHolder">
+					<label>Api</label>
+					<input type="text" name="Trakt_notification.apikey" value="${config.get('Trakt_notification', 'apikey')}" class="textInput large"/>
+					<p class="formHint">
+						Get your key at: <a href="http://trakt.tv/settings/api" onclick="window.open(this.href, '_blank'); return false;">http://trakt.tv/settings/api</a>
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<a href="#traktTest" id="traktTest" class="testNotification">Send a message to Trakt, see if it works.</a>
+				</div>
+			</fieldset>
 		</div>
 		<div class="buttonHolder">
 			<span class="cancel"><a href="#cancel">Cancel</a> or</span> 
@@ -1137,7 +1165,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset', 'traktFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
@@ -1289,6 +1317,14 @@
 			new Request({
 				'url': './testTwitter/',
 				'data': $('twitterFieldset')
+			}).send()
+		})
+		
+		$('traktTest').addEvent('click', function(e){
+			(e).stop()
+			new Request({
+				'url': './testTrakt/',
+				'data': $('traktFieldset')
 			}).send()
 		})
 	});

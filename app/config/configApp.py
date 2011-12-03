@@ -228,6 +228,12 @@ class configApp():
         self.addSection('Synoindex')
         self.setDefault('Synoindex', 'enabled', False)
 
+        self.addSection('Trakt_notification')
+        self.setDefault('Trakt_notification', 'enabled', False)
+        self.setDefault('Trakt_notification', 'apikey', '')
+        self.setDefault('Trakt_notification', 'username', '')
+        self.setDefault('Trakt_notification', 'password', '')
+
         self.addSection('Meta')
         self.setDefault('Meta', 'enabled', False)
         self.setDefault('Meta', 'fanartMinHeight', 0)
