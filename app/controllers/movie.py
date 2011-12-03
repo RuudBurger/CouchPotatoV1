@@ -3,7 +3,7 @@ from app.config.db import Session as Db, Movie, QualityTemplate, MovieQueue
 from app.controllers import BaseController, url, redirect
 from sqlalchemy.sql.expression import or_, desc
 import cherrypy
-import os.path
+import os
 import sqlite3 as MySqlite
 
 log = CPLog(__name__)
@@ -157,30 +157,37 @@ class MovieController(BaseController):
     def _addMovie(self, movie, quality, year = None):
 
         if cherrypy.config.get('config').get('XBMC', 'dbpath'):
-            log.debug('Checking if movie exists in XBMC by IMDB id:' + movie.imdb)
-            dbfile = os.path.join(cherrypy.config.get('config').get('XBMC', 'dbpath'), 'MyVideos34.db')
-            #------Opening connection to XBMC DB------
-            connXbmc = MySqlite.connect(dbfile)
-            if connXbmc:
-                connXbmc.row_factory = MySqlite.Row
-                cXbmc = connXbmc.cursor()
-                cXbmc.execute('select c09 from movie where c09="' + movie.imdb + '"')
-                #------End of Opening connection to XBMC DB------
-                inXBMC = False
-                for rowXbmc in cXbmc: # do a final check just to be sure
-                    log.debug('Found in XBMC:' + rowXbmc["c09"])
-                    if movie.imdb == rowXbmc["c09"]:
-                        inXBMC = True
-                    else:
-                        inXBMC = False
+            for root, dirs, files in os.walk(cherrypy.config.get('config').get('XBMC', 'dbpath')):
+                for file in files:
+                    if file.startswith('MyVideos'):
+                        dbfile = os.path.join(root, file)
 
-                cXbmc.close()
+            if dbfile:
+                #------Opening connection to XBMC DB------
+                connXbmc = MySqlite.connect(dbfile)
+                if connXbmc:
+                    log.debug('Checking if movie exists in XBMC by IMDB id:' + movie.imdb)
+                    connXbmc.row_factory = MySqlite.Row
+                    cXbmc = connXbmc.cursor()
+                    cXbmc.execute('select c09 from movie where c09="' + movie.imdb + '"')
+                    #------End of Opening connection to XBMC DB------
+                    inXBMC = False
+                    for rowXbmc in cXbmc: # do a final check just to be sure
+                        log.debug('Found in XBMC:' + rowXbmc["c09"])
+                        if movie.imdb == rowXbmc["c09"]:
+                            inXBMC = True
+                        else:
+                            inXBMC = False
 
-                if inXBMC:
-                    log.info('Movie already exists in XBMC, skipping.')
-                    return
+                    cXbmc.close()
+
+                    if inXBMC:
+                        log.info('Movie already exists in XBMC, skipping.')
+                        return
+                else:
+                    log.info('Could not connect to the XBMC database at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
             else:
-                log.info('Could not connect to the XBMC database at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
+                log.info('Could not find the XBMC MyVideos db at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
 
         log.info('Adding movie to database: %s' % movie.name)
 
