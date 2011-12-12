@@ -1029,6 +1029,13 @@
 						Sends a notification and updates your Trakt library.
 					</p>
 				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Remove from watchlist</label>
+					<input type="checkbox" name="Trakt_notification.watchlist_remove" value="True" ${' checked="checked"' if config.get('Trakt_notification', 'watchlist_remove') else ''} />
+					<p class="formHint">
+						Removes the downloaded movie from your Trakt watchlist.
+					</p>
+				</div>
 				<div class="ctrlHolder">
 					<label>Username</label>
 					<input type="text" name="Trakt_notification.username" value="${config.get('Trakt_notification', 'username')}" autocomplete="off" class="textInput large"/>

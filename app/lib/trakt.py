@@ -12,12 +12,14 @@ log = CPLog(__name__)
 
 class Trakt:
 
+    watchlist_remove = False
     apikey = ''
     username = ''
     password = ''
 
     def __init__(self):
         self.enabled = self.conf('enabled');
+        self.watchlist_remove = self.conf('watchlist_remove');
         self.username = self.conf('username')
         self.password = self.conf('password')
         self.apikey = self.conf('apikey')
@@ -58,6 +60,7 @@ class Trakt:
             log.info("Method call successful")
             return True
 
+        log.info("Method call unsuccessful: " + resp["status"])
         return False
 
     def notify(self, name, year, imdb_id):
@@ -75,7 +78,21 @@ class Trakt:
                 } ]
             }
         
-        return self.send(method, data)
+        added = self.send(method, data)
+        
+        if self.watchlist_remove:
+            method = "movie/unwatchlist/"
+            method += "%API%"
+            data = {
+                'movies': [ {
+                    'imdb_id': imdb_id,
+                    'title': name,
+                    'year': year
+                    } ]
+                }
+            self.send(method, data)
+        
+        return added
 
     def test(self, apikey, username, password):
         self.username = username

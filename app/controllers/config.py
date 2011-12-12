@@ -73,6 +73,7 @@ class ConfigController(BaseController):
               'NMA.enable', 'NMA.onSnatch',
               'Twitter.enabled', 'Twitter.onSnatch',
               'Trakt_notification.enabled',
+              'Trakt_notification.watchlist_remove',
               'Trakt.enabled',
               'Meta.enabled',
               'MovieETA.enabled',

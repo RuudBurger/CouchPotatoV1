@@ -230,6 +230,7 @@ class configApp():
 
         self.addSection('Trakt_notification')
         self.setDefault('Trakt_notification', 'enabled', False)
+        self.setDefault('Trakt_notification', 'watchlist_remove', False)
         self.setDefault('Trakt_notification', 'apikey', '')
         self.setDefault('Trakt_notification', 'username', '')
         self.setDefault('Trakt_notification', 'password', '')
