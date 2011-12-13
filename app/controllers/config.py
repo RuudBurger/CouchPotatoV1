@@ -178,7 +178,7 @@ class ConfigController(BaseController):
     def testBoxcar(self, **data):
 
         boxcar = Boxcar()
-        boxcar.test(data.get('Boxcar.username'), data.get('Boxcar.password'))
+        boxcar.test(data.get('Boxcar.username'))
 
         return ''
     

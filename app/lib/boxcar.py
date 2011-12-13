@@ -5,44 +5,39 @@ import json
 import urllib
 import urllib2
 import time
+import platform 
 
 log = CPLog(__name__)
 
 class Boxcar:
 
     username = ''
-    password = ''
 
     def __init__(self):
         self.enabled = self.conf('enabled')
         self.username = self.conf('username')
-        self.password = self.conf('password')
         pass
 
     def conf(self, options):
         return cherrypy.config['config'].get('Boxcar', options)
 
     def send(self, message, status):
-
-        url = 'https://boxcar.io/notifications'
-
+        boxcar_provider_key = '7MNNXY3UIzVBwvzkKwkC' #default for provider as given by Boxcar when CouchPotato was registered
+        url = 'https://boxcar.io/devices/providers/' + boxcar_provider_key + '/notifications'
         try:
             message = message.strip()
             data = urllib.urlencode({
-                'notification[from_screen_name]': self.username,
+                'email': self.username,
+                'notification[from_screen_name]': 'CouchPotato running on ' + platform.uname()[1],
                 'notification[message]': message.encode('utf-8'),
                 'notification[from_remote_service_id]': int(time.time()),
-                'notification[source_url]' : 'nas.local'
             })
 
             req = urllib2.Request(url)
-	    authHeader = "Basic %s" % base64.encodestring('%s:%s' % (self.username, self.password))[:-1]
-	    req.add_header("Authorization", authHeader)
-	    
-            handle = urllib2.urlopen(req, data)
-            result = json.load(handle)
 
-            if result['status'] != 'success' or result['response_message'] != 'OK':
+            handle = urllib2.urlopen(req, data)
+            result = handle.info()
+            if result['status'] != '200':
                 raise Exception
 
         except Exception, e:
@@ -59,10 +54,8 @@ class Boxcar:
 
         self.send(message, status)
 
-    def test(self, username, password):
-
+    def test(self, username):
         self.enabled = True
         self.username = username
-        self.password = password
 
         self.notify('This is a test notification from Couch Potato', "Testing:")
