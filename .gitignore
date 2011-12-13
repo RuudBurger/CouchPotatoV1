@@ -1,18 +1,25 @@
+#  CP User Related   #
+######################
 *.db
 *.ini
+/logs/
+/cache/
+
+#  Compiled source    #
+######################
+*.pyc
+
+#  IDE specific      #
+######################
 .pydevproject
 .project
-*.pyc
-.DS_Store
 .tmp*
-/logs/
 *.spec
 /pyInstaller/
 *.exe
 setup.py
 /build/
 debug.conf
-/cache/
 warnCouchPotato.txt
 warnWindowsUpdater.txt
 WindowsStart.py
@@ -21,3 +28,12 @@ WindowsUpdater.py
 *.wpr
 /.idea/
 *.komodoproject
+
+# OS generated files #
+######################
+.Trashes
+.DS_Store?
+desktop.ini
+ehthumbs.db
+Thumbs.db
+.directory
