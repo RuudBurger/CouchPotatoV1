@@ -157,6 +157,7 @@ class MovieController(BaseController):
     def _addMovie(self, movie, quality, year = None):
 
         if cherrypy.config.get('config').get('XBMC', 'dbpath'):
+            dbfile = None
             for root, dirs, files in os.walk(cherrypy.config.get('config').get('XBMC', 'dbpath')):
                 for file in files:
                     if file.startswith('MyVideos'):
