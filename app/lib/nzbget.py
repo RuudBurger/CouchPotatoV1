@@ -59,7 +59,9 @@ class nzbGet():
 
         nzbcontent64 = standard_b64encode(r)
 
-        if nzbGetRPC.append(nzb.name + ".nzb", self.conf('category'), False, nzbcontent64):
+        nzbname = nzb.name.replace("/","_")
+
+        if nzbGetRPC.append(nzbname + ".nzb", self.conf('category'), False, nzbcontent64):
             log.info("NZB sent successfully to nzbGet")
             return True
         else:
