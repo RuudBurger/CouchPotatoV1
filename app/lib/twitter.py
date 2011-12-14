@@ -74,7 +74,7 @@ class Twitter:
         resp, content = oauth_client.request(self.REQUEST_TOKEN_URL, 'POST', body=urllib.urlencode({'oauth_callback':callbackURL}))
 
         if resp['status'] != '200':
-            log.error('Invalid response from Twitter requesting temp token: %s' % resp['status'])
+            log.error('Invalid response from Twitter requesting temp token: %s: %s' % (resp['status'], content))
         else:
             request_token = dict(parse_qsl(content))
 

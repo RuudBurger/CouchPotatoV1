@@ -210,6 +210,9 @@ class ConfigController(BaseController):
         twitter = Twitter()
         referer = cherrypy.request.headers.get('referer')
         auth_url = twitter.get_authorization(referer)
+        if not auth_url:
+          return ('Error making an oauth connection to Twitter.  Check your '
+                  'system time?  See the logs for a more detailed error.')
         return redirect(auth_url)
 
     @cherrypy.expose
