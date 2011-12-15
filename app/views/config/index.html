@@ -409,13 +409,24 @@
 				</div>
 			</fieldset>
 
-            <fieldset class="inlineLabels">
+            		<fieldset class="inlineLabels">
 				<h3>#alt.binaries.hdtv.x264@EFnet</h3>
 				<div class="ctrlHolder checkbox">
 					<label>Enable</label>
 					<input type="checkbox" name="x264.enabled" value="True" ${' checked="checked"' if config.get('x264','enabled') else''} />
 					<p class="formHint">
 						HD movies only
+					</p>
+				</div>
+			</fieldset>
+		
+			<fieldset class="inlineLabels" style="float: right!important;">	<!--Temp layout fix-->
+				<h3>MysterBin</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="mysterbin.enabled" value="True" ${' checked="checked"' if config.get('mysterbin','enabled') else''} />
+					<p class="formHint">
+						Web Search provider 
 					</p>
 				</div>
 			</fieldset>

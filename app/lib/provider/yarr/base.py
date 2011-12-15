@@ -21,7 +21,7 @@ class nzbBase(rss):
         'DTS:4', 'AC3:2',
         '720p:10', '1080p:10', 'bluray:10', 'dvd:1', 'dvdrip:1', 'brrip:1', 'bdrip:1',
         'imbt:1', 'cocain:1', 'vomit:1', 'fico:1', 'arrow:1', 'pukka:1', 'prism:1', 'devise:1',
-        'metis:1', 'diamond:1', 'wiki:1', 'cbgb:1', 'crossbow:1', 'sinners:1', 'amiable:1', 'refined:1', 'twizted:1', 'felony:1', 'hubris:1', 'machd:1',
+        'metis:1', 'diamond:1', 'wiki:1', 'cbgb:1', 'crossbow:1', 'sinners:1', 'amiable:1', 'refined:1', 'twizted:1', 'felony:1', 'hubris:1', 'machd:1', 
         'german:-10', 'french:-10', 'spanish:-10', 'swesub:-20', 'danish:-10'
     ]
 
