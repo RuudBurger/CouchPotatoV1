@@ -1,6 +1,7 @@
 from app.config.cplog import CPLog
 from app.config.db import Session as Db, Movie, QualityTemplate, MovieQueue
 from app.controllers import BaseController, url, redirect
+from app.lib.xbmc import XBMC
 from sqlalchemy.sql.expression import or_, desc
 import cherrypy
 import os
@@ -154,8 +155,7 @@ class MovieController(BaseController):
 
         return self.render({'id':id, 'result':result, 'success':success, 'year':data.get('year')})
 
-    def _addMovie(self, movie, quality, year = None):
-
+    def _checkMovieExists(self, movie):
         if cherrypy.config.get('config').get('XBMC', 'dbpath'):
             dbfile = None
             for root, dirs, files in os.walk(cherrypy.config.get('config').get('XBMC', 'dbpath')):
@@ -184,11 +184,29 @@ class MovieController(BaseController):
 
                     if inXBMC:
                         log.info('Movie already exists in XBMC, skipping.')
-                        return
+                        return True
                 else:
                     log.info('Could not connect to the XBMC database at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
             else:
                 log.info('Could not find the XBMC MyVideos db at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
+
+        xbmc = XBMC()
+        xbmcResults = xbmc.queryVideoDatabase('select c09 from movie where c09="' + movie.imdb + '"')
+
+        if xbmcResults:
+           for xmbcResult in xbmcResults:
+                c09 = xmbcResult.replace("<field>", "").replace("</field>", "").strip()
+                if c09==movie.imdb:
+                    log.info('Movie already exists in XBMC (web API call), skipping.')
+                    return True
+#                log.info("'%s' %s" % (c09, c09==movie.imdb))
+
+        return False
+
+    def _addMovie(self, movie, quality, year = None):
+
+        if self._checkMovieExists(movie=movie):
+           return
 
         log.info('Adding movie to database: %s' % movie.name)
 

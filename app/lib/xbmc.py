@@ -50,6 +50,18 @@ class XBMC:
             command = {'command': 'ExecBuiltIn', 'parameter': 'Notification(CouchPotato, %s)' % message}
             self.send(command, curHost)
 
+    def queryVideoDatabase(self, query):
+        if not self.enabled:
+            return
+
+        ret = []
+        for curHost in self.hosts:
+            command = {'command': 'QueryVideoDatabase(%s)' % query}
+            response = self.send(command, curHost).replace("<html>", "").replace("</html>", "")
+            ret.append(response)
+
+        return ret
+
     def updateLibrary(self):
         if not self.enabled:
             return
