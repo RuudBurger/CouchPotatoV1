@@ -760,10 +760,17 @@
 					<label>DB Path</label>
 					<input type="text" name="XBMC.dbpath" value="${config.get('XBMC', 'dbpath')}" autocomplete="off" class="textInput large"/>
 					<p class="formHint">
-						Used for checking if you already have a movie in you library, before adding it to your wanted list.
+						Used for checking if you already have a movie in your library, before adding it to your wanted list.
 						Example: C:\Users\Username\AppData\Roaming\XBMC\userdata\Database
 					</p>
 				</div>
+                                <div class="ctrlHolder checkbox">
+                                        <label>Use web API</label>
+                                        <input type="checkbox" name="XBMC.useWebAPIExistingCheck" value="True" ${' checked="checked"' if config.get('XBMC', 'useWebAPIExistingCheck') else ''} />
+                                        <p class="formHint">
+                                                Whether to use web API against XBMC hosts to check if you have a movie in your library before adding it to your wanted list.
+                                        </p>
+                                </div>
 			</fieldset>
 			<fieldset class="inlineLabels" id="nmjFieldset">
 				<h3>Networked Media Jukebox</h3>

@@ -212,6 +212,8 @@ def server_start():
 
     # Setup the signal handler
     if hasattr(cherrypy.engine, "signal_handler"):
+        if not options.quiet and not options.daemonize:
+           cherrypy.engine.signal_handler.set_handler(signal='SIGINT', listener=cherrypy.engine.signal_handler.bus.exit)
         cherrypy.engine.signal_handler.subscribe()
     if hasattr(cherrypy.engine, "console_control_handler"):
         cherrypy.engine.console_control_handler.subscribe()

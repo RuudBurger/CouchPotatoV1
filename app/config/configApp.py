@@ -178,6 +178,7 @@ class configApp():
         self.setDefault('XBMC', 'password', 'xbmc')
         self.setDefault('XBMC', 'dbpath', '')
         self.setDefault('XBMC', 'updateOneOnly', False)
+        self.setDefault('XBMC', 'useWebAPIExistingCheck', False)
 
         self.addSection('NMJ')
         self.setDefault('NMJ', 'enabled', False)
