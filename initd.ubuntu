@@ -30,7 +30,7 @@ SETTINGS_LOADED=FALSE
 DESC=CouchPotato
 
 # only accept values from /etc/default/couchpotato
-unset RUN_AS CONFIG DATADIR PID_FILE
+unset RUN_AS CONFIG DATADIR PORT PID_FILE
 
 . /lib/lsb/init-functions
 
@@ -74,6 +74,7 @@ load_settings() {
         [ -z "$CONFIG" ] && DAEMON_OPTS="$DAEMON_OPTS --config=/home/$RUN_AS/.couchpotato/config.ini"
         [ -n "$DATADIR" ] && DAEMON_OPTS="$DAEMON_OPTS --datadir=$DATADIR"
         [ -z "$DATADIR" ] && DAEMON_OPTS="$DAEMON_OPTS --datadir=/home/$RUN_AS/.couchpotato"
+        [ -n "$PORT" ] && DAEMON_OPTS="$DAEMON_OPTS --port=$PORT"
         if ! [ -n "$PID_FILE" ]; then
             PID_FILE=/var/run/couchpotato/couchpotato.pid
         fi

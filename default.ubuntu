@@ -28,6 +28,9 @@ CONFIG=
 # otherwise, the default location (~/.couchpotato) is used:
 DATADIR=
 
+# [optional] Force port number to listen on, otherwise the one set in config.ini is used:
+PORT=
+
 # [optional] full path for the pidfile
 # otherwise, the default location /var/run/couchpotato/couchpotato.pid is used:
 PID_FILE=
