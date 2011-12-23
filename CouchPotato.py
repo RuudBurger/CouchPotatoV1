@@ -38,10 +38,13 @@ def server_start():
     p.add_option('--datadir',
                  dest = 'datadir', default = None,
                  help = "Path to the data directory")
+    p.add_option('--port',
+                 dest = 'port', default = None,
+                 help = "Force webinterface to listen on this port")
 
 
     options, args = p.parse_args()
-    
+
     if options.datadir:
         datadir = options.datadir
 
@@ -50,12 +53,12 @@ def server_start():
 
     else:
         datadir = rundir
-	
+
     datadir = os.path.abspath(datadir)
     
     if not os.access(datadir, os.W_OK):
         raise SystemExit("Data dir must be writeable '" + datadir + "'")
-    
+
     import app.config
     app.config.DATADIR = datadir
    
@@ -71,6 +74,11 @@ def server_start():
             os.makedirs(os.path.dirname(config))
         else:
             raise SystemExit("Directory for config file must be writeable")
+
+    forcedPort=False
+    if options.port:
+        port = int(options.port)
+        forcedPort=True
 
     import cherrypy
     import app.config.render
@@ -106,11 +114,13 @@ def server_start():
     from app.config.updater import Updater
     from cherrypy.process import plugins
 
+    if not forcedPort:
+        port = int(ca.get('global', 'port'))
+
     # Check an see if CP is already running
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     host = ca.get('global', 'host')
-    port = int(ca.get('global', 'port'))
     try:
         s.connect((host, port))
         s.shutdown(0)
@@ -131,7 +141,7 @@ def server_start():
     cherrypy.config.update({
         'global': {
             'server.thread_pool': 10,
-            'server.socket_port': int(ca.get('global', 'port')),
+            'server.socket_port': port,
             'server.socket_host': ca.get('global', 'host'),
             'server.environment': ca.get('global', 'server.environment'),
             'engine.autoreload_on': ca.get('global', 'server.environment') == 'development',
@@ -227,7 +237,7 @@ def server_start():
 
         # Launch browser
         if ca.get('global', 'launchbrowser'):
-            app.launchBrowser(ca.get('global', 'host'), ca.get('global', 'port'))
+            app.launchBrowser(ca.get('global', 'host'), port)
 
         cherrypy.engine.block()
 
