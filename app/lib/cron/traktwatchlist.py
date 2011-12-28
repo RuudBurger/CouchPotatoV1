@@ -3,11 +3,9 @@ from app.config.db import Session as Db, QualityTemplate, Movie
 from app.controllers.movie import MovieController
 from app.lib.cron.base import cronBase
 from app.lib.library import Library
+from app.lib.trakt import Trakt
 import time
 import traceback
-import urllib2
-import json
-from hashlib import sha1
 
 log = CPLog(__name__)
 
@@ -19,7 +17,6 @@ class TraktCron(cronBase, Library):
     lastChecked = 0
     intervalSec = 1800
     config = {}
-    TraktUrl = "http://api.trakt.tv/user/watchlist/movies.json/"
 
     def conf(self, option):
         return self.config.get('Trakt', option)
@@ -45,7 +42,7 @@ class TraktCron(cronBase, Library):
             time.sleep(wait)
 
     def isDisabled(self):
-        return not self.conf('enabled')
+        return not self.conf('watchlist_enabled')
 
     def doJSONCheck(self):
         '''
@@ -57,22 +54,13 @@ class TraktCron(cronBase, Library):
             return
 
         log.info('Starting Trakt check')
-        req = urllib2.Request(self.TraktUrl + self.conf('apikey') + "/" + self.conf('username'))
-        if self.conf('password') != "":
-            req.add_data(json.dumps({'username' : self.conf('username'), 'password' : sha1(self.conf('password')).hexdigest()}))
-            req.add_header('content-type', 'application/json')
-        try:
-            url = urllib2.urlopen(req, timeout = 10)
-            watchlist = json.load(url)
-        except (IOError, URLError):
-            log.info('Trakt conection failed')
+        trakt = Trakt()
+        watchlist = trakt.getWatchlist()
+        if not watchlist:
+            log.info("Could not get watchlist. Please add a password if you have a protected account")
             return
 
         MyMovieController = MovieController()
-        
-        if not watchlist:
-            log.info('No movies found. Please add a password if you have a protected account')
-            return
 
         for movie in watchlist:
             if self.abort: #this loop takes a while, stop when the program needs to close
@@ -80,7 +68,12 @@ class TraktCron(cronBase, Library):
                 return
 
             time.sleep(5) # give the system some slack
-            
+            if (self.conf('dontaddcollection')):
+                if ("in_collection" in movie):
+                    if (movie.get("in_collection")):
+                        log.debug('Movie "%s" already in collection, ignoring' % movie.get('title'))
+                        continue
+
             log.debug('Searching for movie: "%s".' % movie.get('title'))
             result = False
             try:

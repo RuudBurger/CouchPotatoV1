@@ -165,11 +165,14 @@ class configApp():
         self.setDefault('KinepolisRSS', 'minvotes', '900')
 
         self.addSection('Trakt')
-        self.setDefault('Trakt', 'enabled', False)
+        self.setDefault('Trakt', 'watchlist_enabled', False)
+        self.setDefault('Trakt', 'notification_enabled', False)
+        self.setDefault('Trakt', 'watchlist_remove', False)
+        self.setDefault('Trakt', 'dontaddcollection', True)
         self.setDefault('Trakt', 'apikey', '')
         self.setDefault('Trakt', 'username', '')
         self.setDefault('Trakt', 'password', '')
-        
+
         self.addSection('XBMC')
         self.setDefault('XBMC', 'enabled', False)
         self.setDefault('XBMC', 'onSnatch', False)
@@ -229,13 +232,6 @@ class configApp():
 
         self.addSection('Synoindex')
         self.setDefault('Synoindex', 'enabled', False)
-
-        self.addSection('Trakt_notification')
-        self.setDefault('Trakt_notification', 'enabled', False)
-        self.setDefault('Trakt_notification', 'watchlist_remove', False)
-        self.setDefault('Trakt_notification', 'apikey', '')
-        self.setDefault('Trakt_notification', 'username', '')
-        self.setDefault('Trakt_notification', 'password', '')
 
         self.addSection('Meta')
         self.setDefault('Meta', 'enabled', False)

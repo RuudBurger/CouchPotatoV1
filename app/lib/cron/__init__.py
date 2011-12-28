@@ -3,7 +3,7 @@ from app.lib.cron.eta import startEtaCron, etaQueue
 from app.lib.cron.renamer import startRenamerCron
 from app.lib.cron.movierss import startMovieRSSCron
 from app.lib.cron.kinepolisrss import startKinepolisRSSCron
-from app.lib.cron.trakt import startTraktCron
+from app.lib.cron.traktwatchlist import startTraktCron
 from app.lib.cron.subtitle import subtitleQueue, startSubtitleCron
 from app.lib.cron.trailer import startTrailerCron, trailerQueue
 from app.lib.cron.yarr import startYarrCron
@@ -72,7 +72,7 @@ class CronJobs(plugins.SimplePlugin):
         #Trakt cron
         TraktCronJob = startTraktCron(config, self.searchers, self.debug)
         self.threads['Trakt'] = TraktCronJob
-        
+
         #nzb cronjob
         yarrCronJob = startYarrCron(config, self.debug, yarrSearch)
         yarrCronJob.sabNzbd = sabNzbd(config)

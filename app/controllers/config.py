@@ -72,9 +72,10 @@ class ConfigController(BaseController):
               'Boxcar.enabled', 'Boxcar.onSnatch',
               'NMA.enable', 'NMA.onSnatch',
               'Twitter.enabled', 'Twitter.onSnatch',
-              'Trakt_notification.enabled',
-              'Trakt_notification.watchlist_remove',
-              'Trakt.enabled',
+              'Trakt.notification_enabled',
+              'Trakt.watchlist_remove',
+              'Trakt.watchlist_enabled',
+              'Trakt.dontaddcollection',
               'Meta.enabled',
               'MovieETA.enabled',
               'Renamer.enabled', 'Renamer.trailerQuality', 'Renamer.cleanup',
@@ -200,7 +201,7 @@ class ConfigController(BaseController):
     def testTrakt(self, **data):
 
         trakt = Trakt()
-        result = trakt.test(data.get('Trakt_notification.apikey'), data.get('Trakt_notification.username'), data.get('Trakt_notification.password'))
+        result = trakt.test(data.get('Trakt.apikey'), data.get('Trakt.username'), data.get('Trakt.password'))
 
         return str(result)
 

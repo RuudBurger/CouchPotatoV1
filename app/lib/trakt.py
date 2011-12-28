@@ -18,7 +18,7 @@ class Trakt:
     password = ''
 
     def __init__(self):
-        self.enabled = self.conf('enabled');
+        self.enabled = self.conf('notification_enabled');
         self.watchlist_remove = self.conf('watchlist_remove');
         self.username = self.conf('username')
         self.password = self.conf('password')
@@ -26,9 +26,8 @@ class Trakt:
         pass
 
     def conf(self, options):
-        return cherrypy.config['config'].get('Trakt_notification', options)
-
-    def send(self, method, data = {}):
+        return cherrypy.config['config'].get('Trakt', options)
+    def call(self, method, data = {}):
         log.debug("Call method " + method)
 
         apikey = self.apikey
@@ -46,22 +45,24 @@ class Trakt:
         try:
             log.info("Calling method http://api.trakt.tv/" + method + ", with data" + encoded_data)
             stream = urllib.urlopen("http://api.trakt.tv/" + method, encoded_data)
-            resp = stream.read()
-
-            resp = json.loads(resp)
-            
-            if ("error" in resp):
-                raise Exception(resp["error"])
-        except (IOError, Exception):
+            resp = json.load(stream)
+        except(IOError):
             log.info("Failed calling method")
-            return False
+            resp = None
+        return resp
 
+    def send(self, method, data = {}):
+        resp = self.call(method, data)
+        if (resp == None):
+            return False
+        if ("error" in resp):
+            log.info("Trakt error message in response: " + resp["error"])
         if (resp["status"] == "success"):
             log.info("Method call successful")
             return True
-
-        log.info("Method call unsuccessful: " + resp["status"])
-        return False
+        else:
+            log.info("Method call unsuccessful: " + resp["status"])
+            return False
 
     def notify(self, name, year, imdb_id):
         if not self.enabled:
@@ -102,4 +103,8 @@ class Trakt:
         method = "account/test/"
         method += "%API%"
         
-        return self.send(method, {})
+        return self.send(method)
+
+    def getWatchlist(self):
+        method = "user/watchlist/movies.json/%API%/" + self.username
+        return self.call(method)

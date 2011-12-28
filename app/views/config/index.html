@@ -672,15 +672,8 @@
 					</select>
 				</div>
 			</fieldset>
-			<fieldset class="inlineLabels">
-				<h3>Trakt Watchlist</h3>
-				<div class="ctrlHolder checkbox">
-					<label>Enable</label>
-					<input type="checkbox" name="Trakt.enabled" value="True" ${' checked="checked"' if config.get('Trakt', 'enabled') else ''} />
-					<p class="formHint">
-						This will add movies from your Trakt watchlist.
-					</p>
-				</div>
+			<fieldset class="inlineLabels" id="traktFieldset">
+				<h3>Trakt</h3>
                 <div class="ctrlHolder">
 					<label>Trakt Username</label>
 					<input type="text" name="Trakt.username" value="${config.get('Trakt','username')}" class="textInput large"/>
@@ -692,15 +685,32 @@
 					<label>Trakt Password</label>
 					<input type="password" name="Trakt.password" value="${config.get('Trakt', 'password')}" class="textInput large"/>
 					<p class="formHint">
-						Your Trakt Password, only needed if you protect your account
+						Your Trakt Password
 					</p>
 				</div>
 				<div class="ctrlHolder">
 					<label>Trakt API Key</label>
 					<input type="text" name="Trakt.apikey" value="${config.get('Trakt', 'apikey')}" class="textInput large"/>
 					<p class="formHint">
-						Your api key for trakt from http://trakt.tv/settings/api
+						Get your key at: <a href="http://trakt.tv/settings/api" onclick="window.open(this.href, '_blank'); return false;">http://trakt.tv/settings/api</a>
 					</p>
+				</div>
+                <div class="ctrlHolder checkbox">
+					<label>Grab movies from watchlist</label>
+					<input type="checkbox" name="Trakt.watchlist_enabled" value="True" ${' checked="checked"' if config.get('Trakt', 'watchlist_enabled') else ''} />
+					<p class="formHint">
+						This will add movies from your Trakt watchlist.
+					</p>
+				</div>
+                <div class="ctrlHolder checkbox">
+					<label>Ignore Movies in Trakt Collection</label>
+					<input type="checkbox" name="Trakt.dontaddcollection" value="True" ${' checked="checked"' if config.get('Trakt', 'dontaddcollection') else ''} />
+					<p class="formHint">
+						Don't add movies to CouchPotato from watchlist that are already in Trakt collection
+					</p>
+				</div>
+                <div class="ctrlHolder">
+					<a href="#traktTest" id="traktTest" class="testNotification">Send a message to Trakt, see if it works.</a>
 				</div>
 			</fieldset>
 			<fieldset class="inlineLabels">
@@ -1034,39 +1044,21 @@
                     This only works if CP is running on a Synology NAS.
 				</p>
 			</fieldset>
-			<fieldset class="inlineLabels" id="traktFieldset">
+			<fieldset class="inlineLabels" id="traktNotificationFieldset">
 				<h3>Trakt</h3>
 				<div class="ctrlHolder checkbox">
 					<label>Update library</label>
-					<input type="checkbox" name="Trakt_notification.enabled" value="True" ${' checked="checked"' if config.get('Trakt_notification', 'enabled') else ''} />
+					<input type="checkbox" name="Trakt.notification_enabled" value="True" ${' checked="checked"' if config.get('Trakt', 'notification_enabled') else ''} />
 					<p class="formHint">
-						Sends a notification and updates your Trakt library.
+						Sends a notification and updates your Trakt library. You must fill out the username and password in the extras tab for this to work.
 					</p>
 				</div>
 				<div class="ctrlHolder checkbox">
 					<label>Remove from watchlist</label>
-					<input type="checkbox" name="Trakt_notification.watchlist_remove" value="True" ${' checked="checked"' if config.get('Trakt_notification', 'watchlist_remove') else ''} />
+					<input type="checkbox" name="Trakt.watchlist_remove" value="True" ${' checked="checked"' if config.get('Trakt', 'watchlist_remove') else ''} />
 					<p class="formHint">
 						Removes the downloaded movie from your Trakt watchlist.
 					</p>
-				</div>
-				<div class="ctrlHolder">
-					<label>Username</label>
-					<input type="text" name="Trakt_notification.username" value="${config.get('Trakt_notification', 'username')}" autocomplete="off" class="textInput large"/>
-				</div>
-				<div class="ctrlHolder">
-					<label>Password</label>
-					<input type="password" name="Trakt_notification.password" value="${config.get('Trakt_notification', 'password')}" autocomplete="off" class="textInput large"/>
-				</div>
-				<div class="ctrlHolder">
-					<label>Api</label>
-					<input type="text" name="Trakt_notification.apikey" value="${config.get('Trakt_notification', 'apikey')}" class="textInput large"/>
-					<p class="formHint">
-						Get your key at: <a href="http://trakt.tv/settings/api" onclick="window.open(this.href, '_blank'); return false;">http://trakt.tv/settings/api</a>
-					</p>
-				</div>
-				<div class="ctrlHolder">
-					<a href="#traktTest" id="traktTest" class="testNotification">Send a message to Trakt, see if it works.</a>
 				</div>
 			</fieldset>
 		</div>
@@ -1186,7 +1178,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset', 'traktFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset', 'traktNotificationFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)
