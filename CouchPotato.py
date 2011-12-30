@@ -29,6 +29,8 @@ def server_start():
                  dest = 'daemonize', help = "Run the server as a daemon")
     p.add_option('-q', '--quiet', action = "store_true",
                  dest = 'quiet', help = "Don't log to console")
+    p.add_option('--nolaunch', action = "store_true",
+                 dest = 'nolaunch', help="Don't start browser")
     p.add_option('-p', '--pidfile',
                  dest = 'pidfile', default = None,
                  help = "Store the process id in the given file")
@@ -61,7 +63,7 @@ def server_start():
 
     import app.config
     app.config.DATADIR = datadir
-   
+
     if options.config:
         config = options.config
     else:
@@ -75,17 +77,12 @@ def server_start():
         else:
             raise SystemExit("Directory for config file must be writeable")
 
-    forcedPort=False
-    if options.port:
-        port = int(options.port)
-        forcedPort=True
-
     import cherrypy
     import app.config.render
 
     # Configure logging
     from app.config.cplog import CPLog
-    
+
     # Setup logging
     debug = os.path.isfile(os.path.join(datadir, 'debug.conf'))
     log = CPLog()
@@ -99,7 +96,8 @@ def server_start():
     # Stop logging
     if options.quiet or options.daemonize:
         cherrypy.config.update({'log.screen': False})
-    
+    else:
+        cherrypy.config.update({'log.screen': False})
 
     # Config app
     from app.config.configApp import configApp
@@ -114,7 +112,10 @@ def server_start():
     from app.config.updater import Updater
     from cherrypy.process import plugins
 
-    if not forcedPort:
+    # setup hostaddress
+    if options.port:
+        port = int(options.port)
+    else:
         port = int(ca.get('global', 'port'))
 
     # Check an see if CP is already running
@@ -124,7 +125,8 @@ def server_start():
     try:
         s.connect((host, port))
         s.shutdown(0)
-        app.launchBrowser(host, port)
+        if not options.nolaunch:
+            app.launchBrowser(host, port)
         return
     except:
         pass
@@ -236,8 +238,9 @@ def server_start():
     else:
 
         # Launch browser
-        if ca.get('global', 'launchbrowser'):
-            app.launchBrowser(ca.get('global', 'host'), port)
+        if not options.nolaunch:
+            if ca.get('global', 'launchbrowser'):
+                app.launchBrowser(ca.get('global', 'host'), port)
 
         cherrypy.engine.block()
 
