@@ -16,10 +16,10 @@ class tpb(torrentBase):
     """Api for the Pirate Bay"""
 
     name = 'The Pirate Bay'
-    downloadUrl = 'http://torrents.thepiratebay.org/%s/%s.torrent'
-    nfoUrl = 'https://thepiratebay.org/torrent/%s'
-    detailUrl = 'https://thepiratebay.org/torrent/%s'
-    apiUrl = 'https://thepiratebay.org/search/%s/0/7/%d'
+    downloadUrl = 'http://torrents.depiraatbaai.be/%s/%s.torrent'
+    nfoUrl = 'https://depiraatbaai.be/torrent/%s'
+    detailUrl = 'https://depiraatbaai.be/torrent/%s'
+    apiUrl = 'https://depiraatbaai.be/search/%s/0/7/%d'
 
     catIds = {
         207: ['720p', '1080p'],
