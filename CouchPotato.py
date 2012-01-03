@@ -97,7 +97,7 @@ def server_start():
     if options.quiet or options.daemonize:
         cherrypy.config.update({'log.screen': False})
     else:
-        cherrypy.config.update({'log.screen': False})
+        cherrypy.config.update({'log.screen': True})
 
     # Config app
     from app.config.configApp import configApp
