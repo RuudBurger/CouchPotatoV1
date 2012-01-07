@@ -223,7 +223,9 @@ imdb = (function(){
     }
 
     function getId(){
-        return 'tt' + location.href.replace(/[^\d+]+/g, '');
+        var regex = new RegExp(/tt(\d+)/);
+        var id = location.href.match(regex)[0];
+        return id;
     }
 
     function getYear(){

@@ -409,7 +409,7 @@
 				</div>
 			</fieldset>
 
-            		<fieldset class="inlineLabels">
+           	<fieldset class="inlineLabels">
 				<h3>#alt.binaries.hdtv.x264@EFnet</h3>
 				<div class="ctrlHolder checkbox">
 					<label>Enable</label>
@@ -728,6 +728,23 @@
 				<div class="ctrlHolder checkbox">
 					<label>Check VideoETA</label>
 					<input type="checkbox" name="MovieETA.enabled" value="True" ${' checked="checked"' if config.get('MovieETA', 'enabled') else ''} />
+				</div>
+			</fieldset>
+			<fieldset class="inlineLabels">
+				<h3>IMDB Watchlist</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="IMDBWatchlist.enabled" value="True" ${' checked="checked"' if config.get('IMDBWatchlist', 'enabled') else ''} />
+					<p class="formHint">
+						This will magically add movies to your wanted list that appear in public IMDB Watchlist specified below.
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>IMDB Watchlist URL</label>
+					<input type="text" name="IMDBWatchlist.url" value="${config.get('IMDBWatchlist', 'url')}" class="textInput large"/>
+					<p class="formHint">
+						'Export this list' URL of the public IMDB Watchlist
+					</p>
 				</div>
 			</fieldset>
 		</div>

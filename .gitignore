@@ -28,6 +28,7 @@ WindowsUpdater.py
 *.wpr
 /.idea/
 *.komodoproject
+*.sw?
 
 # OS generated files #
 ######################

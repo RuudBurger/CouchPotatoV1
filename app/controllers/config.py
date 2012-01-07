@@ -90,6 +90,7 @@ class ConfigController(BaseController):
               'Subtitles.enabled', 'Subtitles.addLanguage',
               'MovieRSS.enabled',
               'KinepolisRSS.enabled',
+              'IMDBWatchlist.enabled',
             ]
         )
         data.update(data.fromkeys(bools, False))

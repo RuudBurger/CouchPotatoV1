@@ -173,6 +173,10 @@ class configApp():
         self.setDefault('Trakt', 'username', '')
         self.setDefault('Trakt', 'password', '')
 
+        self.addSection('IMDBWatchlist')
+        self.setDefault('IMDBWatchlist', 'enabled', False)
+        self.setDefault('IMDBWatchlist', 'url', '')
+
         self.addSection('XBMC')
         self.setDefault('XBMC', 'enabled', False)
         self.setDefault('XBMC', 'onSnatch', False)
