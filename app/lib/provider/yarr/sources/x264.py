@@ -12,7 +12,7 @@ class x264(torrentBase):
     """Provider for #alt.binaries.hdtv.x264 @ EFnet"""
 
     name = 'x264'
-    searchUrl = 'http://85.214.105.230/x264/requests.php?release=%s&status=FILLED&age=700&sort=ID'
+    searchUrl = 'http://85.214.105.230/x264/requests.php?release=%s&status=FILLED&age=1300&sort=ID'
     downloadUrl = 'http://85.214.105.230/get_nzb.php?id=%s&section=hd'
 
     def __init__(self, config):
