@@ -53,10 +53,13 @@ class ImdbWlCron(cronBase, Library):
 
         log.info('Starting IMDB Watchlist check')
         wl = ImdbWl()
-        watchlist = wl.getWatchlist()
+        # Retrieve defined watchlists into one list
+        watchlist = wl.getWatchlists()
         if not watchlist:
-            log.info("Could not get IMDB watchlist.")
+            log.info("Could not get any info from IMDB Watchlists. Check log for more information.")
             return
+
+        # log.info('Watchlist is "%s"' % watchlist)
 
         MyMovieController = MovieController()
 
@@ -87,6 +90,7 @@ class ImdbWlCron(cronBase, Library):
                 MyMovieController._addMovie(result, quality.id)
             except:
                 log.info('MovieController unable to add this movie: "%s". %s' % (movie['title'], traceback.format_exc()))
+        log.info('Finished processing IMDB Watchlist(s)')
 
 def startImdbWlCron(config, searcher, debug):
     cron = ImdbWlCron()

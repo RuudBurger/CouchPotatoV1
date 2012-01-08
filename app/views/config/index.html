@@ -731,19 +731,19 @@
 				</div>
 			</fieldset>
 			<fieldset class="inlineLabels">
-				<h3>IMDB Watchlist</h3>
+				<h3>IMDB Watchlists</h3>
 				<div class="ctrlHolder checkbox">
 					<label>Enable</label>
 					<input type="checkbox" name="IMDBWatchlist.enabled" value="True" ${' checked="checked"' if config.get('IMDBWatchlist', 'enabled') else ''} />
 					<p class="formHint">
-						This will magically add movies to your wanted list that appear in public IMDB Watchlist specified below.
+						This will magically add movies to your wanted list that appear in public IMDB Watchlist(s) specified below.
 					</p>
 				</div>
 				<div class="ctrlHolder">
-					<label>IMDB Watchlist URL</label>
-					<input type="text" name="IMDBWatchlist.url" value="${config.get('IMDBWatchlist', 'url')}" class="textInput large"/>
+					<label>IMDB Watchlist URL(s)</label>
+                    <textarea name="IMDBWatchlist.url" cols="50" rows="5" class="textInput large">${config.get('IMDBWatchlist', 'url')}</textarea>
 					<p class="formHint">
-						'Export this list' URL of the public IMDB Watchlist
+						Comma separated list of 'Export this list' links from the public IMDB Watchlist pages
 					</p>
 				</div>
 			</fieldset>
