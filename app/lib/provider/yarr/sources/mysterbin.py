@@ -35,7 +35,12 @@ class mysterbin(torrentBase):
 
         url = self.searchUrl % quote_plus(self.toSearchString(movie.name + ' ' + quality))
         log.info('Searching: %s' % url)
-        data = urllib.urlopen(url)
+
+        try:
+            data = urllib2.urlopen(url, timeout = self.timeout).read()
+        except (IOError, URLError):
+            log.error('Failed to open %s.' % url )
+            return results
   
         try:
             tables = SoupStrainer('table')
