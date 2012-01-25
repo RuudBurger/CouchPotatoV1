@@ -107,7 +107,7 @@ class newzbin(nzbBase):
                     title = self.gettextelement(item, "title")
                     if 'error' in title.lower(): continue
 
-                    REPORT_NS = 'http://www.newzbin2.es/DTD/2007/feeds/report/';
+                    REPORT_NS = 'http://www.newzbin.com/DTD/2007/feeds/report/';
 
                     # Add attributes to name
                     for attr in item.find('{%s}attributes' % REPORT_NS):
