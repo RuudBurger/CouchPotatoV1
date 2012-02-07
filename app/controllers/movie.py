@@ -155,6 +155,10 @@ class MovieController(BaseController):
 
         return self.render({'id':id, 'result':result, 'success':success, 'year':data.get('year')})
 
+    @staticmethod
+    def _generateSQLQuery(movie):
+        return "select c09 from movie where c09='%s'" % (movie.imdb)
+
     def _checkMovieExists(self, movie):
         if cherrypy.config.get('config').get('XBMC', 'dbpath'):
             dbfile = None
@@ -170,7 +174,9 @@ class MovieController(BaseController):
                     log.debug('Checking if movie exists in XBMC by IMDB id:' + movie.imdb)
                     connXbmc.row_factory = MySqlite.Row
                     cXbmc = connXbmc.cursor()
-                    cXbmc.execute('select c09 from movie where c09="' + movie.imdb + '"')
+                    #sqlQuery = 'select c09 from movie where c09="' + movie.imdb + '"'
+                    sqlQuery = self._generateSQLQuery(movie)
+                    cXbmc.execute(sqlQuery)
                     #------End of Opening connection to XBMC DB------
                     inXBMC = False
                     for rowXbmc in cXbmc: # do a final check just to be sure
@@ -191,26 +197,36 @@ class MovieController(BaseController):
                 log.info('Could not find the XBMC MyVideos db at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
 
         if cherrypy.config.get('config').get('XBMC', 'useWebAPIExistingCheck'):
-           xbmc = XBMC()
-           xbmcResultsHosts = xbmc.queryVideoDatabase('select c09 from movie where c09="' + movie.imdb + '"')
-
-           if xbmcResultsHosts:
-              for xmbcResults in xbmcResultsHosts:
-                   for xmbcResult in [x.strip() for x in xmbcResults.strip().split('\n')]:
-                       if xmbcResult == "":
-                           continue
-                 
-                       c09 = xmbcResult.replace("<record><field>", "").replace("</field></record>", "").replace("<field>", "").replace("</field>", "").strip()
-                       if c09==movie.imdb:
-                           log.info('Movie already exists in XBMC (web API call), skipping.')
-                           return True
+            xbmc = XBMC()
+            #sqlQuery = 'select c09 from movie where c09="' + movie.imdb + '"'
+            sqlQuery = self._generateSQLQuery(movie)
+            xbmcResultsHosts = xbmc.queryVideoDatabase(sqlQuery)
+            
+            if xbmcResultsHosts:
+                for xmbcResults in xbmcResultsHosts:
+                    records = xmbcResults.strip().split("<record>")
+                    for xmbcResult in records:
+#                        xmbcResult = xmbcResult.strip()
+                        xmbcResult = xmbcResult.replace("</record>", "")
+#                        xmbcResult = xmbcResult.strip()
+                        
+                        if xmbcResult == "":
+                            continue
+                        
+                        fields = filter(lambda x: x != "", [field.replace("</field>", "") for field in xmbcResult.split("<field>")])
+                    
+                        log.debug("fields = %s" % fields)                 
+                        c09 = fields[0]
+                        if c09==movie.imdb:
+                            log.info('Movie already exists in XBMC (web API call), skipping.')
+                            return True
 
         return False
 
     def _addMovie(self, movie, quality, year = None):
 
         if self._checkMovieExists(movie=movie):
-           return
+            return
 
         log.info('Adding movie to database: %s' % movie.name)
 

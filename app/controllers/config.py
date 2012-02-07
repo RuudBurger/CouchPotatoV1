@@ -63,7 +63,7 @@ class ConfigController(BaseController):
         bools = filter(lambda s: not data.get(s),
             [
               'global.launchbrowser', 'global.updater',
-              'XBMC.enabled', 'XBMC.onSnatch',
+              'XBMC.enabled', 'XBMC.onSnatch', 'XBMC.useWebAPIExistingCheck',
               'NMJ.enabled',
               'PLEX.enabled',
               'PROWL.enabled', 'PROWL.onSnatch',
