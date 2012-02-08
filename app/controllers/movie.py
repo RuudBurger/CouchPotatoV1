@@ -157,9 +157,34 @@ class MovieController(BaseController):
 
     @staticmethod
     def _generateSQLQuery(movie):
-        return "select c09 from movie where c09='%s'" % (movie.imdb)
-
-    def _checkMovieExists(self, movie):
+#        return "select c09 from movie where c09='%s'" % (movie.imdb)
+        return "select c09, strVideoCodec, fVideoAspect, iVideoWidth, iVideoHeight from movie left outer join streamdetails on streamdetails.idFile = movie.idFile and iStreamType = 0 where c09='%s'" % (movie.imdb)
+    
+    @staticmethod
+    def _classifyQuality(strVideoCodec, fVideoAspect, iVideoWidth, iVideoHeight):
+        if fVideoAspect is None or strVideoCodec is None or iVideoWidth is None or iVideoHeight is None:
+            return "Unknown" # this might be caused by iso files
+        
+        try:
+            iVideoWidth = int(iVideoWidth)
+            iVideoHeight = int(iVideoHeight)
+        except ValueError:
+            return "Unknown"
+        
+        if iVideoWidth >= 1900: # 1920 is exactly width of 1080
+            return "1080p"
+        elif iVideoHeight == 1080:
+            return "1080p"
+        elif iVideoWidth >= 1276:# 1280 is exactly width of 720
+            return "720p"
+        elif iVideoWidth == 720:
+            return "720p"
+        elif iVideoWidth in [720, 704, 352] or iVideoHeight in [480]: # DVD
+            return "dvdrip"
+        else:
+            return "Unknown" # What about: 640x288 528x240 608x336 640x352 592x320 528x384 688x368 624x336
+        
+    def _checkMovieExists(self, movie, qualityId):
         if cherrypy.config.get('config').get('XBMC', 'dbpath'):
             dbfile = None
             for root, dirs, files in os.walk(cherrypy.config.get('config').get('XBMC', 'dbpath')):
@@ -197,8 +222,12 @@ class MovieController(BaseController):
                 log.info('Could not find the XBMC MyVideos db at ' + cherrypy.config.get('config').get('XBMC', 'dbpath'))
 
         if cherrypy.config.get('config').get('XBMC', 'useWebAPIExistingCheck'):
+            quality = Db.query(QualityTemplate).filter_by(id = qualityId).one()
+            acceptableQualities = [x.type for x in filter(lambda x: x.markComplete, quality.types)]
+            log.debug("acceptableQualities = %s" % acceptableQualities) # log.info(["%s %s %s %s %s" % (x.id, x.markComplete, x.order, x.quality, x.type) for x in sorted(quality.types, key=lambda x:x.order)])
+            
             xbmc = XBMC()
-            #sqlQuery = 'select c09 from movie where c09="' + movie.imdb + '"'
+
             sqlQuery = self._generateSQLQuery(movie)
             xbmcResultsHosts = xbmc.queryVideoDatabase(sqlQuery)
             
@@ -206,26 +235,37 @@ class MovieController(BaseController):
                 for xmbcResults in xbmcResultsHosts:
                     records = xmbcResults.strip().split("<record>")
                     for xmbcResult in records:
-#                        xmbcResult = xmbcResult.strip()
                         xmbcResult = xmbcResult.replace("</record>", "")
-#                        xmbcResult = xmbcResult.strip()
                         
                         if xmbcResult == "":
                             continue
                         
-                        fields = filter(lambda x: x != "", [field.replace("</field>", "") for field in xmbcResult.split("<field>")])
+                        fields = [x.replace("<field>", "") for x in filter(lambda x: x.startswith("<field>"), xmbcResult.split("</field>"))]
                     
-                        log.debug("fields = %s" % fields)                 
-                        c09 = fields[0]
-                        if c09==movie.imdb:
-                            log.info('Movie already exists in XBMC (web API call), skipping.')
-                            return True
+                        log.debug("fields = %s" % fields)
+                        
+                        if len(fields) < 5:
+                            log.error("Invalid response: %s" % xmbcResult)
+                            continue
+                        
+                        imdbId, strVideoCodec, fVideoAspect, iVideoWidth, iVideoHeight = fields[:5]
+                        if imdbId==movie.imdb:
+                            existingMovieQuality = self._classifyQuality(strVideoCodec, fVideoAspect, iVideoWidth, iVideoHeight)
+                            
+                            if existingMovieQuality == "Unknown":
+                                log.info("Unable to classify movie: strVideoCodec=%s, fVideoAspect=%s, iVideoWidth=%s, iVideoHeight=%s" % (strVideoCodec, fVideoAspect, iVideoWidth, iVideoHeight))
+                                
+                            if existingMovieQuality in acceptableQualities:
+                                log.info('Movie already exists in XBMC (web API call), with acceptable quality (%s), skipping.' % (existingMovieQuality))
+                                return True
+                            else:
+                                log.info('Movie already exists in XBMC (web API call), but quality (%s) incorrect (require: %s).' % (existingMovieQuality, acceptableQualities))
 
         return False
 
     def _addMovie(self, movie, quality, year = None):
 
-        if self._checkMovieExists(movie=movie):
+        if self._checkMovieExists(movie=movie, qualityId=quality):
             return
 
         log.info('Adding movie to database: %s' % movie.name)

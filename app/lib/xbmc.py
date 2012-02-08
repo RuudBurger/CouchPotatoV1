@@ -39,7 +39,6 @@ class XBMC:
             log.error("Couldn't sent command to XBMC. %s" % e)
             return False
 
-        log.info('XBMC notification to %s successful.' % host)
         return response
 
     def notify(self, message):
@@ -48,24 +47,27 @@ class XBMC:
 
         for curHost in self.hosts:
             command = {'command': 'ExecBuiltIn', 'parameter': 'Notification(CouchPotato, %s)' % message}
-            self.send(command, curHost)
+            ret = self.send(command, curHost)
+            if ret:
+                log.info('XBMC notification to %s successful.' % curHost)
     
     def setResponseFormat(self, WebHeader=None, WebFooter=None, Header=None, Footer=None, OpenTag=None, CloseTag=None, CloseFinalTag=None, OpenRecordSet=None, CloseRecordSet=None, OpenRecord=None, CloseRecord=None, OpenField=None, CloseField=None):
-        '''See: http://wiki.xbmc.org/index.php?title=Web_Server_HTTP_API#Commands_that_Retrieve_Information'''
+        '''See: http://wiki.xbmc.org/index.php?title=Web_Server_HTTP_API#Commands_that_Retrieve_Information
+        Calling this will no parameters/ all values set to None will result in reseting to default behavior'''
         if not self.enabled:
             return
         
         arguments = locals()
 
-        booleans = ["WebHeader", "WebFooter", "CloseFinalTag"]
+#        booleans = ["WebHeader", "WebFooter", "CloseFinalTag"]
         setResponseFormatCmds = []
         while arguments:
             k,v = arguments.popitem()
             if k == 'self':
                 continue
-            elif k in booleans:           
-                if v is not None and type(v) is bool:
-                    setResponseFormatCmds += [k, " %s" % str(v)]
+#            elif k in booleans: # Handle encoding boolean fields differently
+#                if v is not None and type(v) is bool:
+#                    setResponseFormatCmds += [k, " %s" % str(v)]
             else:
                 if v is not None:
                     setResponseFormatCmds += [k, " %s" % str(v)] # XBMC expects space after ;
@@ -90,7 +92,7 @@ class XBMC:
         if not self.enabled:
             return
         
-        self.resetResponseFormat()
+#        self.resetResponseFormat() # Reset to default settings. This isn't really needed unless we want to process the response of the next setResponseFormat call
         self.setResponseFormat(WebHeader=False, WebFooter=False, Header="", Footer="", OpenTag="", CloseTag="", CloseFinalTag=True, OpenRecordSet="", CloseRecordSet="", OpenRecord="<record>", CloseRecord="</record>", OpenField="<field>", CloseField="</field>")
 
         ret = []
@@ -101,7 +103,7 @@ class XBMC:
             if rawResponse:
                 ret.append(rawResponse)
         
-        self.resetResponseFormat()
+        self.resetResponseFormat() # Restore settings to defaults
 
         return ret
 
