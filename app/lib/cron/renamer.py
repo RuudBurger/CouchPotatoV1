@@ -28,7 +28,7 @@ import re
 import shutil
 import time
 import traceback
-
+import subprocess
 
 log = CPLog(__name__)
 
@@ -75,10 +75,8 @@ class RenamerCron(cronBase, Library):
             if destination == download or download in destination:
                 log.error("Download folder and movie destination shouldn't be the same. Change it in Settings >> Renaming.")
                 return True
-
             return False
         else:
-
             return True
 
     def doRename(self):
@@ -97,13 +95,12 @@ class RenamerCron(cronBase, Library):
 
         if allMovies:
             log.debug("Ready to rename some files.")
-
+        
         for movie in allMovies:
-
             if movie.get('match'):
                 log.debug('self.renameFiles(movie)')
                 finalDestination = self.renameFiles(movie)
-
+                
                 # Search for trailer & subtitles
                 log.debug('crons')
                 cherrypy.config['cron']['trailer'].forDirectory(finalDestination['directory'])
@@ -151,7 +148,10 @@ class RenamerCron(cronBase, Library):
                     except Exception, e:
                         log.error('XMG TMDB API failure.  Please report to developers. API returned: %s' % e)
                         log.error(traceback.format_exc())
-
+                
+                # Run post-processing Scripts
+                self._run_extra_script(finalDestination)
+                
                 # Notify XBMC
                 log.debug('XBMC')
                 xbmc = XBMC()
@@ -500,6 +500,18 @@ class RenamerCron(cronBase, Library):
 
     def replaceDoubles(self, string):
         return string.replace('  ', ' ').replace(' .', '.')
+    
+    def _run_extra_script(self, finalDestination):
+        if (self.conf('script_enabled') and self.conf('file_path')):
+            for file in finalDestination['filenames']:
+                script_cmd = [os.path.abspath(self.conf('file_path'))] + [os.path.join(finalDestination['directory'], file)]
+                log.info('Executing command: ' + str(script_cmd))
+                try:
+                    p = subprocess.Popen(script_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    out, err = p.communicate() #@UnusedVariable
+                    log.info(u"Script result: "+str(out))
+                except OSError, e:
+                    log.info(u"Unable to run extra_script: " + str(e.args[1]))
 
 def _move(old, dest, suppress = True):
     try:

@@ -274,6 +274,18 @@
 						<span><strong>cdNr</strong>: 1</span>
 					</p>
 				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Post-Processing Script</label>
+					<input type="checkbox" name="Renamer.script_enabled" value="True" ${' checked="checked"' if config.get('Renamer', 'script_enabled') else ''} />
+				</div>
+				<div class="ctrlHolder">
+					<label>File Path</label>
+					<input type="text" name="Renamer.file_path" value="${config.get('Renamer','file_path')}" class="textInput large"/>
+					<p class="formHint">
+						Relative file path to your extra script (starting from CouchPotato install folder)
+					</p>
+				</div>
+			</fieldset>
 			</fieldset>
 			<fieldset class="inlineLabels">
 				<div class="ctrlHolder">
@@ -747,6 +759,7 @@
 					<label>Check VideoETA</label>
 					<input type="checkbox" name="MovieETA.enabled" value="True" ${' checked="checked"' if config.get('MovieETA', 'enabled') else ''} />
 				</div>
+				
 			</fieldset>
 			<fieldset class="inlineLabels">
 				<h3>IMDB Watchlists</h3>

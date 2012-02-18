@@ -58,6 +58,8 @@ class configApp():
         self.setDefault('Renamer', 'fileNaming', '<thename><cd>.<ext>')
         self.setDefault('Renamer', 'separator', ' ')
         self.setDefault('Renamer', 'cleanup', False)
+        self.setDefault('Renamer', 'script_enabled', False)
+        self.setDefault('Renamer', 'file_path', '')
 
         self.addSection('Trailer')
         self.setDefault('Trailer', 'quality', False)
@@ -247,7 +249,7 @@ class configApp():
         self.setDefault('Meta', 'fanartFileName', 'fanart.<orig_ext>')
         self.setDefault('Meta', 'posterFileName', 'movie.tbn')
         self.setDefault('Meta', 'nfoFileName', 'movie.nfo')
-
+        
         self.save()
 
     def save(self):
