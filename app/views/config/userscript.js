@@ -21,6 +21,8 @@
 // @include     http://sratim.co.il/view.php?*
 // @exclude     http://trak.tv/movie/*/*
 // @exclude     http://*.trak.tv/movie/*/*
+// @include	http://*.filmweb.pl/*
+// @include	http://filmweb.pl/*
 // ==/UserScript==
 
 var version = 9;
@@ -531,6 +533,53 @@ youtheater = (function(){
     return constructor;
 })();
 
+filmweb = (function(){
+    var obj = this;
+
+	function isMovie(){
+		var filmType = document.getElementById('filmType').innerText
+		return filmType != '[serial TV]';
+	}
+
+	function getName(){
+		// polish or original title if there is no polish one
+		var title = document.getElementsByTagName('title')[0].text.match(/^(.+) \(\d{4}\) (- .+ )?- Filmweb$/)[1];
+		var titleLen = title.length;
+		var metas = document.getElementsByTagName('meta');
+		obj = null;
+		for (i = 0; i < metas.length; i ++) {
+			obj = metas[i];
+			if (obj.content.length >= titleLen) {
+				if (obj.content == title) {
+					break;
+				} else if (obj.content.substr(titleLen,  3) == ' / ') {
+					// original title exists
+					title = obj.content.match(/^.+ \/ (.+)$/)[1];
+					break;
+				}
+			}
+		}
+		// adding 'The' from back to front
+		var theTitle = title.match(/^(.+), The$/);
+		if (theTitle != null) {
+			title = 'The ' + theTitle[1];
+		}
+		return title;
+	}
+
+	function getYear(){
+        return document.getElementById('filmYear').innerHTML;
+//		return document.getElementsByTagName('title')[0].text.match(/^.+ \((\d{4})\) (- .+ )?- Filmweb$/)[1];
+	}
+
+    function constructor(){
+        if(isMovie()){
+            tmdb_api.MovieSearch(getName(), getYear());
+        }
+    }
+    return constructor;
+})();
+
 
 // Start
 (function(){
@@ -545,7 +594,8 @@ youtheater = (function(){
         "allocine.fr" : allocine,
         "rottentomatoes.com" : rotten,
         "youtheater.com": youtheater,
-        "sratim.co.il": youtheater
+        "sratim.co.il": youtheater,
+	"filmweb.pl": filmweb
     };
     
     for (var i in factory){
