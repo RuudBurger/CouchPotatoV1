@@ -722,6 +722,24 @@
 						Thumbnail, poster and .nfo file.
 					</p>
 				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Save URL Only</label>
+					<input type="checkbox" name="Meta.urlonly" value="True" ${' checked="checked"' if config.get('Meta', 'urlonly') else ''} />
+					<p class="formHint">Save only the IMBD Url in the nfo file
+					</p>
+				</div>
+                <div class="ctrlHolder checkbox">
+                    <label>Fanart Filename</label>
+                    <input type="text" name="Meta.fanartfilename" value="${config.get('Meta','fanartfilename')}" class="textInput large"/>
+                </div>
+                <div class="ctrlHolder checkbox">
+                    <label>Poster Filename</label>
+                    <input type="text" name="Meta.posterfilename" value="${config.get('Meta','posterfilename')}" class="textInput large"/>
+                </div>
+                <div class="ctrlHolder checkbox">
+                    <label>NFO Filename</label>
+                    <input type="text" name="Meta.nfofilename" value="${config.get('Meta','nfofilename')}" class="textInput large"/>
+                </div>
 			</fieldset>
 			<fieldset class="inlineLabels">
 				<h3>MovieETA</h3>
