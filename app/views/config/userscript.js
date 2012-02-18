@@ -483,9 +483,11 @@ rotten = (function(){
         return mName;
     }
 
-    function getYear(){
-    	var title = document.getElementsByTagName('h1')[0].getElementsByTagName('span')[0].innerHTML;
-    	return title.match(/\((19|20)[\d]{2,2}\)/)[0].substr(1, 4);
+    function getYear() {
+        var rightCol = document.getElementById("movieSynopsis").parentNode.getElementsByTagName("div")[1];
+        var releaseDate = rightCol.getElementsByTagName("span")[0].getElementsByTagName("span")[0].attributes["content"];
+
+        return releaseDate.value.substr(0, 4);
     }
 
     function constructor(){
