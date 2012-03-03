@@ -142,7 +142,7 @@ class newzbin(nzbBase):
 
                 return results
             except:
-                log.error('Failed to parse XML response from newzbin.com: %s' % traceback.format_exc())
+                log.error('Failed to parse XML response from newzbin2.es: %s' % traceback.format_exc())
 
         return results
 
