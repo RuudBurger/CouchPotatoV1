@@ -120,7 +120,7 @@ class nzbsRus(nzbBase):
                     new.score = self.calcScore(new, movie)
                     new.checkNZB = True
 
-                    if self.isCorrectMovie(new, movie, type, imdbResults = True):
+                    if self.isCorrectMovie(new, movie, type):
                         results.append(new)
                         log.info('Found: %s' % new.name)
 
