@@ -13,6 +13,7 @@ from app.lib.growl import GROWL
 from app.lib.notifo import Notifo
 from app.lib.boxcar import Boxcar
 from app.lib.nma import NMA
+from app.lib.nmwp import NMWP
 from app.lib.twitter import Twitter
 import cherrypy
 import datetime
@@ -231,7 +232,13 @@ class YarrCron(cronBase, rss):
                             log.debug('NotifyMyAndroid')
                             nma = NMA()
                             nma.notify('Download Started', 'Snatched %s' % highest.name)
-
+                        
+                        # Notify NotifyMyWindowsPhone
+                        if self.config.get('NMWP', 'onSnatch'):
+                            log.debug('NotifyMyWindowsPhone')
+                            nmwp = NMWP()
+                            nmwp.notify('Download Started', 'Snatched %s' % highest.name)
+                            
                         # Notify Twitter
                         if self.config.get('Twitter', 'onSnatch'):
                             log.debug('Twitter')

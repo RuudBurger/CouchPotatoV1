@@ -229,6 +229,13 @@ class configApp():
         self.setDefault('NMA', 'devkey', '')
         self.setDefault('NMA', 'priority', '0')
 
+        self.addSection('NMWP')
+        self.setDefault('NMWP', 'enabled', False)
+        self.setDefault('NMWP', 'onSnatch', False)
+        self.setDefault('NMWP', 'apikey', '')
+        self.setDefault('NMWP', 'devkey', '')
+        self.setDefault('NMWP', 'priority', '0')
+
         self.addSection('Twitter')
         self.setDefault('Twitter', 'enabled', False)
         self.setDefault('Twitter', 'onSnatch', False)

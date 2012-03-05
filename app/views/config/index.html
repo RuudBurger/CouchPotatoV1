@@ -1054,6 +1054,43 @@
 					</select>
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels" id="nmwpFieldset">
+				<h3>NotifyMyWindowsPhone</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enabled</label>
+					<input type="checkbox" name="NMWP.enabled" value="True" ${' checked="checked"' if config.get('NMWP', 'enabled') else ''} />
+					<p class="formHint">
+						Sends a notification to <a href="https://NotifyMyWindowsPhone.com">NotifyMyWindowsPhone.com</a>
+					</p>
+				</div>
+				<div class="ctrlHolder checkbox">
+					<label>Also on snatched</label>
+					<input type="checkbox" name="NMWP.onSnatch" value="True" ${' checked="checked"' if config.get('NMWP', 'onSnatch') else ''} />
+					<p class="formHint">
+						Also send a notification when a movie is snatched.
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>API Key</label>
+					<input type="text" name="NMWP.apikey" value="${config.get('NMWP', 'apikey')}" class="textInput large" />
+					<p class="formHint">
+					Multiple keys must be seperated by a , (comma). Up to a maximum of 5
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<a href="#nmwpTest" id="nmwpTest" class="testNotification">Send a message to NotifyMyWindowsPhone, see if it works.</a>
+				</div>
+				<div class="ctrlHolder">
+					<label>Priority</label>
+					<select name="NMWP.priority" class="textInput large">
+					<option value="-2"${' selected="selected"' if config.get('NMWP', 'priority') == '-2' else ''}>Very Low</option>
+					<option value="-1"${' selected="selected"' if config.get('NMWP', 'priority') == '-1' else ''}>Moderate</option>
+					<option value="0"${' selected="selected"' if config.get('NMWP', 'priority') == '0' else ''}>Normal</option>
+					<option value="1"${' selected="selected"' if config.get('NMWP', 'priority') == '1' else ''}>High</option>
+					<option value="2"${' selected="selected"' if config.get('NMWP', 'priority') == '2' else ''}>Emergency</option>
+					</select>
+				</div>
+			</fieldset>
             <fieldset class="inlineLabels" id="twitterFieldset">
 				<h3>Twitter</h3>
 				<div class="ctrlHolder checkbox">
@@ -1371,6 +1408,13 @@
 			new Request({
 				'url': './testNMA/',
 				'data': $('nmaFieldset')
+			}).send()
+		})
+		$('nmwpTest').addEvent('click',function(e){
+			(e).stop()
+			new Request({
+				'url': './testNMWP/',
+				'data': $('nmwpFieldset')
 			}).send()
 		})
         $('twitterTest').addEvent('click',function(e){
