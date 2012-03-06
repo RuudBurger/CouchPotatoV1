@@ -311,6 +311,8 @@ class RenamerCron(cronBase, Library):
         replacements = {
              'cd': '',
              'cdNr': '',
+             'pt': '',
+             'part': '',
              'ext': 'mkv',
              'namethe': namethe.strip(),
              'thename': moviename.strip(),
@@ -354,6 +356,8 @@ class RenamerCron(cronBase, Library):
             if multiple:
                 replacements['cd'] = ' cd' + str(cd)
                 replacements['cdNr'] = ' ' + str(cd)
+                replacements['pt'] = ' pt' + str(cd)
+                replacements['part'] = ' part' + str(cd)
 
             replacements['original'] = file['filename']
 

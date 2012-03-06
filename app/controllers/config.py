@@ -33,6 +33,8 @@ class ConfigController(BaseController):
         replacements = {
              'cd': ' cd1',
              'cdNr': ' 1',
+             'pt': ' pt1',
+             'part': ' part1',
              'ext': 'mkv',
              'namethe': 'Big Lebowski, The',
              'thename': 'The Big Lebowski',
