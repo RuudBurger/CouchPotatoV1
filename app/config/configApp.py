@@ -186,6 +186,7 @@ class configApp():
         self.setDefault('XBMC', 'username', 'xbmc')
         self.setDefault('XBMC', 'password', 'xbmc')
         self.setDefault('XBMC', 'dbpath', '')
+        self.setDefault('XBMC', 'unknown', '')
         self.setDefault('XBMC', 'updateOneOnly', False)
         self.setDefault('XBMC', 'useWebAPIExistingCheck', False)
 

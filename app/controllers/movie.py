@@ -182,7 +182,7 @@ class MovieController(BaseController):
         elif iVideoWidth in [720, 704, 352] or iVideoHeight in [480]: # DVD
             return "dvdrip"
         else:
-            return "Unknown" # What about: 640x288 528x240 608x336 640x352 592x320 528x384 688x368 624x336
+            return "Unknown" # What about: 640x288 528x240 608x336 640x352 592x320 528x384 688x368 624x336 544x240 
         
     def _checkMovieExists(self, movie, qualityId):
         if cherrypy.config.get('config').get('XBMC', 'dbpath'):
@@ -254,6 +254,10 @@ class MovieController(BaseController):
                             
                             if existingMovieQuality == "Unknown":
                                 log.info("Unable to classify movie: strVideoCodec=%s, fVideoAspect=%s, iVideoWidth=%s, iVideoHeight=%s" % (strVideoCodec, fVideoAspect, iVideoWidth, iVideoHeight))
+                                
+                            treatUnknownAs = cherrypy.config.get('config').get('XBMC', 'unknown')
+                            if treatUnknownAs and treatUnknownAs != '':
+                                existingMovieQuality = treatUnknownAs
                                 
                             if existingMovieQuality in acceptableQualities:
                                 log.info('Movie already exists in XBMC (web API call), with acceptable quality (%s), skipping.' % (existingMovieQuality))
