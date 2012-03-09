@@ -324,6 +324,33 @@
 					<label>Password</label>
 					<input type="password" name="newzbin.password" value="${config.get('newzbin', 'password')}" class="textInput large"/>
 				</div>
+				<div class="ctrlHolder">
+					<label for="newzbin.subtitledlanguage">Subtitle Language</label>
+					<select name="newzbin.subtitledlanguage" id="newzbin.subtitledlanguage" class="textInput large">
+						<option value=" "${' selected="selected"' if str(' ') == config.get('newzbin', 'subtitledlanguage') else ''}>None</option>
+						<option value="1073741824"${' selected="selected"' if str('1073741824') == config.get('newzbin', 'subtitledlanguage') else ''}>Unknown</option>
+						<option value="2"${' selected="selected"' if str('2') == config.get('newzbin', 'subtitledlanguage') else ''}>French</option>
+						<option value="4096" ${'selected="selected"' if str('31') == config.get('newzbin', 'subtitledlanguage') else ''}>English</option>	
+						<option value="8"${' selected="selected"' if str('8') == config.get('newzbin', 'subtitledlanguage') else ''}>Spanish</option>
+						<option value="33"${' selected="selected"' if str('33') == config.get('newzbin', 'subtitledlanguage') else ''}>German</option>
+						<option value="512"${' selected="selected"' if str('512') == config.get('newzbin', 'subtitledlanguage') else ''}>Italian</option>
+						<option value="16"${' selected="selected"' if str('16') == config.get('newzbin', 'subtitledlanguage') else ''}>Danish</option>
+						<option value="32"${' selected="selected"' if str('32') == config.get('newzbin', 'subtitledlanguage') else ''}>Dutch</option>
+						<option value="64" ${'selected="selected"' if str('64') == config.get('newzbin', 'subtitledlanguage') else ''}>Japanese</option>			
+						<option value="1024"${' selected="selected"' if str('1024') == config.get('newzbin', 'subtitledlanguage') else ''}>Chinese</option>					
+						<option value="128"${' selected="selected"' if str('128') == config.get('newzbin', 'subtitledlanguage') else ''}>Korean</option>
+						<option value="256"${' selected="selected"' if str('256') == config.get('newzbin', 'subtitledlanguage') else ''}>Russian</option>
+						<option value="2048"${' selected="selected"' if str('2048') == config.get('newzbin', 'subtitledlanguage') else ''}>Polish</option>
+						<option value="8192"${' selected="selected"' if str('8192') == config.get('newzbin', 'subtitledlanguage') else ''}>Vietnamese</option>
+						<option value="16384"${' selected="selected"' if str('16384') == config.get('newzbin', 'subtitledlanguage') else ''}>Swedish</option>
+						<option value="32768"${' selected="selected"' if str('32768') == config.get('newzbin', 'subtitledlanguage') else ''}>Norwegian</option>
+						<option value="65536"${' selected="selected"' if str('65536') == config.get('newzbin', 'subtitledlanguage') else ''}>Finnish</option>
+						<option value="262144"${' selected="selected"' if str('262144') == config.get('newzbin', 'subtitledlanguage') else ''}>Turkish</option>
+						<option value="524288"${' selected="selected"' if str('524288') == config.get('newzbin', 'subtitledlanguage') else ''}>Portuguese</option>
+					</select>
+				</div>				
+
+				
 			</fieldset>
 			<fieldset class="inlineLabels" id="nzbmatrixFieldset">
 				<h3>NZBMatrix.com</h3>
