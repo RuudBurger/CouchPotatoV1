@@ -44,7 +44,7 @@ class newzbin(nzbBase):
         return self.config.get('newzbin', option)
 
     def enabled(self):
-        return self.conf('enabled') and self.config.get('NZB', 'enabled') and self.conf('username') and self.conf('password')
+         return self.conf('enabled') and self.config.get('NZB', 'enabled') and self.conf('username') and self.conf('password') and self.conf('subtitledlanguage')
 
     def find(self, movie, quality, type, retry = False):
 
@@ -58,6 +58,7 @@ class newzbin(nzbBase):
         catId = self.getCatId(type)
 
         arguments = urlencode({
+            'ps_rb_subtitle': self.conf('subtitledlanguage'),
             'searchaction': 'Search',
             'u_url_posts_only': '0',
             'u_show_passworded': '0',
