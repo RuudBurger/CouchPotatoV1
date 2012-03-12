@@ -27,6 +27,14 @@ class ImdbWl:
                 log.info('Incorrect IMDB watchlist URL: %s. Skipping.' % url)
                 return temp_wl
 
+            # Check if user has provided watchlist webpage, rather than export URL
+            try:
+                url_parts = url.split("/")
+                if url_parts[3] == "user" and url_parts[5].startswith("watchlist"):
+                    url = "http://www.imdb.com/list/export?list_id=watchlist&author_id=%s" % (url_parts[4])
+            except(IndexError):
+                pass
+
             urllib._urlopener = ImdbUrlOpener()
             tmp_csv, headers = urllib.urlretrieve(url)
             csvwl = csv.reader(open(tmp_csv, 'rb'))
