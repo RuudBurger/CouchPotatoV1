@@ -564,6 +564,10 @@ a[name=sn], a[name=dl] {
 		.smallList .correct { background-image: url('../../media/images/ok.png'); }
 		.smallList .reAdd { background-image: url('../../media/images/reload.png'); }
 
+		.smallList .launch {
+			width: auto;
+		}
+
 /*** Logs ***/
 #logs {
 	padding: 10px;
