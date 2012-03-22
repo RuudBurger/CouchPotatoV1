@@ -33,7 +33,7 @@ WindowsUpdater.py
 # OS generated files #
 ######################
 .Trashes
-.DS_Store?
+.DS_Store
 desktop.ini
 ehthumbs.db
 Thumbs.db
