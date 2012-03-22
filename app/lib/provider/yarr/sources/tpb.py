@@ -22,7 +22,7 @@ class tpb(torrentBase):
     apiUrl = 'https://depiraatbaai.be/search/%s/0/7/%d'
 
     catIds = {
-        207: ['720p', '1080p'],
+        207: ['720p', '1080p', 'blu'],
         200: ['cam', 'ts', 'dvdrip', 'tc', 'r5', 'scr', 'brrip'],
         202: ['dvdr']
     }

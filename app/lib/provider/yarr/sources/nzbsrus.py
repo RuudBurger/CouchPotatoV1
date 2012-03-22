@@ -18,7 +18,8 @@ class nzbsRus(nzbBase):
     catIds = {
         12:['1080p'], # sub
         11:['720p'], #sub
-        13:['brrip'], #sub
+        13:['blu'], #sub
+        51:['brrip'],
         45:['dvdr'],
         48:['cam', 'ts', 'dvdrip', 'tc', 'r5', 'scr']
     }
