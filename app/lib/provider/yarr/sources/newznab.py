@@ -22,7 +22,7 @@ class newznab(nzbBase):
         2010: ['dvdr'],
         2030: ['cam', 'ts', 'dvdrip', 'tc', 'r5', 'scr'],
         2040: ['720p', '1080p'],
-        2050: ['blu-ray']
+        2050: ['blu']
     }
     catBackupId = 2000
 
