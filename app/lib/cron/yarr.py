@@ -1,10 +1,10 @@
 from app import latinToAscii
 from app.config.cplog import CPLog
-from app.config.db import Movie, Session as Db, History
+from app.config.db import Movie, MovieETA, Session as Db, History
 from app.lib.cron.base import cronBase
 from app.lib.provider.rss import rss
 from app.lib.qualities import Qualities
-from sqlalchemy.sql.expression import or_
+from sqlalchemy.sql.expression import or_, and_
 from app.lib import xbmc
 from app.lib import prowl
 from app.lib.xbmc import XBMC
@@ -86,8 +86,11 @@ class YarrCron(cronBase, rss):
         log.info('Searching for new downloads, for all movies.')
         self.doCheck()
 
+        #get the current time
+        now = int(time.time())
+
         #get all wanted movies
-        movies = Db.query(Movie).filter(or_(Movie.status == 'want', Movie.status == 'waiting')).all()
+        movies = Db.query(Movie).join(MovieETA).filter(or_(Movie.status == 'want', Movie.status == 'waiting')).filter(or_(MovieETA.theater.between(1, now), MovieETA.dvd.between(1, now), and_(MovieETA.theater == 0, MovieETA.dvd == 0))).all()
         for movie in movies:
             if not self.abort and not self.stop:
                 self._search(movie)
