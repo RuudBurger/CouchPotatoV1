@@ -8,6 +8,9 @@ import time
 
 log = CPLog(__name__)
 
+
+
+
 class nzbBase(rss):
 
     config = None
@@ -223,6 +226,21 @@ class nzbBase(rss):
                     return id
 
         return self.catBackupId
+
+    def getCatIdNewznab(self, prefQuality, amountCat):
+        ''' Selecting category by quality '''
+        retval = ''
+        for id, quality in self.catIds.iteritems():
+            for q in quality:
+                if q == prefQuality:
+                    if retval != '':
+                        retval = retval + ','
+                    retval = retval + str(id)
+                    amountCat[0]=amountCat[0] + len(self.catIds.get(id))
+        if retval != '':
+            return retval
+        return str(self.catBackupId)
+
 
     def downloadLink(self, id):
         return self.downloadUrl % (id, self.getApiExt())
