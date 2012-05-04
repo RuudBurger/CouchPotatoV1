@@ -99,25 +99,27 @@ class rss:
         self.wait()
 
         try:
+            
+            # Add CP version to request                                                                                
+            if os.name == 'nt': platf = 'windows'                                                                      
+            elif 'Darwin' in platform.platform(): platf = 'osx'                                                        
+            else: platf = 'linux'                                                                                      
+                                                                                                                       
+            req = urllib2.Request(url)                                                                                 
+            req.add_header('User-Agent', 'CouchPotato')                                                                
+            req.add_header('X-CP-Version', 'CouchPotato (%s - %s)' % (platf, cherrypy.config.get('updater').getVersion().rstrip()))
+
             if username is not '' and password is not '':
                 passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
                 passman.add_password(None, url, username, password)
                 authhandler = urllib2.HTTPBasicAuthHandler(passman)
                 opener = urllib2.build_opener(authhandler)
+                urllib2.install_opener(opener) 
                 log.debug('Opening "%s" with password' % url)
-                data = opener.open(url, timeout = timeout)
             else:
                 log.debug('Opening "%s"' % url)
-
-                req = urllib2.Request(url)
-
-                # Add CP version to request
-                if os.name == 'nt': platf = 'windows'
-                elif 'Darwin' in platform.platform(): platf = 'osx'
-                else: platf = 'linux'
-                req.add_header('X-CP-Version', '%s - %s' % (platf, cherrypy.config.get('updater').getVersion()))
-
-                data = urllib2.urlopen(req, timeout = self.timeout)
+                
+            data = urllib2.urlopen(req, timeout = self.timeout)
 
         except IOError, e:
             log.error('Something went wrong in urlopen: %s' % e)
