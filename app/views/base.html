@@ -2,19 +2,21 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+        <meta content="minimum-scale=1, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
 	<title>CouchPotato</title>
 	<link href="${baseUrl}media/images/favicon.ico" rel="icon" type="image/x-icon" />
 	<link rel="apple-touch-icon" href="${baseUrl}media/images/homescreen.png"/>
 <%
 	cssFiles = [
-		'Base.css',
-		'Main.css',
-		'Uniform.css',
-		'UniformGeneric.css'
+		{ 'file': 'Base.css', 'media': 'screen' },
+		{ 'file': 'Main.css', 'media': 'screen' },
+		{ 'file': 'Uniform.css', 'media': 'screen' },
+		{ 'file': 'UniformGeneric.css', 'media': 'screen' },
+                { 'file': 'Mobile.css', 'media': 'screen and (max-width: 640px)' }
 	]
 %>
 	% for cssFile in cssFiles:
-	<link href="${baseUrl}media/style/${cssFile}" media="screen" rel="stylesheet" type="text/css" />
+	<link href="${baseUrl}media/style/${cssFile['file']}" media="${cssFile['media']}" rel="stylesheet" type="text/css" />
 	% endfor
 </head>
 <body>
