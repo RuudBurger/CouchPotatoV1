@@ -9,7 +9,7 @@ h1 {
     position: relative;
     height: 135px;
     width: 100%;
-    padding: 0;
+    padding: 20px 0 0 0;
 }
 
 #header .navigation ul li {
@@ -61,7 +61,7 @@ input[type="text"], input[type="password"], textarea {
 }
 
 #header .addNew .row .overTxtLabel {
-    top: 70px !important;
+    top: 90px !important;
 }
 
 #header .addNew .row .movieselect {

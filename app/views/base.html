@@ -2,7 +2,15 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+        % if config.get('webapp','enabled'):
+        
         <meta content="minimum-scale=1, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-startup-image" href="${baseUrl}media/images/loading-screen.png" />
+        
+        % endif
+        
 	<title>CouchPotato</title>
 	<link href="${baseUrl}media/images/favicon.ico" rel="icon" type="image/x-icon" />
 	<link rel="apple-touch-icon" href="${baseUrl}media/images/homescreen.png"/>
