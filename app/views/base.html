@@ -11,9 +11,9 @@
 		{ 'file': 'Base.css', 'media': 'screen' },
 		{ 'file': 'Main.css', 'media': 'screen' },
 		{ 'file': 'Uniform.css', 'media': 'screen' },
-		{ 'file': 'UniformGeneric.css', 'media': 'screen' },
-                { 'file': 'Mobile.css', 'media': 'screen and (max-width: 640px)' }
+		{ 'file': 'UniformGeneric.css', 'media': 'screen' }
 	]
+        if config.get('webapp','enabled'): cssFiles.append({ 'file': 'Mobile.css', 'media': 'screen and (max-width: 640px)' })
 %>
 	% for cssFile in cssFiles:
 	<link href="${baseUrl}media/style/${cssFile['file']}" media="${cssFile['media']}" rel="stylesheet" type="text/css" />

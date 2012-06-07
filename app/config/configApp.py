@@ -91,6 +91,9 @@ class configApp():
         self.addSection('mysterbin')
         self.setDefault('mysterbin', 'enabled', False)
 
+        self.addSection('webapp')
+        self.setDefault('webapp', 'enabled', False)
+
         self.addSection('NZB')
         self.setDefault('NZB', 'enabled', True)
         self.setDefault('NZB', 'retention', 300)
