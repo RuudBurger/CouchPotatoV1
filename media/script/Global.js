@@ -116,5 +116,17 @@ window.addEvent('domready', function() {
 	});
 	
 	$(document.body).getElements('.disabled').setStyle('opacity', 0.2)
-
+        
+        // Fix for webapp, iPhone treats a's as a popup to safari. Make sure we change the location of THIS window on non blank targets
+        var a=document.getElementsByTagName("a");
+        for(var i=0;i<a.length;i++)
+        { 
+            if (a[i].target != '_blank') {
+                a[i].onclick=function()
+                {
+                    window.location=this.getAttribute("href");
+                    return false
+                }
+            }
+        }
 })
