@@ -75,7 +75,7 @@ class configApp():
         self.setDefault('NZBMatrix', 'apikey', '')
         self.setDefault('NZBMatrix', 'english', False)
         self.addSection('kere_ws')
-        self.setDefault('kere_ws', 'enabled', True)
+        self.setDefault('kere_ws', 'enabled', False)
         self.setDefault('kere_ws', 'username', '')
         self.setDefault('kere_ws', 'apikey', '')
         self.addSection('newzbin')
