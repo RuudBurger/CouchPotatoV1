@@ -354,6 +354,27 @@
 					</p>
 				</div>
 			</fieldset>
+			<fieldset class="inlineLabels" id="kere_wsFieldset">
+				<h3>Kere.ws</h3>
+				<div class="ctrlHolder checkbox">
+					<label>Enable</label>
+					<input type="checkbox" name="kere_ws.enabled" value="True" ${' checked="checked"' if config.get('kere_ws', 'enabled') else ''} />
+				</div>
+				<div class="ctrlHolder">
+					<label>Username</label>
+					<input type="text" name="kere_ws.username" value="${config.get('kere_ws', 'username')}" autocomplete="off" class="textInput large"/>
+					<p class="formHint">
+						Can be found <a href="http://kere.ws" target="_blank">here</a>, "User Name"
+					</p>
+				</div>
+				<div class="ctrlHolder">
+					<label>Apikey</label>
+					<input type="text" name="kere_ws.apikey" value="${config.get('kere_ws', 'apikey')}" class="textInput large"/>
+					<p class="formHint">
+						Can be found <a href="http://kere.ws" target="_blank">here</a>, "Current API Key" <br />
+					</p>
+				</div>
+			</fieldset>
 			<fieldset class="inlineLabels" id="newznabFieldset">
 				<h3>Newznab</h3>
 				<div class="ctrlHolder checkbox">
@@ -1261,7 +1282,7 @@
 	        }
 	    }
 		
-		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset', 'traktNotificationFieldset'],function(item){
+		Array.each(['renamingFieldset','torrentsFieldset','nzbsFieldset','nzbmatrixFieldset','kere_wsFieldset','nzbsorgFieldset','newznabFieldset','subtitleFieldset', 'xbmcFieldset', 'nmjFieldset', 'plexFieldset', 'prowlFieldset', 'growlFieldset', 'notifoFieldset', 'boxcarFieldset', 'nmaFieldset', 'twitterFieldset', 'synoIndexFieldset', 'traktNotificationFieldset'],function(item){
 		    var fieldset = $(item)
 		    var checkbox = fieldset.getElement('[type=checkbox]')
 		    isEnabled(checkbox, fieldset)

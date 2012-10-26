@@ -1,6 +1,7 @@
 from app.config.cplog import CPLog
 from app.lib.provider.yarr.sources.newznab import newznab
 from app.lib.provider.yarr.sources.nzbmatrix import nzbMatrix
+from app.lib.provider.yarr.sources.kere_ws import kereWs
 from app.lib.provider.yarr.sources.newzbin import newzbin
 from app.lib.provider.yarr.sources.nzbs import nzbs
 from app.lib.provider.yarr.sources.tpb import tpb
@@ -22,7 +23,7 @@ class Searcher():
         self.config = config
         self.debug = debug
 
-        for yarr in [newzbin, nzbMatrix, nzbs, newznab, tpb, x264, nzbsRus]:
+        for yarr in [newzbin, nzbMatrix, kereWs, nzbs, newznab, tpb, x264, nzbsRus]:
             m = yarr(config)
             self.sources.append(m)
 
@@ -71,7 +72,6 @@ class Searcher():
             for check in ['nzb', 'download', 'torrent']:
                 if check in data.get('Content-Type'):
                     return True
-
             return False
         except (IOError, URLError):
             return False
