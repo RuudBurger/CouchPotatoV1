@@ -260,7 +260,9 @@ class Updater(rss, SimplePlugin):
                         pass
 
                     try:
-                        os.renames(fromfile, tofile)
+                        #os.renames(fromfile, tofile)
+                        shutil.copy(fromfile, tofile)
+                        os.remove(fromfile)
                     except Exception, e:
                         log.error('Failed overwriting file: %s' % e)
 
