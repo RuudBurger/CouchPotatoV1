@@ -227,6 +227,11 @@
 	% for movie in downloaded:
 	<span>
 		${movie.name}
+		% for queue in movie.queue:
+			% if len(queue.renamehistory) > 0 and len(launch_prefix) > 0:
+				<a href="${queue.renamehistory[len(queue.renamehistory)-1].new.replace(destination, launch_prefix)}" class="launch">${queue.qualityType}</a>
+			% endif
+		% endfor
 		<a href="${url(controller='movie', action='delete', id=movie.id)}" class="delete"></a>
 		<a href="${url(controller='movie', action='reAdd', id=movie.id)}" class="reAdd" data-id="${movie.id}" title="Movie didnt download, re-add it."></a>
 	</span>

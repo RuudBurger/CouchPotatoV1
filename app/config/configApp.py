@@ -60,6 +60,7 @@ class configApp():
         self.setDefault('Renamer', 'cleanup', False)
         self.setDefault('Renamer', 'script_enabled', False)
         self.setDefault('Renamer', 'file_path', '')
+        self.setDefault('Renamer', 'launch_prefix', '')
 
         self.addSection('Trailer')
         self.setDefault('Trailer', 'quality', False)

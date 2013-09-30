@@ -26,7 +26,10 @@ class MovieController(BaseController):
         snatched = qMovie.order_by(desc(Movie.dateChanged), Movie.name).filter_by(status = u'snatched').all()
         downloaded = qMovie.order_by(desc(Movie.dateChanged), Movie.name).filter_by(status = u'downloaded').all()
 
-        return self.render({'movies': movies, 'snatched':snatched, 'downloaded':downloaded})
+        launch_prefix = cherrypy.config.get('config').get('Renamer', 'launch_prefix')
+        destination = cherrypy.config.get('config').get('Renamer', 'destination')
+
+        return self.render({'movies': movies, 'snatched':snatched, 'downloaded':downloaded, 'launch_prefix':launch_prefix, 'destination':destination})
 
 
     @cherrypy.expose
