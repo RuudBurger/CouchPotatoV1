@@ -10,16 +10,17 @@ log = CPLog(__name__)
 class Qualities:
 
     types = {
-        '1080p':    {'key': '1080p', 'size': (5000, 20000), 'order':1, 'label': '1080P', 'alternative': [], 'allow': [], 'ext':['mkv', 'm2ts']},
-        '720p':     {'key': '720p', 'size': (3500, 10000), 'order':2, 'label': '720P', 'alternative': [], 'allow': [], 'ext':['mkv', 'm2ts']},
-        'brrip':    {'key': 'brrip', 'size': (700, 7000), 'order':3, 'label': 'BR-Rip', 'alternative': ['bdrip'], 'allow': ['720p'], 'ext':['mkv', 'avi']},
-        'dvdr':     {'key': 'dvdr', 'size': (3000, 10000), 'order':4, 'label': 'DVD-R', 'alternative': [], 'tags': ['pal', 'ntsc'], 'allow': [], 'ext':['iso', 'img']},
-        'dvdrip':   {'key': 'dvdrip', 'size': (600, 2400), 'order':5, 'label': 'DVD-Rip', 'alternative': [], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
-        'scr':      {'key': 'scr', 'size': (600, 1600), 'order':6, 'label': 'Screener', 'alternative': ['dvdscr', 'ppvrip'], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
-        'r5':       {'key': 'r5', 'size': (600, 1000), 'order':7, 'label': 'R5', 'alternative': [], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
-        'tc':       {'key': 'tc', 'size': (600, 1000), 'order':8, 'label': 'TeleCine', 'alternative': ['telecine'], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
-        'ts':       {'key': 'ts', 'size': (600, 1000), 'order':9, 'label': 'TeleSync', 'alternative': ['telesync'], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
-        'cam':      {'key': 'cam', 'size': (600, 1000), 'order':10, 'label': 'Cam', 'alternative': [], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']}
+        'blu':    {'key': 'blu', 'size': (15000, 60000), 'order':1, 'label': 'blu-ray', 'alternative': ['blu-ray', 'bluray', '1080p'], 'allow': ['bluray', '1080p'], 'ext':['mkv', 'm2ts']},
+        '1080p':    {'key': '1080p', 'size': (5000, 20000), 'order':2, 'label': '1080P', 'alternative': [], 'allow': [], 'ext':['mkv', 'm2ts']},
+        '720p':     {'key': '720p', 'size': (3500, 10000), 'order':3, 'label': '720P', 'alternative': [], 'allow': [], 'ext':['mkv', 'm2ts']},
+        'brrip':    {'key': 'brrip', 'size': (700, 7000), 'order':4, 'label': 'BR-Rip', 'alternative': ['bdrip'], 'allow': ['720p'], 'ext':['mkv', 'avi']},
+        'dvdr':     {'key': 'dvdr', 'size': (3000, 10000), 'order':5, 'label': 'DVD-R', 'alternative': [], 'tags': ['pal', 'ntsc'], 'allow': [], 'ext':['iso', 'img']},
+        'dvdrip':   {'key': 'dvdrip', 'size': (600, 2400), 'order':6, 'label': 'DVD-Rip', 'alternative': [], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
+        'scr':      {'key': 'scr', 'size': (600, 1600), 'order':7, 'label': 'Screener', 'alternative': ['dvdscr', 'ppvrip'], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
+        'r5':       {'key': 'r5', 'size': (600, 1000), 'order':8, 'label': 'R5', 'alternative': [], 'allow': ['dvdr'], 'ext':['avi', 'mpg', 'mpeg']},
+        'tc':       {'key': 'tc', 'size': (600, 1000), 'order':9, 'label': 'TeleCine', 'alternative': ['telecine'], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
+        'ts':       {'key': 'ts', 'size': (600, 1000), 'order':10, 'label': 'TeleSync', 'alternative': ['telesync'], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']},
+        'cam':      {'key': 'cam', 'size': (600, 1000), 'order':11, 'label': 'Cam', 'alternative': [], 'allow': [], 'ext':['avi', 'mpg', 'mpeg']}
     }
     preReleases = ['cam', 'ts', 'tc', 'r5', 'scr', 'dvdr', 'dvdrip']
 
