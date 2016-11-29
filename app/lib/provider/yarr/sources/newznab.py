@@ -19,8 +19,8 @@ class newznab(nzbBase):
 
     catIds = {
         2000: ['brrip'],
-        2010: ['dvdr'],
-        2030: ['cam', 'ts', 'dvdrip', 'tc', 'r5', 'scr'],
+        2010: ['720p', '1080p', 'dvdr', 'cam', 'ts', 'dvdrip', 'tc', 'r5', 'scr'],
+        2030: ['dvdr', 'cam', 'ts', 'dvdrip', 'tc', 'r5', 'scr'],
         2040: ['720p', '1080p']
     }
     catBackupId = 2000
@@ -48,8 +48,9 @@ class newznab(nzbBase):
         results = []
         if not self.enabled() or not self.isAvailable(self.getUrl(self.searchUrl)):
             return results
-
-        catId = self.getCatId(type)
+        amountCat = [0]
+        amountCat[0] = 0
+        catId = self.getCatIdNewznab(type,amountCat)
         arguments = urlencode({
             'imdbid': movie.imdb.replace('tt', ''),
             'cat': catId,
@@ -57,8 +58,8 @@ class newznab(nzbBase):
             'extended': 1
         })
         url = "%s&%s" % (self.getUrl(self.searchUrl), arguments)
-        cacheId = str(movie.imdb) + '-' + str(catId)
-        singleCat = (len(self.catIds.get(catId)) == 1 and catId != self.catBackupId)
+        cacheId = str(movie.imdb) + '-' + catId    
+        singleCat = (amountCat[0] == 1 and catId != str(self.catBackupId))
 
         try:
             cached = False
