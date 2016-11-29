@@ -460,7 +460,14 @@
 				<div>Got a jailbroken iPhone? Get the iCouchPotato app on Cydia! <span>(Add our Cydia repo: "<strong>http://cydia.myrepospace.com/couchpotato/</strong>" and search for "<strong>iCouchPotato</strong>")</span></div>
 				<img src="${baseUrl}media/images/iphone1.png" /><img src="${baseUrl}media/images/iphone2.png" /><img src="${baseUrl}media/images/iphone3.png" />
 				<div>Why isn't it in the normal Appstore you ask? Because Apple is being a bitch!</div>
-			</fieldset>
+                        </fieldset>
+                        <fieldset class="inlineLabels">
+                            <div><h3>No jailbroken iPhone? You could use the "webapp"!</h3></div>
+                            <div class="ctrlHolder checkbox">
+                                <label>Enable</label>
+                                <input type="checkbox" name="webapp.enabled" value="True" ${' checked="checked"' if config.get('webapp','enabled') else''} /> 
+                            </div>
+                        </fieldset>
 		</div>
 
 		<div class="group about">

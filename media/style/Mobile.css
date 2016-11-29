@@ -1,0 +1,153 @@
+/** alround styling **/
+
+h1 {
+    font-size: 20px;
+    maring-bottom: 10px;
+}
+
+#header {
+    position: relative;
+    height: 135px;
+    width: 100%;
+    padding: 20px 0 0 0;
+}
+
+#header .navigation ul li {
+    font-size: 15px;
+}
+
+#header .navigation ul li a {
+    padding: 20px 5px;
+}
+
+#header .navigation ul li a#showConfig {
+    display: none;
+}
+
+#filterDetails, #clear_downloaded {
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+
+#filterDetails .toggle {
+    display: none;
+}
+
+#filterDetails, #clear_downloaded {
+    font-size: 10px;
+}
+
+#filterDetails a, #filterDetails span, #clear_downloaded a {
+    margin-left: 5px;
+}
+ 
+.page {
+    width: auto;
+}
+
+.content {
+    padding: 10px;
+}
+
+input[type="text"], input[type="password"], textarea {
+    width: 8.25em;
+}
+
+#header .addNew {
+    width: 300px;
+    float: none;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+#header .addNew .row .overTxtLabel {
+    top: 90px !important;
+}
+
+#header .addNew .row .movieselect {
+    width: 118px;
+}
+
+#header .navigation {
+    width: auto;
+}
+
+#header #addForm {
+    clear: left
+}
+
+/** Wanted list **/ 
+#movies .title .thumbnail,
+#movies .item .year,
+#movies .item .quality,
+#movies .title .overview {
+    display: none;
+}
+
+#movies .item .title .extra {
+    width: auto;
+}
+
+#movies .item .title {
+    width: 66%;
+    padding: 10px 0 6px 2%;
+}
+#movies .item .title h2 {
+    font-size: 15px;
+}
+#movies .item .title .rating {
+    color: #ccc;
+    font-weight: normal;
+}
+
+#movies .item .info {
+    width: 32%;
+    padding: 19px 0 6px 0;
+}
+
+/** Smallist **/
+
+.smallList {
+    padding-left: 0;
+}
+
+.smallList span {
+    padding: 4px;
+}
+
+/** Soon page **/ 
+#filterDetails, #clear_downloaded {
+    line-height: 36px;
+}
+
+#feed .eta {
+    margin-bottom: 30px;
+}
+
+#feed .eta .item .thumbnail {
+    display: none;
+}
+
+#feed .eta .item .extra {
+    width: auto;
+}
+
+#feed .eta .item {
+    width: auto;
+    float: none;
+}
+
+#feed .eta .item h2 {
+    font-size: 18px;
+}
+
+#feed .eta .item .release {
+    font-size: 15px;
+}
+
+/** Popup **/
+.question {
+    width: 80%;
+    padding: 5%;
+    margin: 3%;
+}
